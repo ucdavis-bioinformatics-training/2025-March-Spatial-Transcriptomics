@@ -8,10 +8,10 @@ All posted times are **Pacific** time zone. At least one break will be provided 
 |**8:50 am**  | Zoom session starts |
 |**9:00 am**  | Introductions |
 |**9:30 am**  | Introduction to the command line |
-|**11:30 am**  | Lexogen Sponsor Talk |
 |**12:00 am**  | Lunch |
 |**1:00 pm**  | Project set-up |
 |**2:00 pm**  | Creating an expression matrix |
+|**3:00 am**  | Lexogen Sponsor Talk |
 |**5:00 pm** | Zoom session ends |
 
 ### Tuesday, June 11
