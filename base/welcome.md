@@ -60,7 +60,7 @@ Workshop materials are all posted on github, and publicly available
 
 * This Intro to scRNAseq Workshop
 
-   [https://ucdavis-bioinformatics-training.github.io/2023-December-Single-Cell-RNA-Seq-Analysis/](https://ucdavis-bioinformatics-training.github.io/2023-December-Single-Cell-RNA-Seq-Analysis/)
+   [https://ucdavis-bioinformatics-training.github.io/2024-June-Single-Cell-RNA-Seq-Analysis/](https://ucdavis-bioinformatics-training.github.io/2024-June-Single-Cell-RNA-Seq-Analysis/)
 
 ### Computing Cluster
 
@@ -98,5 +98,5 @@ Text based communication will be conducted via a Slack channel. Staff will be mo
 
 #### Patience
 
-We ask for a little more patience as there is a wide background in workshop participants, but we are committed to providing you the best educational experience we can (under the current conditions).
+We ask for a little more patience as there is a wide background in workshop participants, but we are committed to providing you the best educational experience we can.
 
