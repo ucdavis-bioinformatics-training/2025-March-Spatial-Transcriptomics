@@ -12,7 +12,7 @@ output:
 ## Set up workspace
 First, we need to load the required libraries.
 
-```r
+``` r
 library(Seurat)
 library(kableExtra)
 experiment.aggregate <- readRDS("scRNA_workshop-02.rds")
@@ -21,23 +21,24 @@ experiment.aggregate
 
 ```
 ## An object of class Seurat 
-## 11292 features across 6313 samples within 1 assay 
-## Active assay: RNA (11292 features, 0 variable features)
+## 11475 features across 6368 samples within 1 assay 
+## Active assay: RNA (11475 features, 0 variable features)
+##  1 layer present: counts
 ```
 
-```r
+``` r
 set.seed(12345)
 ```
 
 ## Normalize the data
 After filtering, the next step is to normalize the data. We employ a global-scaling normalization method, LogNormalize, that normalizes the gene expression measurements for each cell by the total expression, multiplies this by a scale factor (10,000 by default), and then log-transforms the data.
 
-```r
+``` r
 ?NormalizeData
 ```
 
 
-```r
+``` r
 experiment.aggregate <- NormalizeData(
   object = experiment.aggregate,
   normalization.method = "LogNormalize",
@@ -47,7 +48,7 @@ experiment.aggregate <- NormalizeData(
 ## Cell cycle assignment
 Cell cycle phase can be a significant source of variation in single cell and single nucleus experiments. There are a number of automated cell cycle stage detection methods available for single cell data. For this workshop, we will be using the built-in Seurat cell cycle function, `CellCycleScoring`. This tool compares gene expression in each cell to a list of cell cycle marker genes and scores each barcode based on marker expression. The phase with the highest score is selected for each barcode. Seurat includes a list of cell cycle genes in human single cell data.
 
-```r
+``` r
 s.genes <- cc.genes$s.genes
 g2m.genes <- cc.genes$g2m.genes
 ```
@@ -56,7 +57,7 @@ For other species, a user-provided gene list may be substituted, or the ortholog
 
 **Do not run the code below for human experiments!**
 
-```r
+``` r
 # mouse code DO NOT RUN for human data
 library(biomaRt)
 convertHumanGeneList <- function(x){
@@ -85,7 +86,7 @@ g2m.genes <- convertHumanGeneList(cc.genes.updated.2019$g2m.genes)
 
 Once an appropriate gene list has been identified, the `CellCycleScoring` function can be run.
 
-```r
+``` r
 experiment.aggregate <- CellCycleScoring(experiment.aggregate,
                                          s.features = s.genes,
                                          g2m.features = g2m.genes,
@@ -108,32 +109,32 @@ table(experiment.aggregate@meta.data$Phase) %>%
 <tbody>
   <tr>
    <td style="text-align:center;"> G1 </td>
-   <td style="text-align:center;"> 3777 </td>
+   <td style="text-align:center;"> 3810 </td>
   </tr>
   <tr>
    <td style="text-align:center;"> G2M </td>
-   <td style="text-align:center;"> 1131 </td>
+   <td style="text-align:center;"> 1187 </td>
   </tr>
   <tr>
    <td style="text-align:center;"> S </td>
-   <td style="text-align:center;"> 1405 </td>
+   <td style="text-align:center;"> 1371 </td>
   </tr>
 </tbody>
 </table>
 
 Because the "set.ident" argument was set to TRUE (this is also the default behavior), the active identity of the Seurat object was changed to the phase. To return the active identity to the sample identity, use the `Idents` function.
 
-```r
+``` r
 table(Idents(experiment.aggregate))
 ```
 
 ```
 ## 
 ##    S  G2M   G1 
-## 1405 1131 3777
+## 1371 1187 3810
 ```
 
-```r
+``` r
 Idents(experiment.aggregate) <- "orig.ident"
 table(Idents(experiment.aggregate))
 ```
@@ -141,18 +142,18 @@ table(Idents(experiment.aggregate))
 ```
 ## 
 ## A001-C-007 A001-C-104 B001-A-301 
-##       1023       1859       3431
+##       1038       1880       3450
 ```
 
 ## Identify variable genes
 The function FindVariableFeatures identifies the most highly variable genes (default 2000 genes) by fitting a line to the relationship of log(variance) and log(mean) using loess smoothing, uses this information to standardize the data, then calculates the variance of the standardized data.  This helps avoid selecting genes that only appear variable due to their expression level.
 
-```r
+``` r
 ?FindVariableFeatures
 ```
 
 
-```r
+``` r
 experiment.aggregate <- FindVariableFeatures(
   object = experiment.aggregate,
   selection.method = "vst")
@@ -163,17 +164,18 @@ length(VariableFeatures(experiment.aggregate))
 ## [1] 2000
 ```
 
-```r
+``` r
 top10 <- head(VariableFeatures(experiment.aggregate), 10)
 top10
 ```
 
 ```
-##  [1] "BEST4"      "CLCA4"      "SMOC2"      "NRG1"       "TPH1"      
-##  [6] "LRMP"       "TRPM3"      "PTPRR"      "AC007493.1" "CACNA1A"
+##  [1] "BEST4"           "CLCA4"           "TPH1"            "SMOC2"          
+##  [5] "NRG1"            "TRPM3"           "IRAG2"           "PTPRR"          
+##  [9] "ENSG00000260573" "CACNA1A"
 ```
 
-```r
+``` r
 var.feat.plot <- VariableFeaturePlot(experiment.aggregate)
 var.feat.plot <- LabelPoints(plot = var.feat.plot, points = top10, repel = TRUE)
 var.feat.plot
@@ -185,7 +187,7 @@ var.feat.plot
 
 FindVariableFeatures isn't the only way to set the "variable features" of a Seurat object. Another reasonable approach is to select a set of "minimally expressed" genes.
 
-```r
+``` r
 min.value <- 2
 min.cells <- 10
 
@@ -195,17 +197,17 @@ length(genes.use)
 ```
 
 ```
-## [1] 7012
+## [1] 7112
 ```
 
-```r
+``` r
 VariableFeatures(experiment.aggregate) <- genes.use
 ```
 
 ## Scale the data
 The `ScaleData` function scales and centers genes in the dataset. If variables are provided with the "vars.to.regress" argument, they are individually regressed against each gene, and the resulting residuals are then scaled and centered unless otherwise specified. We regress out cell cycle results S.Score and G2M.Score, mitochondrial RNA level (percent_MT), and the number of features (nFeature_RNA) as a proxy for sequencing depth.
 
-```r
+``` r
 experiment.aggregate <- ScaleData(experiment.aggregate,
                                   vars.to.regress = c("S.Score", "G2M.Score", "percent_MT", "nFeature_RNA"))
 ```
@@ -214,80 +216,82 @@ experiment.aggregate <- ScaleData(experiment.aggregate,
 
 #### Save object
 
-```r
+``` r
 saveRDS(experiment.aggregate, file = "scRNA_workshop-03.rds")
 ```
 
 #### Download Rmd
 
-```r
+``` r
 download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2023-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/04-dimensionality_reduction.Rmd", "04-dimensionality_reduction.Rmd")
 ```
 
 #### Session Information
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-## R version 4.2.2 (2022-10-31)
-## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Big Sur ... 10.16
+## R version 4.4.0 (2024-04-24)
+## Platform: aarch64-apple-darwin20
+## Running under: macOS Ventura 13.5.2
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## time zone: America/Los_Angeles
+## tzcode source: internal
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] kableExtra_1.3.4   SeuratObject_4.1.3 Seurat_4.3.0      
+## [1] kableExtra_1.4.0   Seurat_5.1.0       SeuratObject_5.0.2 sp_2.1-4          
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] Rtsne_0.16             colorspace_2.0-3       deldir_1.0-6          
-##   [4] ellipsis_0.3.2         ggridges_0.5.4         rstudioapi_0.14       
-##   [7] spatstat.data_3.0-0    farver_2.1.1           leiden_0.4.3          
-##  [10] listenv_0.8.0          ggrepel_0.9.2          fansi_1.0.3           
-##  [13] xml2_1.3.3             codetools_0.2-18       splines_4.2.2         
-##  [16] cachem_1.0.6           knitr_1.41             polyclip_1.10-4       
-##  [19] jsonlite_1.8.4         ica_1.0-3              cluster_2.1.4         
-##  [22] png_0.1-8              uwot_0.1.14            shiny_1.7.3           
-##  [25] sctransform_0.3.5      spatstat.sparse_3.0-0  compiler_4.2.2        
-##  [28] httr_1.4.4             assertthat_0.2.1       Matrix_1.5-3          
-##  [31] fastmap_1.1.0          lazyeval_0.2.2         cli_3.4.1             
-##  [34] later_1.3.0            htmltools_0.5.3        tools_4.2.2           
-##  [37] igraph_1.3.5           gtable_0.3.1           glue_1.6.2            
-##  [40] RANN_2.6.1             reshape2_1.4.4         dplyr_1.0.10          
-##  [43] Rcpp_1.0.9             scattermore_0.8        jquerylib_0.1.4       
-##  [46] vctrs_0.5.1            svglite_2.1.0          nlme_3.1-160          
-##  [49] spatstat.explore_3.0-5 progressr_0.11.0       lmtest_0.9-40         
-##  [52] spatstat.random_3.0-1  xfun_0.35              stringr_1.4.1         
-##  [55] globals_0.16.2         rvest_1.0.3            mime_0.12             
-##  [58] miniUI_0.1.1.1         lifecycle_1.0.3        irlba_2.3.5.1         
-##  [61] goftest_1.2-3          future_1.29.0          MASS_7.3-58.1         
-##  [64] zoo_1.8-11             scales_1.2.1           promises_1.2.0.1      
-##  [67] spatstat.utils_3.0-1   parallel_4.2.2         RColorBrewer_1.1-3    
-##  [70] yaml_2.3.6             reticulate_1.28        pbapply_1.6-0         
-##  [73] gridExtra_2.3          ggplot2_3.4.0          sass_0.4.4            
-##  [76] stringi_1.7.8          highr_0.9              systemfonts_1.0.4     
-##  [79] rlang_1.0.6            pkgconfig_2.0.3        matrixStats_0.63.0    
-##  [82] evaluate_0.18          lattice_0.20-45        tensor_1.5            
-##  [85] ROCR_1.0-11            purrr_0.3.5            labeling_0.4.2        
-##  [88] patchwork_1.1.2        htmlwidgets_1.5.4      cowplot_1.1.1         
-##  [91] tidyselect_1.2.0       parallelly_1.32.1      RcppAnnoy_0.0.20      
-##  [94] plyr_1.8.8             magrittr_2.0.3         R6_2.5.1              
-##  [97] generics_0.1.3         DBI_1.1.3              withr_2.5.0           
-## [100] pillar_1.8.1           fitdistrplus_1.1-8     survival_3.4-0        
-## [103] abind_1.4-5            sp_1.5-1               tibble_3.1.8          
-## [106] future.apply_1.10.0    KernSmooth_2.23-20     utf8_1.2.2            
-## [109] spatstat.geom_3.0-3    plotly_4.10.1          rmarkdown_2.18        
-## [112] grid_4.2.2             data.table_1.14.6      webshot_0.5.4         
-## [115] digest_0.6.30          xtable_1.8-4           tidyr_1.2.1           
-## [118] httpuv_1.6.6           munsell_0.5.0          viridisLite_0.4.1     
-## [121] bslib_0.4.1
+##   [1] deldir_2.0-4           pbapply_1.7-2          gridExtra_2.3         
+##   [4] rlang_1.1.3            magrittr_2.0.3         RcppAnnoy_0.0.22      
+##   [7] spatstat.geom_3.2-9    matrixStats_1.3.0      ggridges_0.5.6        
+##  [10] compiler_4.4.0         systemfonts_1.1.0      png_0.1-8             
+##  [13] vctrs_0.6.5            reshape2_1.4.4         stringr_1.5.1         
+##  [16] pkgconfig_2.0.3        fastmap_1.2.0          labeling_0.4.3        
+##  [19] utf8_1.2.4             promises_1.3.0         rmarkdown_2.27        
+##  [22] purrr_1.0.2            xfun_0.44              cachem_1.1.0          
+##  [25] jsonlite_1.8.8         goftest_1.2-3          highr_0.11            
+##  [28] later_1.3.2            spatstat.utils_3.0-4   irlba_2.3.5.1         
+##  [31] parallel_4.4.0         cluster_2.1.6          R6_2.5.1              
+##  [34] ica_1.0-3              spatstat.data_3.0-4    bslib_0.7.0           
+##  [37] stringi_1.8.4          RColorBrewer_1.1-3     reticulate_1.37.0     
+##  [40] parallelly_1.37.1      lmtest_0.9-40          jquerylib_0.1.4       
+##  [43] scattermore_1.2        Rcpp_1.0.12            knitr_1.47            
+##  [46] tensor_1.5             future.apply_1.11.2    zoo_1.8-12            
+##  [49] sctransform_0.4.1      httpuv_1.6.15          Matrix_1.7-0          
+##  [52] splines_4.4.0          igraph_2.0.3           tidyselect_1.2.1      
+##  [55] abind_1.4-5            rstudioapi_0.16.0      yaml_2.3.8            
+##  [58] spatstat.random_3.2-3  codetools_0.2-20       miniUI_0.1.1.1        
+##  [61] spatstat.explore_3.2-7 listenv_0.9.1          lattice_0.22-6        
+##  [64] tibble_3.2.1           plyr_1.8.9             withr_3.0.0           
+##  [67] shiny_1.8.1.1          ROCR_1.0-11            evaluate_0.23         
+##  [70] Rtsne_0.17             future_1.33.2          fastDummies_1.7.3     
+##  [73] survival_3.5-8         polyclip_1.10-6        xml2_1.3.6            
+##  [76] fitdistrplus_1.1-11    pillar_1.9.0           KernSmooth_2.23-22    
+##  [79] plotly_4.10.4          generics_0.1.3         RcppHNSW_0.6.0        
+##  [82] ggplot2_3.5.1          munsell_0.5.1          scales_1.3.0          
+##  [85] globals_0.16.3         xtable_1.8-4           glue_1.7.0            
+##  [88] lazyeval_0.2.2         tools_4.4.0            data.table_1.15.4     
+##  [91] RSpectra_0.16-1        RANN_2.6.1             leiden_0.4.3.1        
+##  [94] dotCall64_1.1-1        cowplot_1.1.3          grid_4.4.0            
+##  [97] tidyr_1.3.1            colorspace_2.1-0       nlme_3.1-164          
+## [100] patchwork_1.2.0        cli_3.6.2              spatstat.sparse_3.0-3 
+## [103] spam_2.10-0            fansi_1.0.6            viridisLite_0.4.2     
+## [106] svglite_2.1.3          dplyr_1.1.4            uwot_0.2.2            
+## [109] gtable_0.3.5           sass_0.4.9             digest_0.6.35         
+## [112] progressr_0.14.0       ggrepel_0.9.5          farver_2.1.2          
+## [115] htmlwidgets_1.6.4      htmltools_0.5.8.1      lifecycle_1.0.4       
+## [118] httr_1.4.7             mime_0.12              MASS_7.3-60.2
 ```
