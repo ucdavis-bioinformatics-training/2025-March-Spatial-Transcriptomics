@@ -331,7 +331,7 @@ A summary of the alignment and assignment of reads to cells and genes is present
 
 Cell Ranger does produce a more readable HTML report with the same statistics and some "analysis".
 
-[Cell Ranger V7 web summary](fullset_web_summary.html)
+[Cell Ranger V8 web summary](fullset_web_summary.html)
 
 ## Exercises
 
@@ -384,6 +384,7 @@ In the interest of time, the dataset we use for this step is a small subset of t
 ### Bonus 1: cellranger features and multi pipeline
 
 Feature barcodes allow you to capture additional information within your cells by using an addition oligo on the GEM beads. This can be from Antibody capture, Crispr guide capture, or a custom capture (like hash tagging).
+
 
 To do so you need to pass a library csv file and a feature (only 1 feature possible at a time) reference file.
 
@@ -483,6 +484,9 @@ Section: [samples]
 | description |	Optional. A description for the sample. |
 
 
+#### **10X Fixed RNA profiling**
+
+About a year ago, 10X developed a fixed RNA profiling kit to facility studies that helps to reduce batch effect for large single cell studies. This protocol use predefined probe sets to catpture RNAs transcriptome wide. A targeted gene has multiple pairs of probes. Each probe pairs hybridize to their target transcript and are then ligated together. The number of unique ligation events are used as a proxy for gene expression instead of the number of transcripts. The analysis of data generated using the fixed RNA protocol uses cellranger multi pipeline and __probe-set__ parameter is required.
 
 ---
 
@@ -510,9 +514,10 @@ Section: [samples]
 call="split-pipe \
 --mode all --nthreads 20 \
 --kit WT_mega \
+--chemistry v2 \
 --samp_list sample_plate.txt \
 --genome_dir $refP/Mus_musculus_splitpipe \
--f $R1 \
+--fq1 $R1 \
 --fq2 $R2 \
 --output_dir $alnP/$SAMPLE"
 

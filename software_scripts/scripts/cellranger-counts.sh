@@ -13,10 +13,10 @@ echo "Allocated threads: " $THREADS
 echo "Allocated memory: " $MEM
 
 ## Where cellranger executable is located
-export PATH=/share/workshop/scRNA_workshop/Software/cellranger-7.2.0/bin:$PATH
+export PATH=/share/workshop/scRNA_workshop/Software/cellranger-8.0.1/bin:$PATH
 ## Set the parameters for the run
 basedir="/share/workshop/scRNA_workshop/${USER}"
-transcriptome="/share/workshop/scRNA_workshop/Software/refdata-gex-GRCh38-2020-A"
+transcriptome="/share/workshop/scRNA_workshop/Software/refdata-gex-GRCh38-2024-A"
 fastqs="${basedir}/scrnaseq_example/00-RawData"
 outdir="${basedir}/01-Cellranger"
 mkdir -p $outdir
