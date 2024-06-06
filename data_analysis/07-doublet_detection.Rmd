@@ -109,9 +109,9 @@ nExp.adj
 ```
 
 ## Doublet detection
-```{r doubletFinder_v3, results=FALSE}
+```{r doubletFinder, results=FALSE}
 experiment.split <- lapply(seq_along(experiment.split), function(i){
-  doubletFinder_v3(experiment.split[[i]],
+  doubletFinder(experiment.split[[i]],
                    PCs = 1:50,
                    pN = 0.25,
                    pK = as.numeric(as.character(pK[[i]])),
@@ -121,7 +121,7 @@ experiment.split <- lapply(seq_along(experiment.split), function(i){
 })
 ```
 
-## Aggreate doublet calls
+## Aggregate doublet calls
 The doublet calls are currently split over three objects. Let's aggregate them into a named character vector.
 ```{r aggregate_calls}
 calls.list <- lapply(experiment.split, function(sce){
@@ -153,6 +153,9 @@ DimPlot(experiment.aggregate,
 experiment.aggregate <- subset(experiment.aggregate, doublet_call == "Singlet")
 experiment.aggregate$doublet_call <- NULL # remove redundant column from metadata
 ```
+
+<span style="color:blue">The approach demonstrated above is applied before creating the combined Seurat Object from all samples. Sometimes, after the combined Seurat Object has gone through filtering, dimensionality reduction and clustering, one would notice some strange expression profiles for some cluster. For example, one cluster expressing genes that are unique markers from different cell types. In this situation, it is possible to perform another round of doublet detection using cluster information. This procedure requires deep knowledge from what genes should and should not be expressed in a cell type and should be treated carefully. For those who are interested, please check out __scDBlFinder__ R package.</span>
+
 
 ## Prepare for the next section
 
