@@ -486,7 +486,7 @@ Section: [samples]
 
 #### **10X Fixed RNA profiling**
 
-About a year ago, 10X developed a fixed RNA profiling kit to facility studies that helps to reduce batch effect for large single cell studies. This protocol use predefined probe sets to catpture RNAs transcriptome wide. A targeted gene has multiple pairs of probes. Each probe pairs hybridize to their target transcript and are then ligated together. The number of unique ligation events are used as a proxy for gene expression instead of the number of transcripts. The analysis of data generated using the fixed RNA protocol uses cellranger multi pipeline and __probe-set__ parameter is required.
+In 2022, 10X introduced a fixed RNA profiling kit that enables sample preparation from formaldehyde-fixed cells and tissues, as well as FFPE tissue blocks. This protocol allows higher throughput in a single GEM well with multiplexing of samples. This protocol uses pre-defined probe sets to catpture RNAs transcriptome wide. A targeted gene has multiple pairs of probes. Each probe pairs hybridize to their target transcript and are then ligated together. The number of unique ligation events are used as a proxy for gene expression instead of the number of transcripts. The analysis of data generated using the fixed RNA protocol uses cellranger multi pipeline and __probe-set__ parameter is required.
 
 ---
 
