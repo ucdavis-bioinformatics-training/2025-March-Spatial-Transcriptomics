@@ -224,7 +224,7 @@ In the R console run the following command to download part 1 of data analysis.
 
 #### Markdown template document
 ```{r}
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2023-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/01-create_object.Rmd", "01-create_object.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-June-Single-Cell-RNA-Seq-Analysis/main/data_analysis/01-create_object.Rmd", "01-create_object.Rmd")
 ```
 
 #### Expression matrix
@@ -233,7 +233,7 @@ In Rstudio, navigate to the terminal tab (next to the console). This gives you a
 
 ```{bash eval=F}
 
-scp username@tadpole.genomecenter.ucdavis.edu:/share/workshop/scRNA_workshop/cellranger_outs/expression_data_cellranger.zip ./
+scp username@tadpole.genomecenter.ucdavis.edu:/share/workshop/scRNA_workshop/cellranger_outs/expression_data_cellranger.zip .
 unzip expression_data_cellranger.zip
 ```
 

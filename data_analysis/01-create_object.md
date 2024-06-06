@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Single Cell RNA-Seq Part 1: Create Seurat object"
 author: "UCD Bioinformatics Core"
-date: "2023-12-06"
+date: "2024-06-06"
 output:
     html_document:
       keep_md: TRUE
@@ -16,7 +16,7 @@ Our first Markdown document concentrates on getting data into R and setting up o
 ## Load packages
 We will start each section by loading the libraries necessary for that portion of the analysis.
 
-```r
+``` r
 library(Seurat)     # single cell RNA-Seq analysis
 library(kableExtra) # format tables
 library(ggplot2)   # create graphics
@@ -27,7 +27,7 @@ library(viridis)   # accessible color palettes
 The metadata we have available for this subset of the [Becker experiment](https://www.nature.com/articles/s41588-022-01088-x) during this workshop is very basic; we don't have a record of patient identifiers, biopsy dates, treatment course, or prognosis. Instead, for each sample, we know the group (healthy, polyp, or cancerous tissue) and the sequencing run, which we can derive from the read header.
 Let's create a data table containing this information.
 
-```r
+``` r
 experiment.metadata <- data.frame(id = c("A001-C-007",
                                          "A001-C-104",
                                          "B001-A-301"),
@@ -72,14 +72,14 @@ experiment.metadata %>%
 ## Create metrics tables
 The **expression_data_cellranger.zip** file that we have downloaded in previous step contains the single cell matrix files and HDF5 files for three single nuclei RNASeq samples from [Becker et al., 2022](https://www.nature.com/articles/s41588-022-01088-x). After un-compressing the file, please make sure that you see three folders (A001-C-007, A001-C-104, and B001-A-301) in the same folder as this R markdown file. If the three folders are located elsewhere, please change the assignment of "dataset.loc" in the code box below to reflect the location of your data.
 
-```r
+``` r
 experiment.name <- "Becker 2022 colorectal cancer continuum"
 dataset.loc <- "./"
 ```
 
 In this section, the metrics_summary.csv files produced by Cellranger are used to create a single table summarizing the sequencing metrics for each sample.
 
-```r
+``` r
 sample.metrics <- lapply(experiment.metadata$id, function(id){
   metrics = read.csv(file.path(dataset.loc,
                                paste0(id,"/outs"),
@@ -105,7 +105,7 @@ sequencing.metrics %>%
 <caption>Cell Ranger Results</caption>
  <thead>
   <tr>
-   <th style="text-align:left;">   </th>
+   <th style="text-align:left;">  </th>
    <th style="text-align:left;"> A001.C.007 </th>
    <th style="text-align:left;"> A001.C.104 </th>
    <th style="text-align:left;"> B001.A.301 </th>
@@ -115,21 +115,21 @@ sequencing.metrics %>%
   <tr grouplength="3"><td colspan="4" style="background-color: #666; color: #fff;"><strong>Overview</strong></td></tr>
 <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Estimated Number of Cells </td>
-   <td style="text-align:left;"> 1,798 </td>
-   <td style="text-align:left;"> 3,144 </td>
-   <td style="text-align:left;"> 4,514 </td>
+   <td style="text-align:left;"> 1,808 </td>
+   <td style="text-align:left;"> 3,164 </td>
+   <td style="text-align:left;"> 4,548 </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Mean Reads per Cell </td>
-   <td style="text-align:left;"> 77,438 </td>
-   <td style="text-align:left;"> 151,221 </td>
-   <td style="text-align:left;"> 38,935 </td>
+   <td style="text-align:left;"> 77,010 </td>
+   <td style="text-align:left;"> 150,265 </td>
+   <td style="text-align:left;"> 38,644 </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Median Genes per Cell </td>
-   <td style="text-align:left;"> 927 </td>
-   <td style="text-align:left;"> 959 </td>
-   <td style="text-align:left;"> 1,331 </td>
+   <td style="text-align:left;"> 937 </td>
+   <td style="text-align:left;"> 970 </td>
+   <td style="text-align:left;"> 1,336 </td>
   </tr>
   <tr grouplength="6"><td colspan="4" style="background-color: #666; color: #fff;"><strong>Sequencing Characteristics</strong></td></tr>
 <tr>
@@ -147,7 +147,7 @@ sequencing.metrics %>%
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Sequencing Saturation </td>
    <td style="text-align:left;"> 75.5% </td>
-   <td style="text-align:left;"> 84.3% </td>
+   <td style="text-align:left;"> 84.4% </td>
    <td style="text-align:left;"> 69.0% </td>
   </tr>
   <tr>
@@ -177,33 +177,33 @@ sequencing.metrics %>%
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Reads Mapped Confidently to Genome </td>
-   <td style="text-align:left;"> 72.3% </td>
-   <td style="text-align:left;"> 49.1% </td>
+   <td style="text-align:left;"> 72.2% </td>
+   <td style="text-align:left;"> 49.2% </td>
    <td style="text-align:left;"> 83.8% </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Reads Mapped Confidently to Intergenic Regions </td>
-   <td style="text-align:left;"> 8.2% </td>
-   <td style="text-align:left;"> 7.4% </td>
-   <td style="text-align:left;"> 5.0% </td>
+   <td style="text-align:left;"> 7.7% </td>
+   <td style="text-align:left;"> 7.0% </td>
+   <td style="text-align:left;"> 4.3% </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Reads Mapped Confidently to Intronic Regions </td>
    <td style="text-align:left;"> 26.9% </td>
-   <td style="text-align:left;"> 20.6% </td>
-   <td style="text-align:left;"> 40.2% </td>
+   <td style="text-align:left;"> 20.5% </td>
+   <td style="text-align:left;"> 40.1% </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Reads Mapped Confidently to Exonic Regions </td>
-   <td style="text-align:left;"> 37.2% </td>
-   <td style="text-align:left;"> 21.2% </td>
-   <td style="text-align:left;"> 38.6% </td>
+   <td style="text-align:left;"> 37.7% </td>
+   <td style="text-align:left;"> 21.6% </td>
+   <td style="text-align:left;"> 39.4% </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Reads Mapped Confidently to Transcriptome </td>
-   <td style="text-align:left;"> 61.1% </td>
-   <td style="text-align:left;"> 39.4% </td>
-   <td style="text-align:left;"> 73.4% </td>
+   <td style="text-align:left;"> 61.6% </td>
+   <td style="text-align:left;"> 39.8% </td>
+   <td style="text-align:left;"> 74.0% </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Reads Mapped Antisense to Gene </td>
@@ -213,21 +213,21 @@ sequencing.metrics %>%
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Fraction Reads in Cells </td>
-   <td style="text-align:left;"> 29.6% </td>
-   <td style="text-align:left;"> 37.7% </td>
-   <td style="text-align:left;"> 36.8% </td>
+   <td style="text-align:left;"> 29.8% </td>
+   <td style="text-align:left;"> 37.8% </td>
+   <td style="text-align:left;"> 36.9% </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Total Genes Detected </td>
-   <td style="text-align:left;"> 23,930 </td>
-   <td style="text-align:left;"> 25,327 </td>
-   <td style="text-align:left;"> 25,462 </td>
+   <td style="text-align:left;"> 24,930 </td>
+   <td style="text-align:left;"> 26,393 </td>
+   <td style="text-align:left;"> 26,515 </td>
   </tr>
   <tr>
    <td style="text-align:left;padding-left: 2em;" indentlevel="1"> Median UMI Counts per Cell </td>
-   <td style="text-align:left;"> 1,201 </td>
-   <td style="text-align:left;"> 1,231 </td>
-   <td style="text-align:left;"> 1,913 </td>
+   <td style="text-align:left;"> 1,206 </td>
+   <td style="text-align:left;"> 1,246 </td>
+   <td style="text-align:left;"> 1,922 </td>
   </tr>
 </tbody>
 </table>
@@ -241,7 +241,7 @@ In addition to the standard Seurat workflow, this documentation makes use of som
 #### Read in expression matrix
 First, we read in data from each individual sample folder.
 
-```r
+``` r
 expression.data <- lapply(experiment.metadata$id, function(id){
   sample.matrix = Read10X_h5(file.path(dataset.loc, id, "/outs","filtered_feature_bc_matrix.h5"))
   colnames(sample.matrix) = paste(sapply(strsplit(colnames(sample.matrix),split="-"), '[[', 1L), id, sep="_")
@@ -251,20 +251,20 @@ names(expression.data) <- experiment.metadata$id
 ```
 
 
-```r
+``` r
 View(expression.data)
 ```
 
 #### Merge matrices
 
-```r
+``` r
 aggregate.data <- do.call("cbind", expression.data)
 ```
 
 #### Create object
 The `CreateSeuratObject` function allows feature (gene) and cell filtering by minimum cell and feature counts. We will set these to 0 for now in order to explore manual filtering more fully in part 2.
 
-```r
+``` r
 experiment.aggregate <- CreateSeuratObject(
   aggregate.data,
   project = experiment.name,
@@ -280,7 +280,7 @@ We can now attach the metadata in our table to the Seurat object.
 #### Match metadata to expression matrix
 The columns of the expression matrix correspond to the cells in the experiment. When we created the Seurat object, the "names.field" and "names.delim" arguments allowed Seurat to infer sample identity from the cell names. This information is stored in a variable called "orig.ident."
 
-```r
+``` r
 levels(experiment.aggregate$orig.ident)
 ```
 
@@ -290,14 +290,14 @@ levels(experiment.aggregate$orig.ident)
 
 These sample identifiers are stored in the experiment.metadata object as well, which allows us to match the other metadata contained within that table to the correct cells within the Seurat object.
 
-```r
+``` r
 sample.index <- match(experiment.aggregate$orig.ident, experiment.metadata$id)
 ```
 
 #### Attach metadata
 The AddMetaData function returns a new Seurat object with an additional column in the metadata table containing the new information.
 
-```r
+``` r
 experiment.aggregate <- AddMetaData(experiment.aggregate,
                                     metadata = experiment.metadata$group[sample.index],
             col.name = "group")
@@ -315,14 +315,14 @@ experiment.aggregate$run <- factor(experiment.aggregate$run,
 ## Explore the Seurat object
 A Seurat object is a complex data structure containing the data from a single cell or single nucleus assay and **all** of the information associated with the experiment, including annotations, analysis, and more. This data structure was developed by the authors of the Seurat analysis package, for use with their pipeline.
 
-```r
+``` r
 View(experiment.aggregate)
 ```
 
 Most Seurat functions take the object as an argument, and return either a new Seurat object or a ggplot object (a visualization). As the analysis continues, more and more data will be added to the object.
 
 
-```r
+``` r
 slotNames(experiment.aggregate)
 ```
 
@@ -332,16 +332,18 @@ slotNames(experiment.aggregate)
 ## [11] "version"      "commands"     "tools"
 ```
 
-```r
+``` r
 experiment.aggregate@assays # a slot is accessed with the @ symbol
 ```
 
 ```
 ## $RNA
-## Assay data with 36601 features for 9456 cells
+## Assay (v5) data with 38606 features for 9520 cells
 ## First 10 features:
-##  MIR1302-2HG, FAM138A, OR4F5, AL627309.1, AL627309.3, AL627309.2,
-## AL627309.5, AL627309.4, AP006222.2, AL732372.1
+##  DDX11L2, MIR1302-2HG, FAM138A, ENSG00000290826, OR4F5, ENSG00000238009,
+## ENSG00000239945, ENSG00000239906, ENSG00000241860, ENSG00000241599 
+## Layers:
+##  counts
 ```
 
 - Which slots are empty, and which contain data?
@@ -351,19 +353,19 @@ experiment.aggregate@assays # a slot is accessed with the @ symbol
 There is often more than one way to interact with the information stored in each of a Seurat objects many slots. The default behaviors of different access functions are described in the help documentation.
 
 
-```r
+``` r
 # which slot is being accessed here? find another way to produce the result
 head(experiment.aggregate[[]])
 ```
 
 ```
 ##                             orig.ident nCount_RNA nFeature_RNA
-## AAACCCAAGTTATGGA_A001-C-007 A001-C-007       2078         1549
-## AAACCCACAACGCCCA_A001-C-007 A001-C-007        854          687
-## AAACCCACAGAAGTTA_A001-C-007 A001-C-007        541          467
-## AAACCCAGTCAGTCCG_A001-C-007 A001-C-007        605          538
-## AAACGAAGTTGGTGTT_A001-C-007 A001-C-007        954          772
-## AAACGCTAGGAGCAAA_A001-C-007 A001-C-007        734          629
+## AAACCCAAGTTATGGA_A001-C-007 A001-C-007       2099         1568
+## AAACCCACAACGCCCA_A001-C-007 A001-C-007        865          696
+## AAACCCACAGAAGTTA_A001-C-007 A001-C-007        547          472
+## AAACCCAGTCAGTCCG_A001-C-007 A001-C-007        621          550
+## AAACGAAGTTGGTGTT_A001-C-007 A001-C-007        968          784
+## AAACGCTAGGAGCAAA_A001-C-007 A001-C-007        747          641
 ##                                         group                    run
 ## AAACCCAAGTTATGGA_A001-C-007 Colorectal Cancer A00509:126:HTLFWDMXX:1
 ## AAACCCACAACGCCCA_A001-C-007 Colorectal Cancer A00509:126:HTLFWDMXX:1
@@ -382,7 +384,7 @@ Imagine the barcode rank plot from the Cell Ranger web summary. That graphic plo
 The Seurat `BarcodeInflectionsPlot` provides a similar graphic. In this case, because we are using the filtered barcode matrix, rather than all barcodes, much of the background is absent from the plot.
 
 
-```r
+``` r
 experiment.aggregate <- CalculateBarcodeInflections(experiment.aggregate)
 BarcodeInflectionsPlot(experiment.aggregate) +
   scale_color_viridis_d()
@@ -393,7 +395,7 @@ BarcodeInflectionsPlot(experiment.aggregate) +
 Adding a log-scale transformation to the x-axis increases the resemblance to the Cell Ranger plot. Values on the y-axis are already log-transformed.
 
 
-```r
+``` r
 BarcodeInflectionsPlot(experiment.aggregate) +
   scale_x_continuous(trans = "log10") +
   scale_color_viridis_d()
@@ -405,81 +407,84 @@ BarcodeInflectionsPlot(experiment.aggregate) +
 
 #### Save object
 
-```r
+``` r
 saveRDS(experiment.aggregate, file="scRNA_workshop-01.rds")
 ```
 
 #### Download Rmd
 
-```r
+``` r
 download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2023-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/02-filtering.Rmd", "02-filtering.Rmd")
 ```
 
 #### Session information
 
-```r
+``` r
 sessionInfo()
 ```
 
 ```
-## R version 4.2.2 (2022-10-31)
-## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Big Sur ... 10.16
+## R version 4.4.0 (2024-04-24)
+## Platform: aarch64-apple-darwin20
+## Running under: macOS Ventura 13.5.2
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## time zone: America/Los_Angeles
+## tzcode source: internal
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] viridis_0.6.2      viridisLite_0.4.1  ggplot2_3.4.0      kableExtra_1.3.4  
-## [5] SeuratObject_4.1.3 Seurat_4.3.0      
+## [1] viridis_0.6.5      viridisLite_0.4.2  ggplot2_3.5.1      kableExtra_1.4.0  
+## [5] Seurat_5.1.0       SeuratObject_5.0.2 sp_2.1-4          
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] Rtsne_0.16             colorspace_2.0-3       deldir_1.0-6          
-##   [4] ellipsis_0.3.2         ggridges_0.5.4         rstudioapi_0.14       
-##   [7] spatstat.data_3.0-0    farver_2.1.1           leiden_0.4.3          
-##  [10] listenv_0.8.0          bit64_4.0.5            ggrepel_0.9.2         
-##  [13] fansi_1.0.3            xml2_1.3.3             codetools_0.2-18      
-##  [16] splines_4.2.2          cachem_1.0.6           knitr_1.41            
-##  [19] polyclip_1.10-4        jsonlite_1.8.4         ica_1.0-3             
-##  [22] cluster_2.1.4          png_0.1-8              uwot_0.1.14           
-##  [25] shiny_1.7.3            sctransform_0.3.5      spatstat.sparse_3.0-0 
-##  [28] compiler_4.2.2         httr_1.4.4             assertthat_0.2.1      
-##  [31] Matrix_1.5-3           fastmap_1.1.0          lazyeval_0.2.2        
-##  [34] cli_3.4.1              later_1.3.0            htmltools_0.5.3       
-##  [37] tools_4.2.2            igraph_1.3.5           gtable_0.3.1          
-##  [40] glue_1.6.2             RANN_2.6.1             reshape2_1.4.4        
-##  [43] dplyr_1.0.10           Rcpp_1.0.9             scattermore_0.8       
-##  [46] jquerylib_0.1.4        vctrs_0.5.1            svglite_2.1.0         
-##  [49] nlme_3.1-160           spatstat.explore_3.0-5 progressr_0.11.0      
-##  [52] lmtest_0.9-40          spatstat.random_3.0-1  xfun_0.35             
-##  [55] stringr_1.4.1          globals_0.16.2         rvest_1.0.3           
-##  [58] mime_0.12              miniUI_0.1.1.1         lifecycle_1.0.3       
-##  [61] irlba_2.3.5.1          goftest_1.2-3          future_1.29.0         
-##  [64] MASS_7.3-58.1          zoo_1.8-11             scales_1.2.1          
-##  [67] promises_1.2.0.1       spatstat.utils_3.0-1   parallel_4.2.2        
-##  [70] RColorBrewer_1.1-3     yaml_2.3.6             reticulate_1.28       
-##  [73] pbapply_1.6-0          gridExtra_2.3          sass_0.4.4            
-##  [76] stringi_1.7.8          highr_0.9              systemfonts_1.0.4     
-##  [79] rlang_1.0.6            pkgconfig_2.0.3        matrixStats_0.63.0    
-##  [82] evaluate_0.18          lattice_0.20-45        tensor_1.5            
-##  [85] ROCR_1.0-11            purrr_0.3.5            labeling_0.4.2        
-##  [88] patchwork_1.1.2        htmlwidgets_1.5.4      bit_4.0.5             
-##  [91] cowplot_1.1.1          tidyselect_1.2.0       parallelly_1.32.1     
-##  [94] RcppAnnoy_0.0.20       plyr_1.8.8             magrittr_2.0.3        
-##  [97] R6_2.5.1               generics_0.1.3         DBI_1.1.3             
-## [100] withr_2.5.0            pillar_1.8.1           fitdistrplus_1.1-8    
-## [103] survival_3.4-0         abind_1.4-5            sp_1.5-1              
-## [106] tibble_3.1.8           future.apply_1.10.0    hdf5r_1.3.7           
-## [109] KernSmooth_2.23-20     utf8_1.2.2             spatstat.geom_3.0-3   
-## [112] plotly_4.10.1          rmarkdown_2.18         grid_4.2.2            
-## [115] data.table_1.14.6      webshot_0.5.4          digest_0.6.30         
-## [118] xtable_1.8-4           tidyr_1.2.1            httpuv_1.6.6          
-## [121] munsell_0.5.0          bslib_0.4.1
+##   [1] RColorBrewer_1.1-3     rstudioapi_0.16.0      jsonlite_1.8.8        
+##   [4] magrittr_2.0.3         spatstat.utils_3.0-4   farver_2.1.2          
+##   [7] rmarkdown_2.27         vctrs_0.6.5            ROCR_1.0-11           
+##  [10] spatstat.explore_3.2-7 htmltools_0.5.8.1      sass_0.4.9            
+##  [13] sctransform_0.4.1      parallelly_1.37.1      KernSmooth_2.23-22    
+##  [16] bslib_0.7.0            htmlwidgets_1.6.4      ica_1.0-3             
+##  [19] plyr_1.8.9             plotly_4.10.4          zoo_1.8-12            
+##  [22] cachem_1.1.0           igraph_2.0.3           mime_0.12             
+##  [25] lifecycle_1.0.4        pkgconfig_2.0.3        Matrix_1.7-0          
+##  [28] R6_2.5.1               fastmap_1.2.0          fitdistrplus_1.1-11   
+##  [31] future_1.33.2          shiny_1.8.1.1          digest_0.6.35         
+##  [34] colorspace_2.1-0       patchwork_1.2.0        tensor_1.5            
+##  [37] RSpectra_0.16-1        irlba_2.3.5.1          labeling_0.4.3        
+##  [40] progressr_0.14.0       fansi_1.0.6            spatstat.sparse_3.0-3 
+##  [43] httr_1.4.7             polyclip_1.10-6        abind_1.4-5           
+##  [46] compiler_4.4.0         bit64_4.0.5            withr_3.0.0           
+##  [49] fastDummies_1.7.3      highr_0.11             MASS_7.3-60.2         
+##  [52] tools_4.4.0            lmtest_0.9-40          httpuv_1.6.15         
+##  [55] future.apply_1.11.2    goftest_1.2-3          glue_1.7.0            
+##  [58] nlme_3.1-164           promises_1.3.0         grid_4.4.0            
+##  [61] Rtsne_0.17             cluster_2.1.6          reshape2_1.4.4        
+##  [64] generics_0.1.3         hdf5r_1.3.10           gtable_0.3.5          
+##  [67] spatstat.data_3.0-4    tidyr_1.3.1            data.table_1.15.4     
+##  [70] xml2_1.3.6             utf8_1.2.4             spatstat.geom_3.2-9   
+##  [73] RcppAnnoy_0.0.22       ggrepel_0.9.5          RANN_2.6.1            
+##  [76] pillar_1.9.0           stringr_1.5.1          spam_2.10-0           
+##  [79] RcppHNSW_0.6.0         later_1.3.2            splines_4.4.0         
+##  [82] dplyr_1.1.4            lattice_0.22-6         survival_3.5-8        
+##  [85] bit_4.0.5              deldir_2.0-4           tidyselect_1.2.1      
+##  [88] miniUI_0.1.1.1         pbapply_1.7-2          knitr_1.47            
+##  [91] gridExtra_2.3          svglite_2.1.3          scattermore_1.2       
+##  [94] xfun_0.44              matrixStats_1.3.0      stringi_1.8.4         
+##  [97] lazyeval_0.2.2         yaml_2.3.8             evaluate_0.23         
+## [100] codetools_0.2-20       tibble_3.2.1           cli_3.6.2             
+## [103] uwot_0.2.2             xtable_1.8-4           reticulate_1.37.0     
+## [106] systemfonts_1.1.0      munsell_0.5.1          jquerylib_0.1.4       
+## [109] Rcpp_1.0.12            globals_0.16.3         spatstat.random_3.2-3 
+## [112] png_0.1-8              parallel_4.4.0         dotCall64_1.1-1       
+## [115] listenv_0.9.1          scales_1.3.0           ggridges_0.5.6        
+## [118] leiden_0.4.3.1         purrr_1.0.2            rlang_1.1.3           
+## [121] cowplot_1.1.3
 ```

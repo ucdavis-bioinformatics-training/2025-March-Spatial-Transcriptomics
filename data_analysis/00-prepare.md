@@ -1,7 +1,7 @@
 ---
 title: "Prepare scRNA-Seq analysis"
 author: "UC Davis Bioinformatics Core"
-date: "2023-12-04"
+date: "2024-06-04"
 output: 
   html_document:
     keep_md: TRUE
@@ -245,7 +245,7 @@ In the R console run the following command to download part 1 of data analysis.
 #### Markdown template document
 
 ```r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2023-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/01-create_object.Rmd", "01-create_object.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-June-Single-Cell-RNA-Seq-Analysis/main/data_analysis/01-create_object.Rmd", "01-create_object.Rmd")
 ```
 
 #### Expression matrix
