@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Single Cell RNA-Seq Part 6: Enrichment and model-based differential expression"
 author: "Bioinformatics Core"
-date: "2023-12-11"
+date: "2024-06-06"
 output:
     html_document:
       keep_md: TRUE
@@ -13,7 +13,7 @@ output:
 
 ## Set up workspace
 
-```r
+``` r
 library(Seurat)
 library(limma)
 library(topGO)
@@ -27,7 +27,7 @@ Idents(experiment.aggregate) <- "finalcluster"
 ## 1. Gene Ontology (GO) Enrichment of Genes Expressed in a Cluster
 [Gene Ontology](http://geneontology.org/docs/ontology-documentation/) provides a controlled vocabulary for describing gene products.  Here we use enrichment analysis to identify GO terms that are over-represented among the gene expressed in cells in a given cluster. 
 
-```r
+``` r
 cluster10 <- subset(experiment.aggregate, idents = '10')
 expr <- as.matrix(GetAssayData(cluster10))
 
@@ -66,164 +66,164 @@ names(geneList) <- all.genes
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> GO:0010613 </td>
-   <td style="text-align:left;"> positive regulation of cardiac muscle hypertrophy </td>
+   <td style="text-align:left;"> GO:0006338 </td>
+   <td style="text-align:left;"> chromatin remodeling </td>
+   <td style="text-align:right;"> 464 </td>
    <td style="text-align:right;"> 19 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 0.34 </td>
-   <td style="text-align:left;"> 0.00031 </td>
+   <td style="text-align:right;"> 5.61 </td>
+   <td style="text-align:left;"> 2.6e-06 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> GO:0006325 </td>
-   <td style="text-align:left;"> chromatin organization </td>
-   <td style="text-align:right;"> 465 </td>
-   <td style="text-align:right;"> 24 </td>
-   <td style="text-align:right;"> 8.31 </td>
-   <td style="text-align:left;"> 0.00047 </td>
+   <td style="text-align:left;"> GO:0043484 </td>
+   <td style="text-align:left;"> regulation of RNA splicing </td>
+   <td style="text-align:right;"> 148 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 1.79 </td>
+   <td style="text-align:left;"> 0.00041 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> GO:0030036 </td>
-   <td style="text-align:left;"> actin cytoskeleton organization </td>
-   <td style="text-align:right;"> 462 </td>
-   <td style="text-align:right;"> 19 </td>
-   <td style="text-align:right;"> 8.26 </td>
-   <td style="text-align:left;"> 0.00057 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> GO:0034968 </td>
-   <td style="text-align:left;"> histone lysine methylation </td>
-   <td style="text-align:right;"> 81 </td>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> 1.45 </td>
-   <td style="text-align:left;"> 0.00059 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> GO:2001014 </td>
-   <td style="text-align:left;"> regulation of skeletal muscle cell differentiation </td>
-   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:left;"> GO:1903613 </td>
+   <td style="text-align:left;"> regulation of protein tyrosine phosphatase activity </td>
    <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 0.20 </td>
-   <td style="text-align:left;"> 0.00083 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.04 </td>
+   <td style="text-align:left;"> 0.00043 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> GO:0000381 </td>
-   <td style="text-align:left;"> regulation of alternative mRNA splicing, via spliceosome </td>
-   <td style="text-align:right;"> 42 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 0.75 </td>
+   <td style="text-align:left;"> GO:0006306 </td>
+   <td style="text-align:left;"> DNA methylation </td>
+   <td style="text-align:right;"> 33 </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.40 </td>
+   <td style="text-align:left;"> 0.00063 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GO:0061061 </td>
+   <td style="text-align:left;"> muscle structure development </td>
+   <td style="text-align:right;"> 381 </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 4.61 </td>
+   <td style="text-align:left;"> 0.00067 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GO:0031580 </td>
+   <td style="text-align:left;"> membrane raft distribution </td>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.05 </td>
    <td style="text-align:left;"> 0.00086 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> GO:0006338 </td>
-   <td style="text-align:left;"> chromatin remodeling </td>
-   <td style="text-align:right;"> 270 </td>
-   <td style="text-align:right;"> 13 </td>
-   <td style="text-align:right;"> 4.82 </td>
-   <td style="text-align:left;"> 0.00108 </td>
+   <td style="text-align:left;"> GO:0009791 </td>
+   <td style="text-align:left;"> post-embryonic development </td>
+   <td style="text-align:right;"> 65 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0.79 </td>
+   <td style="text-align:left;"> 0.00110 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> GO:0048813 </td>
-   <td style="text-align:left;"> dendrite morphogenesis </td>
-   <td style="text-align:right;"> 95 </td>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> 1.70 </td>
-   <td style="text-align:left;"> 0.00152 </td>
+   <td style="text-align:left;"> GO:0000512 </td>
+   <td style="text-align:left;"> lncRNA-mediated post-transcriptional gene silencing </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.06 </td>
+   <td style="text-align:left;"> 0.00142 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> GO:0045445 </td>
-   <td style="text-align:left;"> myoblast differentiation </td>
-   <td style="text-align:right;"> 70 </td>
+   <td style="text-align:left;"> GO:1903978 </td>
+   <td style="text-align:left;"> regulation of microglial cell activation </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.06 </td>
+   <td style="text-align:left;"> 0.00142 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GO:0045060 </td>
+   <td style="text-align:left;"> negative thymic T cell selection </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.06 </td>
+   <td style="text-align:left;"> 0.00142 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GO:2000627 </td>
+   <td style="text-align:left;"> positive regulation of miRNA catabolic process </td>
    <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 1.25 </td>
-   <td style="text-align:left;"> 0.00152 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> GO:1901888 </td>
-   <td style="text-align:left;"> regulation of cell junction assembly </td>
-   <td style="text-align:right;"> 124 </td>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 2.22 </td>
-   <td style="text-align:left;"> 0.00167 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> GO:1901897 </td>
-   <td style="text-align:left;"> regulation of relaxation of cardiac muscle </td>
-   <td style="text-align:right;"> 4 </td>
    <td style="text-align:right;"> 2 </td>
    <td style="text-align:right;"> 0.07 </td>
-   <td style="text-align:left;"> 0.00186 </td>
+   <td style="text-align:left;"> 0.00211 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> GO:0031666 </td>
-   <td style="text-align:left;"> positive regulation of lipopolysaccharide-mediated signaling... </td>
-   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:left;"> GO:0072711 </td>
+   <td style="text-align:left;"> cellular response to hydroxyurea </td>
+   <td style="text-align:right;"> 7 </td>
    <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 0.07 </td>
-   <td style="text-align:left;"> 0.00186 </td>
+   <td style="text-align:right;"> 0.08 </td>
+   <td style="text-align:left;"> 0.00292 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> GO:0071320 </td>
    <td style="text-align:left;"> cellular response to cAMP </td>
-   <td style="text-align:right;"> 30 </td>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 0.54 </td>
-   <td style="text-align:left;"> 0.00188 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> GO:0061049 </td>
-   <td style="text-align:left;"> cell growth involved in cardiac muscle cell development </td>
-   <td style="text-align:right;"> 15 </td>
+   <td style="text-align:right;"> 26 </td>
    <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 0.27 </td>
-   <td style="text-align:left;"> 0.00218 </td>
+   <td style="text-align:right;"> 0.31 </td>
+   <td style="text-align:left;"> 0.00366 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> GO:0010595 </td>
-   <td style="text-align:left;"> positive regulation of endothelial cell migration </td>
-   <td style="text-align:right;"> 76 </td>
+   <td style="text-align:left;"> GO:2000045 </td>
+   <td style="text-align:left;"> regulation of G1/S transition of mitotic cell cycle </td>
+   <td style="text-align:right;"> 123 </td>
    <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 1.36 </td>
-   <td style="text-align:left;"> 0.00232 </td>
+   <td style="text-align:right;"> 1.49 </td>
+   <td style="text-align:left;"> 0.00370 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> GO:0002063 </td>
-   <td style="text-align:left;"> chondrocyte development </td>
-   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:left;"> GO:0000398 </td>
+   <td style="text-align:left;"> mRNA splicing, via spliceosome </td>
+   <td style="text-align:right;"> 241 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 2.91 </td>
+   <td style="text-align:left;"> 0.00377 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GO:0030889 </td>
+   <td style="text-align:left;"> negative regulation of B cell proliferation </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.10 </td>
+   <td style="text-align:left;"> 0.00387 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> GO:0006376 </td>
+   <td style="text-align:left;"> mRNA splice site recognition </td>
+   <td style="text-align:right;"> 27 </td>
    <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 0.29 </td>
-   <td style="text-align:left;"> 0.00264 </td>
+   <td style="text-align:right;"> 0.33 </td>
+   <td style="text-align:left;"> 0.00408 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> GO:0045906 </td>
-   <td style="text-align:left;"> negative regulation of vasoconstriction </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 0.09 </td>
-   <td style="text-align:left;"> 0.00306 </td>
+   <td style="text-align:left;"> GO:0010720 </td>
+   <td style="text-align:left;"> positive regulation of cell development </td>
+   <td style="text-align:right;"> 263 </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 3.18 </td>
+   <td style="text-align:left;"> 0.00452 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> GO:0098909 </td>
-   <td style="text-align:left;"> regulation of cardiac muscle cell action potential involved ... </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 0.09 </td>
-   <td style="text-align:left;"> 0.00306 </td>
+   <td style="text-align:left;"> GO:0060218 </td>
+   <td style="text-align:left;"> hematopoietic stem cell differentiation </td>
+   <td style="text-align:right;"> 28 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 0.34 </td>
+   <td style="text-align:left;"> 0.00453 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> GO:0048842 </td>
-   <td style="text-align:left;"> positive regulation of axon extension involved in axon guida... </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 0.09 </td>
-   <td style="text-align:left;"> 0.00306 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> GO:0021785 </td>
-   <td style="text-align:left;"> branchiomotor neuron axon guidance </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 0.09 </td>
-   <td style="text-align:left;"> 0.00306 </td>
+   <td style="text-align:left;"> GO:0010558 </td>
+   <td style="text-align:left;"> negative regulation of macromolecule biosynthetic process </td>
+   <td style="text-align:right;"> 1370 </td>
+   <td style="text-align:right;"> 31 </td>
+   <td style="text-align:right;"> 16.56 </td>
+   <td style="text-align:left;"> 0.00463 </td>
   </tr>
 </tbody>
 </table>
@@ -238,7 +238,7 @@ names(geneList) <- all.genes
 Limma can be used to fit any linear model to expression data and is useful for analyses that go beyond two-group comparisons.  A detailed tutorial of model specification in limma is available [here](https://ucdavis-bioinformatics-training.github.io/2021-June-RNA-Seq-Analysis/data_analysis/DE_Analysis_mm_with_quizzes) and in the [limma User's Guide](https://www.bioconductor.org/packages/devel/bioc/vignettes/limma/inst/doc/usersguide.pdf).
 
 
-```r
+``` r
 # filter genes to those expressed in at least 10% of cells
 keep <- rownames(expr)[which(n.gt.0/ncol(expr) >= 0.1)]
 expr2 <- expr[keep,]
@@ -254,7 +254,7 @@ head(mm) %>%
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">   </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">  </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> proper.groupColorectal.Cancer </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> proper.groupNormal </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> proper.groupPolyp </th>
@@ -266,69 +266,69 @@ head(mm) %>%
  </thead>
 <tbody>
   <tr>
+   <td style="text-align:left;"> AAACGCTTCTCTGCTG_A001-C-007 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.2751272 </td>
+   <td style="text-align:right;"> 0.8966284 </td>
+   <td style="text-align:right;"> 1.1409396 </td>
+   <td style="text-align:right;"> 1038 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AACAGGGGTCCCTGAG_A001-C-007 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> -0.0068710 </td>
+   <td style="text-align:right;"> 0.0132416 </td>
+   <td style="text-align:right;"> 0.7835455 </td>
+   <td style="text-align:right;"> 719 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AAGCATCCATCCCACT_A001-C-007 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.0518141 </td>
+   <td style="text-align:right;"> 0.0255571 </td>
+   <td style="text-align:right;"> 0.5510810 </td>
+   <td style="text-align:right;"> 1391 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AAGCGAGCACGAGAAC_A001-C-007 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> -0.0403860 </td>
+   <td style="text-align:right;"> -0.0059914 </td>
+   <td style="text-align:right;"> 0.4604758 </td>
+   <td style="text-align:right;"> 980 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AAGCGTTCAGCCTATA_A001-C-007 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> -0.0316891 </td>
+   <td style="text-align:right;"> 0.0644262 </td>
+   <td style="text-align:right;"> 0.7960199 </td>
+   <td style="text-align:right;"> 761 </td>
+  </tr>
+  <tr>
    <td style="text-align:left;"> ACGGTTAGTCTCACAA_A001-C-007 </td>
    <td style="text-align:right;"> 1 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0347548 </td>
-   <td style="text-align:right;"> 0.7909218 </td>
-   <td style="text-align:right;"> 0.5656109 </td>
-   <td style="text-align:right;"> 1187 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> ACTGTCCAGGCGTTAG_A001-C-007 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> -0.0513069 </td>
-   <td style="text-align:right;"> -0.0204757 </td>
-   <td style="text-align:right;"> 0.5043712 </td>
-   <td style="text-align:right;"> 1634 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> AGCGTATAGCCTCAGC_A001-C-007 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> -0.0576611 </td>
-   <td style="text-align:right;"> -0.0549822 </td>
-   <td style="text-align:right;"> 3.0966767 </td>
-   <td style="text-align:right;"> 880 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> AGCGTATAGGTATCTC_A001-C-007 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.1080488 </td>
-   <td style="text-align:right;"> -0.0416714 </td>
-   <td style="text-align:right;"> 0.4595588 </td>
-   <td style="text-align:right;"> 783 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> AGGACTTGTACCTATG_A001-C-007 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0181025 </td>
-   <td style="text-align:right;"> -0.0642517 </td>
-   <td style="text-align:right;"> 0.4804393 </td>
-   <td style="text-align:right;"> 986 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> AGGGTTTGTTCTTCAT_A001-C-007 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0057069 </td>
-   <td style="text-align:right;"> -0.0475972 </td>
-   <td style="text-align:right;"> 1.3483146 </td>
-   <td style="text-align:right;"> 937 </td>
+   <td style="text-align:right;"> 0.0445603 </td>
+   <td style="text-align:right;"> 0.7918382 </td>
+   <td style="text-align:right;"> 0.5617978 </td>
+   <td style="text-align:right;"> 1199 </td>
   </tr>
 </tbody>
 </table>
 
-```r
+``` r
 tail(mm) %>%
 	  kable() %>%
 	  kable_styling("striped", fixed_thead = TRUE)
@@ -337,7 +337,7 @@ tail(mm) %>%
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">   </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">  </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> proper.groupColorectal.Cancer </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> proper.groupNormal </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> proper.groupPolyp </th>
@@ -349,69 +349,69 @@ tail(mm) %>%
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:left;"> TCCACCAAGTAACGTA_B001-A-301 </td>
+   <td style="text-align:left;"> TGGGTTACAAGAATGT_B001-A-301 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 1 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> -0.0872095 </td>
-   <td style="text-align:right;"> -0.1505728 </td>
-   <td style="text-align:right;"> 0.1785183 </td>
-   <td style="text-align:right;"> 2096 </td>
+   <td style="text-align:right;"> 0.0913972 </td>
+   <td style="text-align:right;"> -0.1247840 </td>
+   <td style="text-align:right;"> 0.2367798 </td>
+   <td style="text-align:right;"> 894 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> TCCACCAGTGTCCACG_B001-A-301 </td>
+   <td style="text-align:left;"> TGTTTGTTCACTACTT_B001-A-301 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 1 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> -0.0697658 </td>
-   <td style="text-align:right;"> -0.1145196 </td>
-   <td style="text-align:right;"> 0.3147954 </td>
-   <td style="text-align:right;"> 1147 </td>
+   <td style="text-align:right;"> -0.1148748 </td>
+   <td style="text-align:right;"> -0.1289778 </td>
+   <td style="text-align:right;"> 0.4276115 </td>
+   <td style="text-align:right;"> 1075 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> TCGCTTGAGACTTGTC_B001-A-301 </td>
+   <td style="text-align:left;"> TTCCGTGTCCGCTGTT_B001-A-301 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 1 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> -0.0989612 </td>
-   <td style="text-align:right;"> -0.1146185 </td>
-   <td style="text-align:right;"> 0.1570475 </td>
-   <td style="text-align:right;"> 1471 </td>
+   <td style="text-align:right;"> -0.1008870 </td>
+   <td style="text-align:right;"> -0.0119225 </td>
+   <td style="text-align:right;"> 0.6284916 </td>
+   <td style="text-align:right;"> 1009 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> TCTCCGACACAGTACT_B001-A-301 </td>
+   <td style="text-align:left;"> TTCTTCCAGTCCCAAT_B001-A-301 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 1 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 0.0437678 </td>
-   <td style="text-align:right;"> -0.1455716 </td>
-   <td style="text-align:right;"> 0.1921230 </td>
-   <td style="text-align:right;"> 2383 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> TGATGGTCATAACTCG_B001-A-301 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> -0.1108661 </td>
-   <td style="text-align:right;"> -0.1465694 </td>
-   <td style="text-align:right;"> 0.5749668 </td>
-   <td style="text-align:right;"> 1413 </td>
+   <td style="text-align:right;"> 0.0325015 </td>
+   <td style="text-align:right;"> -0.1043837 </td>
+   <td style="text-align:right;"> 0.3673095 </td>
+   <td style="text-align:right;"> 822 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> TTCTTCCCAGCGTAGA_B001-A-301 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 1 </td>
    <td style="text-align:right;"> 0 </td>
-   <td style="text-align:right;"> -0.0361969 </td>
-   <td style="text-align:right;"> 0.0067655 </td>
-   <td style="text-align:right;"> 0.5504587 </td>
-   <td style="text-align:right;"> 843 </td>
+   <td style="text-align:right;"> -0.0226923 </td>
+   <td style="text-align:right;"> 0.0085482 </td>
+   <td style="text-align:right;"> 0.5474453 </td>
+   <td style="text-align:right;"> 850 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> TTTACGTGTGTCTTAG_B001-A-301 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> -0.0945735 </td>
+   <td style="text-align:right;"> -0.1263372 </td>
+   <td style="text-align:right;"> 0.5700326 </td>
+   <td style="text-align:right;"> 891 </td>
   </tr>
 </tbody>
 </table>
 
-```r
+``` r
 # Fit model in limma
 fit <- lmFit(expr2, mm)
 head(coef(fit)) %>%
@@ -422,7 +422,7 @@ head(coef(fit)) %>%
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">   </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">  </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> proper.groupColorectal.Cancer </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> proper.groupNormal </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> proper.groupPolyp </th>
@@ -435,68 +435,68 @@ head(coef(fit)) %>%
 <tbody>
   <tr>
    <td style="text-align:left;"> CCNL2 </td>
-   <td style="text-align:right;"> 0.0579580 </td>
-   <td style="text-align:right;"> 0.4644867 </td>
-   <td style="text-align:right;"> 0.5707252 </td>
-   <td style="text-align:right;"> -0.5229024 </td>
-   <td style="text-align:right;"> 0.7195925 </td>
-   <td style="text-align:right;"> 0.2619560 </td>
-   <td style="text-align:right;"> 0.0001080 </td>
+   <td style="text-align:right;"> 0.2242247 </td>
+   <td style="text-align:right;"> 0.1990672 </td>
+   <td style="text-align:right;"> 0.2470341 </td>
+   <td style="text-align:right;"> -0.4213528 </td>
+   <td style="text-align:right;"> 0.4293688 </td>
+   <td style="text-align:right;"> 0.1358057 </td>
+   <td style="text-align:right;"> 0.0002361 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> CDK11B </td>
-   <td style="text-align:right;"> 0.5915809 </td>
-   <td style="text-align:right;"> 0.1722522 </td>
-   <td style="text-align:right;"> 0.5923884 </td>
-   <td style="text-align:right;"> -0.6623504 </td>
-   <td style="text-align:right;"> 0.7849839 </td>
-   <td style="text-align:right;"> -0.3260968 </td>
-   <td style="text-align:right;"> 0.0000319 </td>
+   <td style="text-align:right;"> 0.6242932 </td>
+   <td style="text-align:right;"> 0.1148185 </td>
+   <td style="text-align:right;"> 0.5999028 </td>
+   <td style="text-align:right;"> -0.4532588 </td>
+   <td style="text-align:right;"> 0.6436532 </td>
+   <td style="text-align:right;"> -0.2417947 </td>
+   <td style="text-align:right;"> 0.0000213 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> SLC35E2B </td>
+   <td style="text-align:right;"> 0.0037741 </td>
+   <td style="text-align:right;"> 0.0495442 </td>
+   <td style="text-align:right;"> 0.0914102 </td>
+   <td style="text-align:right;"> 0.5887303 </td>
+   <td style="text-align:right;"> 0.0651147 </td>
+   <td style="text-align:right;"> 0.1952115 </td>
+   <td style="text-align:right;"> 0.0001180 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> CDK11A </td>
-   <td style="text-align:right;"> 0.9175843 </td>
-   <td style="text-align:right;"> 0.2172913 </td>
-   <td style="text-align:right;"> 0.4343150 </td>
-   <td style="text-align:right;"> -1.0275000 </td>
-   <td style="text-align:right;"> 0.9939193 </td>
-   <td style="text-align:right;"> -0.0600846 </td>
-   <td style="text-align:right;"> 0.0000147 </td>
+   <td style="text-align:right;"> 0.5310057 </td>
+   <td style="text-align:right;"> -0.1306109 </td>
+   <td style="text-align:right;"> -0.0306059 </td>
+   <td style="text-align:right;"> -1.0572770 </td>
+   <td style="text-align:right;"> 0.9785408 </td>
+   <td style="text-align:right;"> -0.0026322 </td>
+   <td style="text-align:right;"> 0.0003089 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> NADK </td>
-   <td style="text-align:right;"> 0.3736396 </td>
-   <td style="text-align:right;"> 0.2646946 </td>
-   <td style="text-align:right;"> 0.0662475 </td>
-   <td style="text-align:right;"> -0.2493852 </td>
-   <td style="text-align:right;"> 0.1639109 </td>
-   <td style="text-align:right;"> 0.0637775 </td>
-   <td style="text-align:right;"> -0.0000001 </td>
+   <td style="text-align:right;"> 0.9047053 </td>
+   <td style="text-align:right;"> 0.5465035 </td>
+   <td style="text-align:right;"> 0.5874302 </td>
+   <td style="text-align:right;"> -0.2504437 </td>
+   <td style="text-align:right;"> -0.0059736 </td>
+   <td style="text-align:right;"> -0.2493937 </td>
+   <td style="text-align:right;"> -0.0001804 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> GNB1 </td>
-   <td style="text-align:right;"> 0.7772654 </td>
-   <td style="text-align:right;"> 0.5788333 </td>
-   <td style="text-align:right;"> 0.8958150 </td>
-   <td style="text-align:right;"> -0.5519191 </td>
-   <td style="text-align:right;"> 0.9004079 </td>
-   <td style="text-align:right;"> -0.0616478 </td>
-   <td style="text-align:right;"> 0.0002935 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> SKI </td>
-   <td style="text-align:right;"> 0.7171411 </td>
-   <td style="text-align:right;"> 0.1954765 </td>
-   <td style="text-align:right;"> 0.4870630 </td>
-   <td style="text-align:right;"> -0.7409301 </td>
-   <td style="text-align:right;"> -0.1685434 </td>
-   <td style="text-align:right;"> -0.2098351 </td>
-   <td style="text-align:right;"> 0.0000133 </td>
+   <td style="text-align:right;"> 0.5492680 </td>
+   <td style="text-align:right;"> 0.7200203 </td>
+   <td style="text-align:right;"> 0.6733315 </td>
+   <td style="text-align:right;"> -0.5749704 </td>
+   <td style="text-align:right;"> 0.9643106 </td>
+   <td style="text-align:right;"> 0.2342349 </td>
+   <td style="text-align:right;"> 0.0001687 </td>
   </tr>
 </tbody>
 </table>
 
-```r
+``` r
 # Test 'Normal' - 'Colorectal.Cancer'
 contr <- makeContrasts(proper.groupNormal - proper.groupColorectal.Cancer, levels = colnames(coef(fit)))
 contr %>%
@@ -507,7 +507,7 @@ contr %>%
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">   </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">  </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> proper.groupNormal - proper.groupColorectal.Cancer </th>
   </tr>
  </thead>
@@ -543,7 +543,7 @@ contr %>%
 </tbody>
 </table>
 
-```r
+``` r
 fit2 <- contrasts.fit(fit, contrasts = contr)
 fit2 <- eBayes(fit2)
 out <- topTable(fit2, n = Inf, sort.by = "P")
@@ -555,7 +555,7 @@ head(out, 30) %>%
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
  <thead>
   <tr>
-   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">   </th>
+   <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">  </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> logFC </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> AveExpr </th>
    <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"> t </th>
@@ -567,273 +567,273 @@ head(out, 30) %>%
 <tbody>
   <tr>
    <td style="text-align:left;"> XIST </td>
-   <td style="text-align:right;"> 1.9827318 </td>
-   <td style="text-align:right;"> 0.6682736 </td>
-   <td style="text-align:right;"> 11.870704 </td>
-   <td style="text-align:right;"> 0.0e+00 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-   <td style="text-align:right;"> 37.251244 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> GUCA2A </td>
-   <td style="text-align:right;"> 1.6727802 </td>
-   <td style="text-align:right;"> 0.4946151 </td>
-   <td style="text-align:right;"> 10.607512 </td>
-   <td style="text-align:right;"> 0.0e+00 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-   <td style="text-align:right;"> 31.021088 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> MMP12 </td>
-   <td style="text-align:right;"> -2.0976536 </td>
-   <td style="text-align:right;"> 0.6819202 </td>
-   <td style="text-align:right;"> -8.045790 </td>
-   <td style="text-align:right;"> 0.0e+00 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-   <td style="text-align:right;"> 18.347651 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> PHGR1 </td>
-   <td style="text-align:right;"> 1.7128625 </td>
-   <td style="text-align:right;"> 0.6230695 </td>
-   <td style="text-align:right;"> 7.990444 </td>
-   <td style="text-align:right;"> 0.0e+00 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-   <td style="text-align:right;"> 18.079041 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> CKB </td>
-   <td style="text-align:right;"> 2.0697765 </td>
-   <td style="text-align:right;"> 1.1605407 </td>
-   <td style="text-align:right;"> 7.813288 </td>
-   <td style="text-align:right;"> 0.0e+00 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-   <td style="text-align:right;"> 17.222231 </td>
+   <td style="text-align:right;"> 2.1155304 </td>
+   <td style="text-align:right;"> 0.8383589 </td>
+   <td style="text-align:right;"> 13.661092 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:right;"> 54.324855 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> SLC26A2 </td>
-   <td style="text-align:right;"> 1.8826649 </td>
-   <td style="text-align:right;"> 0.9641306 </td>
-   <td style="text-align:right;"> 6.787927 </td>
-   <td style="text-align:right;"> 0.0e+00 </td>
-   <td style="text-align:right;"> 0.0000004 </td>
-   <td style="text-align:right;"> 12.377261 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> SLC26A3 </td>
-   <td style="text-align:right;"> 1.5570563 </td>
-   <td style="text-align:right;"> 0.6022747 </td>
-   <td style="text-align:right;"> 6.661061 </td>
-   <td style="text-align:right;"> 0.0e+00 </td>
-   <td style="text-align:right;"> 0.0000006 </td>
-   <td style="text-align:right;"> 11.794657 </td>
+   <td style="text-align:right;"> 2.2940612 </td>
+   <td style="text-align:right;"> 1.2102978 </td>
+   <td style="text-align:right;"> 11.450240 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:right;"> 40.637829 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> PIGR </td>
-   <td style="text-align:right;"> 1.7503636 </td>
-   <td style="text-align:right;"> 1.1102687 </td>
-   <td style="text-align:right;"> 6.460438 </td>
-   <td style="text-align:right;"> 0.0e+00 </td>
-   <td style="text-align:right;"> 0.0000015 </td>
-   <td style="text-align:right;"> 10.882534 </td>
+   <td style="text-align:right;"> 2.1206204 </td>
+   <td style="text-align:right;"> 1.3048963 </td>
+   <td style="text-align:right;"> 9.653033 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:right;"> 29.658194 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> HIVEP3 </td>
-   <td style="text-align:right;"> -1.4376532 </td>
-   <td style="text-align:right;"> 0.7340200 </td>
-   <td style="text-align:right;"> -5.994125 </td>
-   <td style="text-align:right;"> 0.0e+00 </td>
-   <td style="text-align:right;"> 0.0000121 </td>
-   <td style="text-align:right;"> 8.810834 </td>
+   <td style="text-align:left;"> SLC26A3 </td>
+   <td style="text-align:right;"> 1.6660558 </td>
+   <td style="text-align:right;"> 0.7474037 </td>
+   <td style="text-align:right;"> 9.247113 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:right;"> 27.235093 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> NR3C2 </td>
-   <td style="text-align:right;"> 1.6376297 </td>
-   <td style="text-align:right;"> 1.0291416 </td>
-   <td style="text-align:right;"> 5.792722 </td>
-   <td style="text-align:right;"> 1.0e-07 </td>
-   <td style="text-align:right;"> 0.0000276 </td>
-   <td style="text-align:right;"> 7.939339 </td>
+   <td style="text-align:left;"> CCND3 </td>
+   <td style="text-align:right;"> 2.1487014 </td>
+   <td style="text-align:right;"> 1.1948400 </td>
+   <td style="text-align:right;"> 8.593783 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:right;"> 23.403324 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> UTY </td>
-   <td style="text-align:right;"> -1.3631601 </td>
-   <td style="text-align:right;"> 0.7485786 </td>
-   <td style="text-align:right;"> -5.484691 </td>
-   <td style="text-align:right;"> 3.0e-07 </td>
-   <td style="text-align:right;"> 0.0000928 </td>
-   <td style="text-align:right;"> 6.636837 </td>
+   <td style="text-align:left;"> GUCA2A </td>
+   <td style="text-align:right;"> 1.3966234 </td>
+   <td style="text-align:right;"> 0.5377794 </td>
+   <td style="text-align:right;"> 8.235661 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:right;"> 21.345829 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> ZG16 </td>
-   <td style="text-align:right;"> 0.9778633 </td>
-   <td style="text-align:right;"> 0.3534387 </td>
-   <td style="text-align:right;"> 5.484091 </td>
-   <td style="text-align:right;"> 3.0e-07 </td>
-   <td style="text-align:right;"> 0.0000928 </td>
-   <td style="text-align:right;"> 6.634339 </td>
+   <td style="text-align:left;"> PHGR1 </td>
+   <td style="text-align:right;"> 1.5875349 </td>
+   <td style="text-align:right;"> 0.7790538 </td>
+   <td style="text-align:right;"> 8.094118 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:right;"> 20.542213 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> MUC13 </td>
-   <td style="text-align:right;"> 1.2139028 </td>
-   <td style="text-align:right;"> 0.5911549 </td>
-   <td style="text-align:right;"> 5.163231 </td>
-   <td style="text-align:right;"> 1.1e-06 </td>
-   <td style="text-align:right;"> 0.0003496 </td>
-   <td style="text-align:right;"> 5.320392 </td>
+   <td style="text-align:left;"> MMP12 </td>
+   <td style="text-align:right;"> -1.5478178 </td>
+   <td style="text-align:right;"> 0.4498059 </td>
+   <td style="text-align:right;"> -8.042518 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:right;"> 20.250687 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> PDE4D </td>
-   <td style="text-align:right;"> 1.6637089 </td>
-   <td style="text-align:right;"> 1.5119900 </td>
-   <td style="text-align:right;"> 5.120095 </td>
-   <td style="text-align:right;"> 1.3e-06 </td>
-   <td style="text-align:right;"> 0.0003901 </td>
-   <td style="text-align:right;"> 5.147303 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> TNFAIP2 </td>
-   <td style="text-align:right;"> -1.4572991 </td>
-   <td style="text-align:right;"> 1.0361014 </td>
-   <td style="text-align:right;"> -5.104445 </td>
-   <td style="text-align:right;"> 1.4e-06 </td>
-   <td style="text-align:right;"> 0.0003901 </td>
-   <td style="text-align:right;"> 5.084722 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> HSP90AA1 </td>
-   <td style="text-align:right;"> -1.3268169 </td>
-   <td style="text-align:right;"> 0.7386294 </td>
-   <td style="text-align:right;"> -5.041036 </td>
-   <td style="text-align:right;"> 1.8e-06 </td>
-   <td style="text-align:right;"> 0.0004794 </td>
-   <td style="text-align:right;"> 4.832355 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> MACF1 </td>
-   <td style="text-align:right;"> -1.2728166 </td>
-   <td style="text-align:right;"> 2.5152218 </td>
-   <td style="text-align:right;"> -5.024663 </td>
-   <td style="text-align:right;"> 1.9e-06 </td>
-   <td style="text-align:right;"> 0.0004838 </td>
-   <td style="text-align:right;"> 4.767506 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> SATB2 </td>
-   <td style="text-align:right;"> 1.2335513 </td>
-   <td style="text-align:right;"> 0.6184811 </td>
-   <td style="text-align:right;"> 4.931185 </td>
-   <td style="text-align:right;"> 2.9e-06 </td>
-   <td style="text-align:right;"> 0.0006781 </td>
-   <td style="text-align:right;"> 4.399765 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> RNF213 </td>
-   <td style="text-align:right;"> -1.4619869 </td>
-   <td style="text-align:right;"> 1.4301922 </td>
-   <td style="text-align:right;"> -4.899682 </td>
-   <td style="text-align:right;"> 3.3e-06 </td>
-   <td style="text-align:right;"> 0.0007080 </td>
-   <td style="text-align:right;"> 4.276803 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> PARP14 </td>
-   <td style="text-align:right;"> -1.5705769 </td>
-   <td style="text-align:right;"> 1.4065849 </td>
-   <td style="text-align:right;"> -4.895788 </td>
-   <td style="text-align:right;"> 3.3e-06 </td>
-   <td style="text-align:right;"> 0.0007080 </td>
-   <td style="text-align:right;"> 4.261639 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> IL7R </td>
-   <td style="text-align:right;"> -1.0858376 </td>
-   <td style="text-align:right;"> 0.3242462 </td>
-   <td style="text-align:right;"> -4.865053 </td>
-   <td style="text-align:right;"> 3.8e-06 </td>
-   <td style="text-align:right;"> 0.0007591 </td>
-   <td style="text-align:right;"> 4.142219 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> FOXP1 </td>
-   <td style="text-align:right;"> 1.5111842 </td>
-   <td style="text-align:right;"> 1.6488493 </td>
-   <td style="text-align:right;"> 4.856249 </td>
-   <td style="text-align:right;"> 3.9e-06 </td>
-   <td style="text-align:right;"> 0.0007591 </td>
-   <td style="text-align:right;"> 4.108095 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> AMN </td>
-   <td style="text-align:right;"> 0.8531736 </td>
-   <td style="text-align:right;"> 0.2741440 </td>
-   <td style="text-align:right;"> 4.731821 </td>
-   <td style="text-align:right;"> 6.6e-06 </td>
-   <td style="text-align:right;"> 0.0011476 </td>
-   <td style="text-align:right;"> 3.630123 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> EPCAM </td>
-   <td style="text-align:right;"> 1.1109426 </td>
-   <td style="text-align:right;"> 0.5789830 </td>
-   <td style="text-align:right;"> 4.715942 </td>
-   <td style="text-align:right;"> 7.0e-06 </td>
-   <td style="text-align:right;"> 0.0011476 </td>
-   <td style="text-align:right;"> 3.569703 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> PLA2G7 </td>
-   <td style="text-align:right;"> -1.1812964 </td>
-   <td style="text-align:right;"> 0.5448965 </td>
-   <td style="text-align:right;"> -4.705319 </td>
-   <td style="text-align:right;"> 7.3e-06 </td>
-   <td style="text-align:right;"> 0.0011476 </td>
-   <td style="text-align:right;"> 3.529356 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> ZBTB20 </td>
-   <td style="text-align:right;"> 1.5396424 </td>
-   <td style="text-align:right;"> 1.7559376 </td>
-   <td style="text-align:right;"> 4.700057 </td>
-   <td style="text-align:right;"> 7.5e-06 </td>
-   <td style="text-align:right;"> 0.0011476 </td>
-   <td style="text-align:right;"> 3.509395 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> RAPGEF1 </td>
-   <td style="text-align:right;"> -1.5180128 </td>
-   <td style="text-align:right;"> 1.5356339 </td>
-   <td style="text-align:right;"> -4.698717 </td>
-   <td style="text-align:right;"> 7.5e-06 </td>
-   <td style="text-align:right;"> 0.0011476 </td>
-   <td style="text-align:right;"> 3.504313 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> SAT1 </td>
-   <td style="text-align:right;"> -1.8924435 </td>
-   <td style="text-align:right;"> 2.0416164 </td>
-   <td style="text-align:right;"> -4.696409 </td>
-   <td style="text-align:right;"> 7.6e-06 </td>
-   <td style="text-align:right;"> 0.0011476 </td>
-   <td style="text-align:right;"> 3.495562 </td>
+   <td style="text-align:left;"> CKB </td>
+   <td style="text-align:right;"> 1.8461063 </td>
+   <td style="text-align:right;"> 1.2010000 </td>
+   <td style="text-align:right;"> 7.809511 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:right;"> 18.944244 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> TYMP </td>
-   <td style="text-align:right;"> -1.3860201 </td>
-   <td style="text-align:right;"> 0.9203430 </td>
-   <td style="text-align:right;"> -4.688993 </td>
-   <td style="text-align:right;"> 7.8e-06 </td>
-   <td style="text-align:right;"> 0.0011476 </td>
-   <td style="text-align:right;"> 3.467469 </td>
+   <td style="text-align:right;"> -1.5086803 </td>
+   <td style="text-align:right;"> 0.5986687 </td>
+   <td style="text-align:right;"> -7.449051 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:right;"> 16.957641 </td>
   </tr>
   <tr>
-   <td style="text-align:left;"> SCNN1B </td>
-   <td style="text-align:right;"> 0.9079763 </td>
-   <td style="text-align:right;"> 0.3004799 </td>
-   <td style="text-align:right;"> 4.668610 </td>
-   <td style="text-align:right;"> 8.5e-06 </td>
-   <td style="text-align:right;"> 0.0011916 </td>
-   <td style="text-align:right;"> 3.390400 </td>
+   <td style="text-align:left;"> PDE3A </td>
+   <td style="text-align:right;"> 1.2645878 </td>
+   <td style="text-align:right;"> 0.5870357 </td>
+   <td style="text-align:right;"> 7.227138 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 0.00e+00 </td>
+   <td style="text-align:right;"> 15.757169 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> MUC12 </td>
+   <td style="text-align:right;"> 1.2465258 </td>
+   <td style="text-align:right;"> 0.7228761 </td>
+   <td style="text-align:right;"> 6.611899 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 2.00e-07 </td>
+   <td style="text-align:right;"> 12.529424 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RNF213 </td>
+   <td style="text-align:right;"> -1.5582052 </td>
+   <td style="text-align:right;"> 1.5052670 </td>
+   <td style="text-align:right;"> -6.586467 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 2.00e-07 </td>
+   <td style="text-align:right;"> 12.399425 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> MBNL1 </td>
+   <td style="text-align:right;"> 1.6531241 </td>
+   <td style="text-align:right;"> 2.4693744 </td>
+   <td style="text-align:right;"> 6.362969 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 5.00e-07 </td>
+   <td style="text-align:right;"> 11.269562 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> NXPE1 </td>
+   <td style="text-align:right;"> 1.3190223 </td>
+   <td style="text-align:right;"> 0.7592336 </td>
+   <td style="text-align:right;"> 6.322599 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 6.00e-07 </td>
+   <td style="text-align:right;"> 11.067939 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> FKBP5 </td>
+   <td style="text-align:right;"> 1.7002914 </td>
+   <td style="text-align:right;"> 1.3458515 </td>
+   <td style="text-align:right;"> 6.307107 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 6.00e-07 </td>
+   <td style="text-align:right;"> 10.990775 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ZG16 </td>
+   <td style="text-align:right;"> 0.9881296 </td>
+   <td style="text-align:right;"> 0.4012025 </td>
+   <td style="text-align:right;"> 6.191486 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 1.00e-06 </td>
+   <td style="text-align:right;"> 10.418473 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> PARP14 </td>
+   <td style="text-align:right;"> -1.4952975 </td>
+   <td style="text-align:right;"> 1.0742512 </td>
+   <td style="text-align:right;"> -6.145782 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 1.20e-06 </td>
+   <td style="text-align:right;"> 10.194040 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> MT-CO2 </td>
+   <td style="text-align:right;"> -1.1821944 </td>
+   <td style="text-align:right;"> 2.3699957 </td>
+   <td style="text-align:right;"> -6.134752 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 1.20e-06 </td>
+   <td style="text-align:right;"> 10.140028 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> UTY </td>
+   <td style="text-align:right;"> -1.1717486 </td>
+   <td style="text-align:right;"> 0.6887650 </td>
+   <td style="text-align:right;"> -6.006045 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 2.20e-06 </td>
+   <td style="text-align:right;"> 9.514278 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> MAML2 </td>
+   <td style="text-align:right;"> 1.5838731 </td>
+   <td style="text-align:right;"> 1.5289834 </td>
+   <td style="text-align:right;"> 5.912160 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 3.30e-06 </td>
+   <td style="text-align:right;"> 9.063133 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> SON </td>
+   <td style="text-align:right;"> -1.4616397 </td>
+   <td style="text-align:right;"> 1.2857812 </td>
+   <td style="text-align:right;"> -5.900829 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 3.30e-06 </td>
+   <td style="text-align:right;"> 9.008987 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CLCA4 </td>
+   <td style="text-align:right;"> 1.0303576 </td>
+   <td style="text-align:right;"> 0.4594471 </td>
+   <td style="text-align:right;"> 5.763777 </td>
+   <td style="text-align:right;"> 0e+00 </td>
+   <td style="text-align:right;"> 6.30e-06 </td>
+   <td style="text-align:right;"> 8.359471 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> SAMD9L </td>
+   <td style="text-align:right;"> -1.0383851 </td>
+   <td style="text-align:right;"> 0.5141782 </td>
+   <td style="text-align:right;"> -5.583241 </td>
+   <td style="text-align:right;"> 1e-07 </td>
+   <td style="text-align:right;"> 1.46e-05 </td>
+   <td style="text-align:right;"> 7.519295 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> TNFAIP2 </td>
+   <td style="text-align:right;"> -1.1456072 </td>
+   <td style="text-align:right;"> 0.5712894 </td>
+   <td style="text-align:right;"> -5.560157 </td>
+   <td style="text-align:right;"> 1e-07 </td>
+   <td style="text-align:right;"> 1.56e-05 </td>
+   <td style="text-align:right;"> 7.413159 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> CCDC88A </td>
+   <td style="text-align:right;"> -1.2538645 </td>
+   <td style="text-align:right;"> 0.8548085 </td>
+   <td style="text-align:right;"> -5.553025 </td>
+   <td style="text-align:right;"> 1e-07 </td>
+   <td style="text-align:right;"> 1.56e-05 </td>
+   <td style="text-align:right;"> 7.380426 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> PLA2G7 </td>
+   <td style="text-align:right;"> -0.9520283 </td>
+   <td style="text-align:right;"> 0.3656429 </td>
+   <td style="text-align:right;"> -5.536909 </td>
+   <td style="text-align:right;"> 1e-07 </td>
+   <td style="text-align:right;"> 1.62e-05 </td>
+   <td style="text-align:right;"> 7.306572 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ARHGAP15 </td>
+   <td style="text-align:right;"> 1.4385488 </td>
+   <td style="text-align:right;"> 2.0487528 </td>
+   <td style="text-align:right;"> 5.406200 </td>
+   <td style="text-align:right;"> 2e-07 </td>
+   <td style="text-align:right;"> 2.92e-05 </td>
+   <td style="text-align:right;"> 6.712990 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> LINC00996 </td>
+   <td style="text-align:right;"> -1.0889424 </td>
+   <td style="text-align:right;"> 0.5261653 </td>
+   <td style="text-align:right;"> -5.356665 </td>
+   <td style="text-align:right;"> 3e-07 </td>
+   <td style="text-align:right;"> 3.56e-05 </td>
+   <td style="text-align:right;"> 6.490603 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ATP1A1 </td>
+   <td style="text-align:right;"> 1.1449796 </td>
+   <td style="text-align:right;"> 0.7971706 </td>
+   <td style="text-align:right;"> 5.325406 </td>
+   <td style="text-align:right;"> 3e-07 </td>
+   <td style="text-align:right;"> 3.99e-05 </td>
+   <td style="text-align:right;"> 6.350999 </td>
   </tr>
 </tbody>
 </table>
@@ -849,7 +849,7 @@ head(out, 30) %>%
 
 ## Save files
 
-```r
+``` r
 write.csv(GenTable(GOdata, Fisher = resultFisher), file = "cluster10_GOdata.csv")
 write.csv(out, file = "cluster10_Normal-Colorectal.Cancer_topTable.csv")
 ```
@@ -870,89 +870,86 @@ A tutorial on using limma for bulk RNASeq is available [here](https://ucdavis-bi
 
 #### Download Rmd document
 
-```r
+``` r
 download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2023-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/07-doublet_detection.Rmd", "07-doublet_detection.Rmd")
 ```
 
 #### Session Information
 
-```r
+``` r
 sessionInfo()
 ```
 
-<div class='r_output'> R version 4.3.2 (2023-10-31 ucrt)
- Platform: x86_64-w64-mingw32/x64 (64-bit)
- Running under: Windows 10 x64 (build 19045)
- 
- Matrix products: default
- 
- 
- locale:
- [1] LC_COLLATE=English_United States.utf8 
- [2] LC_CTYPE=English_United States.utf8   
- [3] LC_MONETARY=English_United States.utf8
- [4] LC_NUMERIC=C                          
- [5] LC_TIME=English_United States.utf8    
- 
- time zone: America/Los_Angeles
- tzcode source: internal
- 
- attached base packages:
- [1] stats4    stats     graphics  grDevices utils     datasets  methods  
- [8] base     
- 
- other attached packages:
-  [1] org.Hs.eg.db_3.17.0  kableExtra_1.3.4     dplyr_1.1.4         
-  [4] topGO_2.52.0         SparseM_1.81         GO.db_3.17.0        
-  [7] AnnotationDbi_1.62.2 IRanges_2.34.1       S4Vectors_0.38.2    
- [10] Biobase_2.60.0       graph_1.78.0         BiocGenerics_0.46.0 
- [13] limma_3.56.2         Seurat_5.0.1         SeuratObject_5.0.1  
- [16] sp_2.1-2            
- 
- loaded via a namespace (and not attached):
-   [1] RColorBrewer_1.1-3      rstudioapi_0.15.0       jsonlite_1.8.8         
-   [4] magrittr_2.0.3          spatstat.utils_3.0-4    rmarkdown_2.25         
-   [7] zlibbioc_1.46.0         vctrs_0.6.5             ROCR_1.0-11            
-  [10] memoise_2.0.1           spatstat.explore_3.2-5  RCurl_1.98-1.13        
-  [13] webshot_0.5.5           htmltools_0.5.7         sass_0.4.8             
-  [16] sctransform_0.4.1       parallelly_1.36.0       KernSmooth_2.23-22     
-  [19] bslib_0.6.1             htmlwidgets_1.6.4       ica_1.0-3              
-  [22] plyr_1.8.9              plotly_4.10.3           zoo_1.8-12             
-  [25] cachem_1.0.8            igraph_1.5.1            mime_0.12              
-  [28] lifecycle_1.0.4         pkgconfig_2.0.3         Matrix_1.6-4           
-  [31] R6_2.5.1                fastmap_1.1.1           GenomeInfoDbData_1.2.10
-  [34] fitdistrplus_1.1-11     future_1.33.0           shiny_1.8.0            
-  [37] digest_0.6.33           colorspace_2.1-0        patchwork_1.1.3        
-  [40] tensor_1.5              RSpectra_0.16-1         irlba_2.3.5.1          
-  [43] RSQLite_2.3.4           progressr_0.14.0        fansi_1.0.6            
-  [46] spatstat.sparse_3.0-3   httr_1.4.7              polyclip_1.10-6        
-  [49] abind_1.4-5             compiler_4.3.2          bit64_4.0.5            
-  [52] DBI_1.1.3               fastDummies_1.7.3       highr_0.10             
-  [55] MASS_7.3-60             tools_4.3.2             lmtest_0.9-40          
-  [58] httpuv_1.6.13           future.apply_1.11.0     goftest_1.2-3          
-  [61] glue_1.6.2              nlme_3.1-164            promises_1.2.1         
-  [64] grid_4.3.2              Rtsne_0.17              cluster_2.1.6          
-  [67] reshape2_1.4.4          generics_0.1.3          gtable_0.3.4           
-  [70] spatstat.data_3.0-3     tidyr_1.3.0             data.table_1.14.10     
-  [73] xml2_1.3.6              XVector_0.40.0          utf8_1.2.4             
-  [76] spatstat.geom_3.2-7     RcppAnnoy_0.0.21        ggrepel_0.9.4          
-  [79] RANN_2.6.1              pillar_1.9.0            stringr_1.5.1          
-  [82] spam_2.10-0             RcppHNSW_0.5.0          later_1.3.2            
-  [85] splines_4.3.2           lattice_0.22-5          bit_4.0.5              
-  [88] survival_3.5-7          deldir_2.0-2            tidyselect_1.2.0       
-  [91] Biostrings_2.68.1       miniUI_0.1.1.1          pbapply_1.7-2          
-  [94] knitr_1.45              gridExtra_2.3           svglite_2.1.3          
-  [97] scattermore_1.2         xfun_0.41               matrixStats_1.1.0      
- [100] stringi_1.8.2           lazyeval_0.2.2          yaml_2.3.7             
- [103] evaluate_0.23           codetools_0.2-19        tibble_3.2.1           
- [106] cli_3.6.1               uwot_0.1.16             systemfonts_1.0.5      
- [109] xtable_1.8-4            reticulate_1.34.0       munsell_0.5.0          
- [112] jquerylib_0.1.4         GenomeInfoDb_1.36.4     Rcpp_1.0.11            
- [115] globals_0.16.2          spatstat.random_3.2-2   png_0.1-8              
- [118] parallel_4.3.2          ellipsis_0.3.2          blob_1.2.4             
- [121] ggplot2_3.4.4           dotCall64_1.1-1         bitops_1.0-7           
- [124] listenv_0.9.0           viridisLite_0.4.2       scales_1.3.0           
- [127] ggridges_0.5.4          crayon_1.5.2            leiden_0.4.3.1         
- [130] purrr_1.0.2             rlang_1.1.2             rvest_1.0.3            
- [133] KEGGREST_1.40.1         cowplot_1.1.1
-</div>
+```
+## R version 4.4.0 (2024-04-24)
+## Platform: aarch64-apple-darwin20
+## Running under: macOS Ventura 13.5.2
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## time zone: America/Los_Angeles
+## tzcode source: internal
+## 
+## attached base packages:
+## [1] stats4    stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
+## 
+## other attached packages:
+##  [1] org.Hs.eg.db_3.19.1  kableExtra_1.4.0     dplyr_1.1.4         
+##  [4] topGO_2.56.0         SparseM_1.82         GO.db_3.19.1        
+##  [7] AnnotationDbi_1.66.0 IRanges_2.38.0       S4Vectors_0.42.0    
+## [10] Biobase_2.64.0       graph_1.82.0         BiocGenerics_0.50.0 
+## [13] limma_3.60.2         Seurat_5.1.0         SeuratObject_5.0.2  
+## [16] sp_2.1-4            
+## 
+## loaded via a namespace (and not attached):
+##   [1] RColorBrewer_1.1-3      rstudioapi_0.16.0       jsonlite_1.8.8         
+##   [4] magrittr_2.0.3          spatstat.utils_3.0-4    rmarkdown_2.27         
+##   [7] zlibbioc_1.50.0         vctrs_0.6.5             ROCR_1.0-11            
+##  [10] memoise_2.0.1           spatstat.explore_3.2-7  htmltools_0.5.8.1      
+##  [13] sass_0.4.9              sctransform_0.4.1       parallelly_1.37.1      
+##  [16] KernSmooth_2.23-22      bslib_0.7.0             htmlwidgets_1.6.4      
+##  [19] ica_1.0-3               plyr_1.8.9              plotly_4.10.4          
+##  [22] zoo_1.8-12              cachem_1.1.0            igraph_2.0.3           
+##  [25] mime_0.12               lifecycle_1.0.4         pkgconfig_2.0.3        
+##  [28] Matrix_1.7-0            R6_2.5.1                fastmap_1.2.0          
+##  [31] GenomeInfoDbData_1.2.12 fitdistrplus_1.1-11     future_1.33.2          
+##  [34] shiny_1.8.1.1           digest_0.6.35           colorspace_2.1-0       
+##  [37] patchwork_1.2.0         tensor_1.5              RSpectra_0.16-1        
+##  [40] irlba_2.3.5.1           RSQLite_2.3.7           progressr_0.14.0       
+##  [43] fansi_1.0.6             spatstat.sparse_3.0-3   httr_1.4.7             
+##  [46] polyclip_1.10-6         abind_1.4-5             compiler_4.4.0         
+##  [49] bit64_4.0.5             DBI_1.2.3               fastDummies_1.7.3      
+##  [52] highr_0.11              MASS_7.3-60.2           tools_4.4.0            
+##  [55] lmtest_0.9-40           httpuv_1.6.15           future.apply_1.11.2    
+##  [58] goftest_1.2-3           glue_1.7.0              nlme_3.1-164           
+##  [61] promises_1.3.0          grid_4.4.0              Rtsne_0.17             
+##  [64] cluster_2.1.6           reshape2_1.4.4          generics_0.1.3         
+##  [67] gtable_0.3.5            spatstat.data_3.0-4     tidyr_1.3.1            
+##  [70] data.table_1.15.4       xml2_1.3.6              XVector_0.44.0         
+##  [73] utf8_1.2.4              spatstat.geom_3.2-9     RcppAnnoy_0.0.22       
+##  [76] ggrepel_0.9.5           RANN_2.6.1              pillar_1.9.0           
+##  [79] stringr_1.5.1           spam_2.10-0             RcppHNSW_0.6.0         
+##  [82] later_1.3.2             splines_4.4.0           lattice_0.22-6         
+##  [85] bit_4.0.5               survival_3.5-8          deldir_2.0-4           
+##  [88] tidyselect_1.2.1        Biostrings_2.72.0       miniUI_0.1.1.1         
+##  [91] pbapply_1.7-2           knitr_1.47              gridExtra_2.3          
+##  [94] svglite_2.1.3           scattermore_1.2         xfun_0.44              
+##  [97] statmod_1.5.0           matrixStats_1.3.0       UCSC.utils_1.0.0       
+## [100] stringi_1.8.4           lazyeval_0.2.2          yaml_2.3.8             
+## [103] evaluate_0.23           codetools_0.2-20        tibble_3.2.1           
+## [106] cli_3.6.2               uwot_0.2.2              systemfonts_1.1.0      
+## [109] xtable_1.8-4            reticulate_1.37.0       munsell_0.5.1          
+## [112] jquerylib_0.1.4         GenomeInfoDb_1.40.1     Rcpp_1.0.12            
+## [115] globals_0.16.3          spatstat.random_3.2-3   png_0.1-8              
+## [118] parallel_4.4.0          blob_1.2.4              ggplot2_3.5.1          
+## [121] dotCall64_1.1-1         listenv_0.9.1           viridisLite_0.4.2      
+## [124] scales_1.3.0            ggridges_0.5.6          crayon_1.5.2           
+## [127] leiden_0.4.3.1          purrr_1.0.2             rlang_1.1.3            
+## [130] KEGGREST_1.44.0         cowplot_1.1.3
+```
