@@ -235,7 +235,7 @@ sequencing.metrics %>%
 This roughly replicates the table that appears in the Cellranger web summary file.
 
 ## Create Seurat object
-We will be using [Seurat](http://satijalab.org/seurat/) (currently version 4) as the basis of our single cell (or nucleus) RNA-Seq analysis. Seurat is a popular R package that is designed for QC, analysis, and exploration of single cell data, which aims to enable users to identify and interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse types of single cell data.
+We will be using [Seurat](http://satijalab.org/seurat/) as the basis of our single cell (or nucleus) RNA-Seq analysis. Seurat is a popular R package that is designed for QC, analysis, and exploration of single cell data, which aims to enable users to identify and interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse types of single cell data.
 In addition to the standard Seurat workflow, this documentation makes use of some custom code, and brings in functions from other packages. For additional information on Seurat standard workflows, see the authors' [tutorials](https://satijalab.org/seurat/vignettes.html).
 
 #### Read in expression matrix
