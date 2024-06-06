@@ -86,7 +86,7 @@ __Full-length__ capture tries to achieve a uniform coverage of each transcript (
 	* Expression analysis
 	* Splicing information
 	* The more information desired beyond expression, the higher the reads needed per cell (~50K reads/cell to 10M reads/cell)
-	* Long read sequencing protocols available for both PacBio and ONT platforms
+	* **Long read sequencing protocols available: PacBio [Kinnex single-cell RNA kit](https://www.pacb.com/products-and-services/applications/rna-sequencing/single-cell-rna-sequencing/) and ONT platforms [Ligation sequencing kit](https://nanoporetech.com/applications/investigations/single-cell-sequencing)**
 
 
 For smaller experiments < 5000 cells, the R packages [`SingleCellExperiment`](http://bioconductor.org/packages/SingleCellExperiment), [`scater`](http://bioconductor.org/packages/scater/), [`SC3`](http://bioconductor.org/packages/release/bioc/html/SC3.html) are good choices. For larger experiments (> 5000 cells), the R package [`Seurat`](http://satijalab.org/seurat/) offers a complete solution.
