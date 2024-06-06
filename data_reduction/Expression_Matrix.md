@@ -86,6 +86,7 @@ __Full-length__ capture tries to achieve a uniform coverage of each transcript (
 	* Expression analysis
 	* Splicing information
 	* The more information desired beyond expression, the higher the reads needed per cell (~50K reads/cell to 10M reads/cell)
+	* Long read sequencing protocols available for both PacBio and ONT platforms
 
 
 For smaller experiments < 5000 cells, the R packages [`SingleCellExperiment`](http://bioconductor.org/packages/SingleCellExperiment), [`scater`](http://bioconductor.org/packages/scater/), [`SC3`](http://bioconductor.org/packages/release/bioc/html/SC3.html) are good choices. For larger experiments (> 5000 cells), the R package [`Seurat`](http://satijalab.org/seurat/) offers a complete solution.
@@ -103,7 +104,7 @@ A nice starting point to learn about single-cell software can be found [here](ht
 <p class="caption">Elements to a 10x read (V3)</p>
 </div>
 
-cellranger  version 7 has many sub-applications
+cellranger  version 8 has many sub-applications
 
 
 1. cellranger mkfastq
@@ -343,7 +344,7 @@ Cell Ranger does produce a more readable HTML report with the same statistics an
 2. Add Cell Ranger to your path, and review cellranger's sub-applications and help docs
 
     ```bash
-		export PATH=/share/workshop/scRNA_workshop/Software/cellranger-7.2.0/bin:$PATH
+		export PATH=/share/workshop/scRNA_workshop/Software/cellranger-8.0.1/bin:$PATH
 		cellranger --help
 		cellranger count --help
     ```
