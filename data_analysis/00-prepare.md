@@ -28,7 +28,7 @@ The following package installation commands should be run individually, **in the
 
 r-universe is a new umbrella project by __rOpenSci__. It uses cross-compiling for arm64 binaries.
 
-<span style="color:blue">For those who are using Macs that have M1/M2/M3 chips, if you have trouble installing the packages and get error that is similar to "ld: warning: ignoring file '/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libR.dylib': found architecture 'arm64', required architecture 'x86_64'", please go to https://bioc.r-universe.dev/ and search for the packages and use the installation instructions provided there.</span>
+<span style="color:blue">For those who are using Macs that have M1/M2/M3 chips, if you have trouble installing the packages and get error that is similar to "ld: warning: ignoring file '/Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libR.dylib': found architecture 'arm64', required architecture 'x86_64'", please go to https://r-universe.dev/search/ and search for the packages and use the installation instructions provided there.</span>
 
 #### BiocManager
 BiocManager is an interface for the bioinformatics-specific R package repository. We will be using BiocManager to install other packages when possible, rather than the base R function install.packages.
