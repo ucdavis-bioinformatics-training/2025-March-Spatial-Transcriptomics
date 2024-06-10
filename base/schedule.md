@@ -8,9 +8,9 @@ All posted times are **Pacific** time zone. At least one break will be provided 
 |**8:50 am**  | Zoom session starts |
 |**9:00 am**  | Introductions |
 |**9:30 am**  | Introduction to the command line |
-|**11:00 pm**  | Project set-up |
-|**12:00 am**  | Lunch |
-|**1:00 am**  | Lexogen Sponsor Talk |
+|**11:00 am**  | Project set-up |
+|**12:00 pm**  | Lunch |
+|**1:30 pm**  | Lexogen Sponsor Talk |
 |**2:00 pm**  | Creating an expression matrix |
 |**5:00 pm** | Zoom session ends |
 
