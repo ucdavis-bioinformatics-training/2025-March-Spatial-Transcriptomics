@@ -242,7 +242,7 @@ When a command is typed on the command line, the operating system searches for a
 
 The path can be modified in a number of ways.
 
-    export PATH=/share/workshop/scRNA_workshop/Software/cellranger-7.1.0/bin:$PATH
+    export PATH=/share/workshop/scRNA_workshop/Software/cellranger-8.0.1/bin:$PATH
     echo $PATH
 
 The module command also modifies the path, adding directories containing the executables associated with user-installed software to the path temporarily.
