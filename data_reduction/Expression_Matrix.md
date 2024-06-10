@@ -133,7 +133,7 @@ Let's launch the cellranger job, and then take a moment to walk through what the
 
 ## Launch cellranger
 
-1. Log into tadpole with the username/password
+1. Log into tadpole with your username/password, and navigate to your project directory.
 
     ```bash
     cd /share/workshop/scRNA_workshop/$USER/scrnaseq_example
