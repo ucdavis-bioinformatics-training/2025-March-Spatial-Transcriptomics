@@ -252,7 +252,7 @@ The module command also modifies the path, adding directories containing the exe
 
 ### Downlaoding files: scp
 
-The s in scp stands for "secure." For this section, we you will need to work on your local computer instead of tadpole. Open a fresh terminal.
+The s in scp stands for "secure." For this section, we you will need to work **on your local computer** instead of tadpole. Open a fresh terminal.
 
     scp username@tadpole.genomecenter.ucdavis.edu:/share/workshop/scRNA_workshop/Scripts/template.sh .
 
