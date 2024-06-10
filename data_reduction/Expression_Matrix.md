@@ -129,6 +129,49 @@ cellranger  version 8 has many sub-applications
 
 In this workshop, we will only be using the count sub-application.
 
+Let's launch the cellranger job, and then take a moment to walk through what the software does as we look at the results.
+
+## Launch cellranger
+
+1. Log into tadpole with the username/password
+
+    ```bash
+    cd /share/workshop/scRNA_workshop/$USER/scrnaseq_example
+    ```
+
+2. Add Cell Ranger to your path, and review cellranger's sub-applications and help docs
+
+    ```bash
+		export PATH=/share/workshop/scRNA_workshop/Software/cellranger-8.0.1/bin:$PATH
+		cellranger --help
+		cellranger count --help
+    ```
+
+3. Review the [cellranger-counts.sh](../software_scripts/scripts/cellranger-counts.sh) script used to map reads in the fastq files.
+
+4. Copy the SLURM script to your **scrnaseq_example** folder and do a test run.
+
+    ```bash
+    mkdir -p /share/workshop/scRNA_workshop/$USER/scrnaseq_example/scripts/slurmout
+    cd /share/workshop/scRNA_workshop/$USER/scrnaseq_example/scripts
+    cp /share/workshop/scRNA_workshop/Software/cellranger-counts.slurm .
+    ```
+
+    update the email address in the script if you like.
+
+    ```bash
+    sbatch cellranger-counts.slurm
+    ```
+
+
+5. Link completed result folders to your scrnaseq_example folders.
+
+    ```bash
+    cd /share/workshop/scRNA_workshop/$USER/scrnaseq_example
+    ln -s /share/workshop/scRNA_workshop/cellranger_outs/A001-C-007-subset ./A001-C-007-copy
+    ```
+
+
 ### Cell barcode and UMI filtering
 
 * Cell barcodes
@@ -175,7 +218,7 @@ In certain cases, such as when the input to the assay consists of nuclei, there 
 	* These UMI counts form an unfiltered gene-barcode matrix.
 
 
-### Filtering cells (the 10x way)
+### Filtering cells
 
 Cell Ranger 3.0 introduced and improved cell-calling algorithm that is better able to identify populations of low RNA content cells, especially when low RNA content cells are mixed into a population of high RNA content cells. For example, tumor samples often contain large tumor cells mixed with smaller tumor infiltrating lymphocytes (TIL) and researchers may be particularly interested in the TIL population. The new algorithm is based on the EmptyDrops method (Lun et al., 2019).
 
@@ -334,44 +377,6 @@ Cell Ranger does produce a more readable HTML report with the same statistics an
 [Cell Ranger V8 web summary](fullset_web_summary.html)
 
 ## Exercises
-
-1. Log into tadpole with the username/password
-
-    ```bash
-    cd /share/workshop/scRNA_workshop/$USER/scrnaseq_example
-    ```
-
-2. Add Cell Ranger to your path, and review cellranger's sub-applications and help docs
-
-    ```bash
-		export PATH=/share/workshop/scRNA_workshop/Software/cellranger-8.0.1/bin:$PATH
-		cellranger --help
-		cellranger count --help
-    ```
-
-3. Review the [cellranger-counts.sh](../software_scripts/scripts/cellranger-counts.sh) script used to map reads in the fastq files.
-
-4. Copy the SLURM script to your **scrnaseq_example** folder and do a test run.
-
-    ```bash
-    mkdir -p /share/workshop/scRNA_workshop/$USER/scrnaseq_example/scripts/slurmout
-    cd /share/workshop/scRNA_workshop/$USER/scrnaseq_example/scripts
-    cp /share/workshop/scRNA_workshop/Software/cellranger-counts.slurm .
-    ```
-
-    update the email address in the script if you like.
-
-    ```bash
-    sbatch cellranger-counts.slurm
-    ```
-
-
-5. Link completed result folders to your scrnaseq_example folders.
-
-    ```bash
-    cd /share/workshop/scRNA_workshop/$USER/scrnaseq_example
-    ln -s /share/workshop/scRNA_workshop/cellranger_outs/A001-C-007-subset ./A001-C-007-copy
-    ```
 
 	1. Explore the folder A001-C-007-copy. Which output folders/files contain the expression matrix?
 	2. Review the metrics_summary.csv file. What was the total number of reads in this sample?
