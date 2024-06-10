@@ -99,7 +99,7 @@ mkdir -p /share/workshop/scRNA_workshop/$USER/scrnaseq_example
 cd /share/workshop/scRNA_workshop/$USER/scrnaseq_example
 mkdir 00-RawData
 cd 00-RawData/
-ln -s /share/workshop/scRNA_workshop/Data/*.fastq.gz .
+ln -s /share/workshop/scRNA_workshop/DATA/*.fastq.gz .
 ```
 
 This directory now contains the reads for each sample.
@@ -108,7 +108,7 @@ This directory now contains the reads for each sample.
 
 ```bash
 cd /share/workshop/scRNA_workshop/$USER/scrnaseq_example/00-RawData
-ls *_R1_* |cut -d'_' -f1 - > ../samples.txt
+ls *_R1_* |cut -d'_' -f1 > ../samples.txt
 cat ../samples.txt
 ```
 
