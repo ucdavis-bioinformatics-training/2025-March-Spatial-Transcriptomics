@@ -185,8 +185,8 @@ The cp command copies files, or, when using the -r option, directories. This com
 
 Instead of duplicating raw data and other large files, it is typical to create symbolic links. The resulting symbolic link can be treated as a copy of the file.
 
-    ln -s /share/workshop/scRNA_workshop/Data/example.sam .
-    ln -s /share/workshop/scRNA_workshop/Data/example.fastq.gz .
+    ln -s /share/workshop/scRNA_workshop/DATA/example.sam .
+    ln -s /share/workshop/scRNA_workshop/DATA/example.fastq.gz .
     ls -lh
 
 
