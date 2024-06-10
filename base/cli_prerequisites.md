@@ -397,7 +397,7 @@ The 'scancel' command is used to cancel specified jobs (either running or queued
 Jobs may be specified by ID number, or if you use the "-u" option with your username, you can cancel all of your jobs at once.
 
     scancel 29390121 # cancels the job if still running
-    scancel $USER # cancels all of your jobs
+    scancel -u $USER # cancels all of your jobs
 
 
 ## Quiz 1
