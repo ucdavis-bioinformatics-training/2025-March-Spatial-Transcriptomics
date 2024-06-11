@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Single Cell RNA-Seq Part 4: Dimensionality reduction"
 author: "UCD Bioinformatics Core"
-date: "2024-06-06"
+date: "2024-06-10"
 output:
     html_document:
       keep_md: TRUE
@@ -132,6 +132,8 @@ JackStrawPlot(object = experiment.aggregate, dims = 1:100) +
   scale_color_viridis_d() +
   theme(legend.position="bottom")
 ```
+
+![](04-dimensionality_reduction_files/figure-html/jackstraw-1.png)<!-- -->
 
 Let's use the first 50 PCs.
 
