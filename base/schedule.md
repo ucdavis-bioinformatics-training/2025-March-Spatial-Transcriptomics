@@ -2,7 +2,7 @@
 
 All posted times are **Pacific** time zone. At least one break will be provided each morning and afternoon.
 
-### Monday, June 10
+### Monday, December 9
 
 |:----------- |:------------------- |
 |**8:50 am**  | Zoom session starts |
@@ -14,7 +14,7 @@ All posted times are **Pacific** time zone. At least one break will be provided 
 |**2:00 pm**  | Creating an expression matrix |
 |**5:00 pm** | Zoom session ends |
 
-### Tuesday, June 11
+### Tuesday, December 10
 
 |:----------- |:------------------- |
 |**8:50 am**  | Zoom session starts |
@@ -25,7 +25,7 @@ All posted times are **Pacific** time zone. At least one break will be provided 
 |**1:00 pm**  | Data Analysis Parts 1 - 3  |
 |**5:00 pm** | Zoom session ends |
 
-### Wednesday, June 12
+### Wednesday, December 11
 
 |:----------- |:------------------- |
 |**8:50 am**  | Zoom session starts |
