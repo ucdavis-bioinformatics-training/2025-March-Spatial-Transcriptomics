@@ -213,7 +213,7 @@ The cat command prints the content of any file(s) provided as arguments to the s
     cat example.sam # use control-C to escape!
     zcat example.fastq.gz
 
-Why would this be useful? The output of one command can be sent to another command as input using the "pipe" character, as you'll see below. Sometimes commands that may seem pointless in isolation are unexpectedly powerful when linked together with pipes.
+Why would this be useful? The output of one command can be sent to another command as input using the "pipe" character, as you'll see below. Commands that may seem pointless in isolation are unexpectedly powerful when linked together with pipes.
 
 #### head and tail: display specified lines
 
