@@ -560,7 +560,7 @@ The output of the two steps include three items per sample: a "analysis_summary.
 
 
 <div class="figure" style="text-align: center">
-<img src="figures/Honeycombworkflow.png" alt="Workflow of Honeycomb Biotechnologies single cell" width="65%" />
+<img src="figures/Honeycombworkflow.png" alt="Workflow of Honeycomb Biotechnologies single cell" width="80%" />
 <p class="caption">Workflow of Honeycomb Biotechnologies; Source Honeycomb Biotechnologies</p>
 </div>
 
