@@ -509,7 +509,7 @@ In 2022, 10X introduced a fixed RNA profiling kit that enables sample preparatio
 * A workflow includes sample fixing that allows easy collection of samples over time
 * Better sensitivity to detect more genes and transcripts per cell
 * Flexibility in cell types
-* No hardware required
+* No instruments required
 
 
 #### Analysis
@@ -550,5 +550,34 @@ call="split-pipe --mode comb --nthreads 20 \
 
 
 The output of the two steps include three items per sample: a "analysis_summary.csv" file, a "analysis_summary.html", and a folder that includes all relevant results. The most important results are in DGE_filtered subfolder, which includes "all_genes.csv", "cell_metatdata.csv", and "DGE.mtx". These results can be read into Seurat using ReadParseBio function.
+
+---
+
+### Bonus 3: Data preprocessing for Honeycomb Biotechnologies
+
+
+<div class="figure" style="text-align: center">
+<img src="figures/Honeycombworkflow.png" alt="Workflow of Honeycomb Biotechnologies single cell" width="65%" />
+<p class="caption">Workflow of Honeycomb Biotechnologies; Source Honeycomb Biotechnologies</p>
+</div>
+
+
+#### Advantages
+
+* More complete recovery of cell-types
+* Flexible workflow allows samples to be stored and processed at the same time
+* No instruments required
+
+#### Analysis
+
+call="beenet analyze \
+--sample-name=samplename \
+--ref=refpath \
+--num-barcodes=22000 \
+--fastqs=fastqs.txt \
+--out=outdir \
+--star-args='--runThreadN 12'"
+
+Fastq files can be specified after the parameters, or using __fastqs__ parameter that list files one pair per line. The output of the analysis a bam file, RCM (Read Count Matrix) file, TCM (Transcript Count Matrix), CMSummary.tsv (Count Matrix Summary), ReadsQC.tsv and SampleQC.tsv.
 
 ---
