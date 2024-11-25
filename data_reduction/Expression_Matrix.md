@@ -22,7 +22,7 @@ Raw fastq files first need to be preprocessed, extracting any elements that are 
 
 The remaining sequences are mapped to a reference genome/trancriptome. 10x Genomics and Parse Biosciences both maintain custom preprocessing and alignment pipelines fine-tuned for their technologies. 10x's Cell Ranger is based on [STAR](https://github.com/alexdobin/STAR) aligner. Another good choice is a pseudo-alignment method (e.g. [Kallisto](https://pachterlab.github.io/kallisto/), [Salmon](http://salmon.readthedocs.io/en/latest/salmon.html)). For __full-length__ datasets with tens- or hundreds of thousands of reads per cell pseudo-aligners become appealing since their run-time can be several orders of magnitude less than traditional aligners.
 
-__Note__, if _spike-ins_ are used, the _spike-in_ sequences should be added to the reference sequence prior to mapping.
+__Note__, if a significant contribution of exogenous sequences to the libraries is anticipated, including spike-ins, transgenic constructs, or pathogens, these sequences should be added to the reference sequence prior to mapping.
 
 ### Mapping QC
 
@@ -31,12 +31,12 @@ After aligning sequence data to the genome we should evaluate the quality of the
 ### Gene Counting
 
 STAR (and by extension, Cell Ranger), Kallisto, and Salmon all quantify the expression level of each gene for
-each cell as a part of its output. If UMIs were used, duplicates need to be first marked and then gene expression levels recounted. The package [`UMI-tools`](https://github.com/CGATOxford/UMI-tools) can be used to process and correct UMIs. The Parse Bioscience pipeline and Cell Ranger handle UMI deduplication and cell barcode assignment internally, producing an expression matrix that is ready for analysis.
+each cell as a part of its output. If UMIs were used, duplicates need to be first marked and then gene expression levels recounted. The package [`UMI-tools`](https://github.com/CGATOxford/UMI-tools) can be used to process and correct UMIs. The Parse Bioscience pipeline and Cell Ranger both handle UMI deduplication and cell barcode assignment internally, producing an expression matrix that is ready for analysis.
 
 Specific steps to be performed are dependent on the type of library, the element layout of the read, and the sequencing parameters.
 
 
-[STAR](https://github.com/alexdobin/STAR), [Salmon](https://salmon.readthedocs.io/en/latest/alevin.html), [Kallisto/bustools](https://www.kallistobus.tools/) each have pipelines build specifically for processing single-cell datasets.
+[STAR](https://github.com/alexdobin/STAR), [Salmon](https://salmon.readthedocs.io/en/latest/alevin.html), [Kallisto/bustools](https://www.kallistobus.tools/) each have pipelines built specifically for processing single-cell datasets.
 
 
 ## scRNAseq Libraries
@@ -71,7 +71,7 @@ Svensson, etc., 2018, Nature Protocols https://www.nature.com/articles/nprot.201
 * Smart-seq-total, Isakova, 2021
 * VASA-seq, Salmen, 2022
 
-Methods differ in how they capture a cell and quantify gene expression (either __full-length__ or __tag-based__).
+Methods differ in how they capture a cell (e.g. droplets, wells, combinatorial barcoding) and quantify gene expression (either __full-length__ or __tag-based__).
 
 __Full-length__ capture tries to achieve a uniform coverage of each transcript (many reads per transcript). __Tag-based__ protocols only capture either the 5'- or 3'-end of each transcript (single read per transcript). Choice in method determines what types of analyses the data can be used for. __Full-length__ capture can be used to distinguish different iso-forms, where __tag-based__ method is best used for only gene abundance.
 
@@ -104,7 +104,7 @@ A nice starting point to learn about single-cell software can be found [here](ht
 <p class="caption">Elements to a 10x read (V3)</p>
 </div>
 
-cellranger  version 8 has many sub-applications
+cellranger version 8 has many sub-applications
 
 
 1. cellranger mkfastq
@@ -142,7 +142,7 @@ Let's launch the cellranger job, and then take a moment to walk through what the
 2. Add Cell Ranger to your path, and review cellranger's sub-applications and help docs
 
     ```bash
-		export PATH=/share/workshop/scRNA_workshop/Software/cellranger-8.0.1/bin:$PATH
+		module load cellranger-8.0.1
 		cellranger --help
 		cellranger count --help
     ```
@@ -157,7 +157,7 @@ Let's launch the cellranger job, and then take a moment to walk through what the
     cp /share/workshop/scRNA_workshop/Software/cellranger-counts.slurm .
     ```
 
-    update the email address in the script if you like.
+    Update the email address in the script if you like.
 
     ```bash
     sbatch cellranger-counts.slurm
@@ -171,6 +171,9 @@ Let's launch the cellranger job, and then take a moment to walk through what the
     ln -s /share/workshop/scRNA_workshop/cellranger_outs/A001-C-007-subset ./A001-C-007-copy
     ```
 
+## cellranger methods
+
+What is cellranger doing?
 
 ### Cell barcode and UMI filtering
 
@@ -386,7 +389,7 @@ In the interest of time, the dataset we use for this step is a small subset of t
 
 ---
 
-### Bonus 1: cellranger features and multi pipeline
+### Bonus 1: cellranger feature barcodes and multi pipeline
 
 Feature barcodes allow you to capture additional information within your cells by using an addition oligo on the GEM beads. This can be from Antibody capture, Crispr guide capture, or a custom capture (like hash tagging).
 

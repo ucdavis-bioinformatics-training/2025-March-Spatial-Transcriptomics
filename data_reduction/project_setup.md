@@ -72,13 +72,12 @@ function showResults(myq, qc, rc){
 </script>
 
 
-The dataset used in this workshop is a subset of a much larger dataset from a [recent study](https://doi.org/10.1038/s41588-022-01088-x) that generated single nuclei transcriptome and chromatin accessibility profiles from colorectal tissue samples. The authors isolated 1000 to 10000 nuclei per sample for 81 samples of three types: 48 polyp samples, 27 normal tissue samples, and 6 colorectal cancer (CRC) samples from patients with or without germline APC mutations. They observed a continuum of cell state and composition changes from normal tissue, to polyps, to cancer.
+The dataset used in this workshop is a subset of a much larger dataset from a [recent study](https://doi.org/10.1038/s41588-022-01088-x) that generated single nuclei transcriptome and chromatin accessibility profiles from colorectal tissue samples.[^1] The authors isolated 1000 to 10000 nuclei per sample for 81 samples of three types: 48 polyp samples, 27 normal tissue samples, and 6 colorectal cancer (CRC) samples from patients with or without germline APC mutations. They observed a continuum of cell state and composition changes from normal tissue, to polyps, to cancer.
 
 For the purposes of this workshop, we will use one sample from each condition (CRC: A001-C-007, polyp: A001-C-104, and normal: B001-A-301).
 
-Source:
 
-Becker, W. R.; Nevins, S. A.; Chen, D. C.; Chiu, R.; Horning, A. M.; Guha, T. K.; Laquindanum, R.; Mills, M.; Chaib, H.; Ladabaum, U.; Longacre, T.; Shen, J.; Esplin, E. D.; Kundaje, A.; Ford, J. M.; Curtis, C.; Snyder, M. P.; Greenleaf, W. J. Single-Cell Analyses Define a Continuum of Cell State and Composition Changes in the Malignant Transformation of Polyps to Colorectal Cancer. Nat. Genet. 2022. https://doi.org/10.1038/s41588-022-01088-x.
+[^1]: Becker, W. R.; Nevins, S. A.; Chen, D. C.; Chiu, R.; Horning, A. M.; Guha, T. K.; Laquindanum, R.; Mills, M.; Chaib, H.; Ladabaum, U.; Longacre, T.; Shen, J.; Esplin, E. D.; Kundaje, A.; Ford, J. M.; Curtis, C.; Snyder, M. P.; Greenleaf, W. J. Single-Cell Analyses Define a Continuum of Cell State and Composition Changes in the Malignant Transformation of Polyps to Colorectal Cancer. Nat. Genet. 2022. https://doi.org/10.1038/s41588-022-01088-x.
 
 # Data Setup
 
@@ -144,7 +143,13 @@ Let's figure out the number of reads in this file. A simple way to do that is to
 zcat A001-C-007_S4_R1_001.fastq.gz | wc -l
 ```
 
-Divide this number by 4 and you have the number of reads in this file. One more thing to try is to figure out the length of the reads without counting each nucleotide. First get the first 4 lines of the file (i.e. the first record):
+Divide this number by 4 and you have the number of reads in this file.
+
+```bash
+expr $(zcat A001-C-007_S4_R1_001.fastq.gz | wc -l) / 4
+```
+
+One more thing to try is to figure out the length of the reads without counting each nucleotide. First get the first 4 lines of the file (i.e. the first record):
 
 ```bash
 zcat A001-C-007_S4_R1_001.fastq.gz  | head -4

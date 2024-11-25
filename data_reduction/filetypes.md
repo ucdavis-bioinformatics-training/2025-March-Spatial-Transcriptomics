@@ -8,15 +8,14 @@ The primary file types you'll see related to DNA sequence analysis are:
 * [sam/bam/cram](#Alignment-based-file-types:-SAM,-BAM,-and-CRAM)
 
 ## Sequence based file types
-Sequence based files first started out as fasta with paired qual files (Sanger and 454). As Illumina sequencing and quality scores grew more common, the fastq file became the default output from DNA sequencers. These days additional file types are being used, including fast5 by Oxford Nanopore and 'unmapped' bam files by Pacific Biosciences.
+Sequence was first stored in fasta format with supplemental quality score file. As Illumina sequencing and quality scores grew more common, the fastq file became the default output from DNA sequencers. These days additional file types are being used, including fast5 by Oxford Nanopore and 'unmapped' bam files by Pacific Biosciences.
 
 ### fasta
 The fasta format uses the '>' to indicate a new sequence followed by the name of the sequence on the same line. The following line(s) are the DNA sequence, and may be split on multiple lines (wrapped), until the next '>' is reached. Genome and transcriptome files are most often in fasta format.
 
 <img src="filetypes_figures/fasta_format.png" alt="annotated example fasta file containing gap and soft masking" width="80%"/>
 
-
-Qual files are rarely used these days and so are not discussed.
+Qual files are now largely obsolete.
 
 ### fastq
 fastq files combine the sequence and quality scores into a single file. Each sequence must have 4 lines: header, sequence, historical '+', and quality.
@@ -45,11 +44,9 @@ Casava 1.8 read name convention:
 * **ATCACG** index sequence. In some recent versions, this is replaced by a number identifying the sample.
 
 ### Quality Scores
-Quality scores are paired 1 to 1 with sequence characters.
+Quality scores are paired 1 to 1 with sequence characters. In order to accomplish this, quality scores (which are frequently two-digit numbers) are transformed into single-character ([ASCII values](https://en.wikipedia.org/wiki/ASCII))..
 
 <img src="filetypes_figures/phred_calculation.png" alt="Phred score calculation" width="40%"/>
-
-Each quality character has a numerical value associated with it ([ASCII value](https://en.wikipedia.org/wiki/ASCII)).
 
 <img src="filetypes_figures/ascii_table.png" alt="table of ASCII values" width="80%"/>
 
@@ -142,21 +139,19 @@ The alignment flag encodes information about the alignment in bitwise [format](h
 If interpreting the SAM flag seems a little overwhelming, you can use a [flag decoding tool](https://broadinstitute.github.io/picard/explain-flags.html).
 
 **RNAME: reference sequence name**  
-The reference sequence name identifies the sequence to which the query (e.g. read) is mapped. This unique identifier comes from fasta header and matches a @SQ field in the SAM header section.
+The reference sequence name identifies the sequence to which the query (e.g. read) is mapped. This unique identifier comes from fasta header and matches an @SQ field in the SAM header section.
 
 **POS: 1-based leftmost position of (post-clipping) aligned read**  
 
 **MAPQ: mapping quality (phred scaled)**  
-MAPQ, contains the "phred-scaled posterior probability that the mapping position" is wrong.   
-In a probabilistic view, each read alignment is an estimate of the true alignment and is therefore also a random variable. It can be wrong. The error probability is scaled in the Phred. For example, given 1000 read alignments with mapping quality being 30, one of them will be incorrectly mapped to the wrong location on average.  
-A value 255 indicates that the mapping quality is not available.
+The MAPQ field encodes the probability that the query is incorrectly aligned. Like the quality scores produced by a sequencer, mapping quality scores are Phred-scaled; of 1000 read alignments with mapping quality 30, 1 is mapped to the wrong location on average.  
+A value of 255 indicates that the mapping quality is not available.
 
-MAPQ explained:
-The calculation of mapping qualities is simple, but this simple calculation considers many of the factors below:
+The following factors impact mapping quality:
 * The repeat structure of the reference. Reads falling in repetitive regions usually get very low mapping quality.
-* The base quality of the read. Low quality means the observed read sequence is possibly wrong, and wrong sequence may lead to a wrong alignment.
+* The base quality of the read. Low quality means the observed read sequence is possibly wrong, and wrong sequence may lead to a wrong alignment. Low quality reads generally receive low mapping quality scores.
 * The sensitivity of the alignment algorithm. The true hit is more likely to be missed by an algorithm with low sensitivity, which also causes mapping errors.
-* Paired end or not. Reads mapped in proper pairs are more likely to be correct.
+* Paired end or not. Reads mapped in proper pairs are more likely to be correct, and therefore have higher mapping quality scores.
 
 When you see a read alignment with a mapping quality of 30 or greater, it usually implies:
 * The overall base quality of the read is good.
@@ -190,10 +185,10 @@ This field equals POS at the primary alignment of the next read. If PNEXT is 0, 
 If all segments are mapped to the same reference, the unsigned observed template length equals the number of bases from the leftmost mapped base to the rightmost mapped base. The leftmost segment has a plus sign and the rightmost has a minus sign. The sign of segments in the middle is undefined. It is set as 0 for single-segment template or when the information is unavailable.
 
 **SEQ: segment sequence**  
-The sequence that was aligned. If hard clipping occurred, only the aligned portion is represented, if soft clipping occurred, the original sequence is present.
+The sequence that was aligned. If hard clipping occurred, only the aligned portion is represented. If soft clipping occurred, the original sequence is present.
 
 **QUAL: segment quality scores**  
-The quality scores of the sequence that was aligned. If hard clipping occurred, only the aligned portion is represented, if soft clipping occurred, the original sequence is present.
+The quality scores of the sequence that was aligned. If hard clipping occurred, only the aligned portion is represented. If soft clipping occurred, the original sequence is present.
 
 ### Compression: BAM and CRAM
 
