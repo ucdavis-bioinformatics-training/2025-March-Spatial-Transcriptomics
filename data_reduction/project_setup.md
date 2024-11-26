@@ -194,7 +194,7 @@ myQuestions1 = [
     answers: {
       a: "200 Thousand",
       b: "500 Thousand",
-      c: "1 Million",
+      c: "4 Million",
       d: "2 Million"
     },
     correctAnswer: "c"

@@ -100,7 +100,7 @@ The JackStraw function randomly permutes a subset of data, and calculates projec
 PCs with a strong enrichment of low p-value genes are identified as significant components.
 
 **The JackStraw permutation is computationally intensive and can be quite slow. Consider skipping this step and exploring the function when you have some extra time.**
-```{r jackstraw, eval=FALSE}
+```{r jackstraw, eval=T, fig.height = 22, fig.width = 12}
 experiment.aggregate <- JackStraw(experiment.aggregate, dims = 100)
 experiment.aggregate <- ScoreJackStraw(experiment.aggregate, dims = 1:100)
 JackStrawPlot(object = experiment.aggregate, dims = 1:100) +
@@ -142,7 +142,7 @@ saveRDS(experiment.aggregate, file="scRNA_workshop-04.rds")
 
 #### Download Rmd
 ```{r download_Rmd, eval=TRUE}
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2023-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/05-clustering_celltype.Rmd", "05-clustering_celltype.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/05-clustering_celltype.Rmd", "05-clustering_celltype.Rmd")
 ```
 
 #### Session information
