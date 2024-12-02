@@ -141,6 +141,7 @@ The location of any directory can be represented in one of two ways:
 - the absolute path, which begins from the root
 - the relative path, which begins from the present working directory
 
+
     cd ..
 
 In a relative path, the ".." refers to the directory one level above the present location. To specify a directory two levels above the present working directory, use "../..", and so on.
