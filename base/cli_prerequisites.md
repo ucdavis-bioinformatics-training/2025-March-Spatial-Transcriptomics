@@ -279,19 +279,21 @@ Though there are ways to run the commands in test.sh right now, it's generally u
 </div>
 
 
-The first '-' becomes a 'd' if the 'file' is actually a directory. The next three characters represent **r**ead, **w**rite, and e**x**ecute permissions for the file owner (you), followed by three characters for users in the owner's group, followed by three characters for all other users. Run the 'chmod' command to change permissions for the 'test.sh' file, adding execute permissions ('+x') for the user (you) and your group ('ug'):
+These 10 characters in the first field of the output represent the *permissions*, and tell us who has the ability to **r**ead, **w**rite, and e**x**ecute the file.
+
+The first character records the file type, and the '-' becomes a 'd' if the 'file' is actually a directory. The following groups of three characters represent permissions for the file owner (you), users in the owner's group, and all other users (everyone), respectively.
+
+- r = read
+- w = write
+- x = execute
+
+Run the 'chmod' command to change permissions for the 'test.sh' file, adding execute permissions ('+x') for the user (you) and your group ('ug'):
 
     chmod ug+x template.sh
     ls -lh template.sh
 
 <div class="output">-rwxrwxr-- 1 hslyman workshop 287 Jul 12 16:23 template.sh
 </div>
-
-The first 10 characters of the output represent the file and permissions.
-The first character is the file type, the next three sets of three represent the file permissions for the user, group, and everyone respectively.
-- r = read
-- w = write
-- x = execute
 
 Run the script. We have to provide a relative reference to the script './' because its not on our path.
 
