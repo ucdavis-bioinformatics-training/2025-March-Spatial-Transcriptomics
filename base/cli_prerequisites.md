@@ -247,7 +247,7 @@ The path can be modified in a number of ways.
 
 The module command also modifies the path, adding directories containing the executables associated with user-installed software to the path temporarily.
 
-    module load cellranger
+    module load cellranger/8.0.1
     echo $PATH
 
 ### Downlaoding files: scp
