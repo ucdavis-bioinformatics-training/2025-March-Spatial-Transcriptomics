@@ -375,7 +375,7 @@ A summary of the alignment and assignment of reads to cells and genes is present
 
 ### 10X genomics html reports
 
-Cell Ranger does produce a more readable HTML report with the same statistics and some "analysis".
+Cell Ranger also produces a more readable HTML report with the same statistics and some "analysis".
 
 [Cell Ranger V8 web summary](web_summary.html)
 
