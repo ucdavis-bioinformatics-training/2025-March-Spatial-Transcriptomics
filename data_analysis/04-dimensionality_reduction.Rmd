@@ -50,7 +50,7 @@ DimPlot(experiment.aggregate,
 The axes are unit-less; points (cells or nuclei) that are farther apart are more dissimilar on the displayed PC than points that are closer together.
 
 ### PCA loadings
-Each PC can be imagined as a sort of meta-gene for which every cell has an expression value. The top genes associated with the reduction component (i.e. contributing to a cell's "expression level" of that meta-gene) can be plotted for a selected dimension(s) using the `VizDimLoadings` function.
+Each PC can be imagined as a sort of meta-gene for which every cell has an expression value. The top genes associated with a PC component can be plotted for a selected dimension(s) using the `VizDimLoadings` function.
 ```{r viz_pca}
 VizDimLoadings(experiment.aggregate,
                dims = 1,
@@ -61,7 +61,7 @@ VizDimLoadings(experiment.aggregate,
 ```
 
 ### Heat map
-Heat maps display similar information. On the x-axis, cells are ordered by their embeddings ("expression" of the PC), while on the y-axis, genes are ordered by PC loading. When fewer than the total number of cells is selected, this results in selection of the cells with the largest absolute value embeddings, which emphasizes variation on the PC.
+Heat maps can be used to visualize the expressions of the top associated gene with a PC component. On the x-axis, cells are ordered by their embeddings ("expression" of the PC), while on the y-axis, genes are ordered by PC loading. When fewer than the total number of cells is selected, this results in selection of the cells with the largest absolute value embeddings, which emphasizes variation on the PC.
 ```{r heatmap_pca}
 DimHeatmap(experiment.aggregate,
            dims = 1,

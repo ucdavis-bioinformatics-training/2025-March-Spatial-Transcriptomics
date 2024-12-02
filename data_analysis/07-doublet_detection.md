@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Single Cell RNA-Seq Part 7: Doublet detection"
 author: "UCD Bioinformatics Core"
-date: "2024-06-06"
+date: "2024-12-02"
 output:
     html_document:
       keep_md: TRUE
@@ -222,7 +222,7 @@ saveRDS(experiment.aggregate, file = "scRNA_workshop-07.rds")
 #### Download Rmd document
 
 ``` r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2023-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/08-integration.Rmd", "08-integration.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/08-integration.Rmd", "08-integration.Rmd")
 ```
 
 #### Session information
@@ -234,7 +234,7 @@ sessionInfo()
 ```
 ## R version 4.4.0 (2024-04-24)
 ## Platform: aarch64-apple-darwin20
-## Running under: macOS Ventura 13.5.2
+## Running under: macOS Ventura 13.7.1
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -269,7 +269,7 @@ sessionInfo()
 ##  [28] later_1.3.2            spatstat.utils_3.0-4   irlba_2.3.5.1         
 ##  [31] cluster_2.1.6          R6_2.5.1               ica_1.0-3             
 ##  [34] spatstat.data_3.0-4    bslib_0.7.0            stringi_1.8.4         
-##  [37] RColorBrewer_1.1-3     reticulate_1.37.0      parallelly_1.37.1     
+##  [37] RColorBrewer_1.1-3     reticulate_1.39.0      parallelly_1.37.1     
 ##  [40] lmtest_0.9-40          jquerylib_0.1.4        scattermore_1.2       
 ##  [43] Rcpp_1.0.12            knitr_1.47             tensor_1.5            
 ##  [46] future.apply_1.11.2    zoo_1.8-12             sctransform_0.4.1     

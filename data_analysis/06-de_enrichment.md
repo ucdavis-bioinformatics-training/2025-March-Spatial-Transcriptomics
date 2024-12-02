@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Single Cell RNA-Seq Part 6: Enrichment and model-based differential expression"
 author: "Bioinformatics Core"
-date: "2024-06-06"
+date: "2024-12-02"
 output:
     html_document:
       keep_md: TRUE
@@ -871,7 +871,7 @@ A tutorial on using limma for bulk RNASeq is available [here](https://ucdavis-bi
 #### Download Rmd document
 
 ``` r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2023-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/07-doublet_detection.Rmd", "07-doublet_detection.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/07-doublet_detection.Rmd", "07-doublet_detection.Rmd")
 ```
 
 #### Session Information
@@ -883,7 +883,7 @@ sessionInfo()
 ```
 ## R version 4.4.0 (2024-04-24)
 ## Platform: aarch64-apple-darwin20
-## Running under: macOS Ventura 13.5.2
+## Running under: macOS Ventura 13.7.1
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -944,7 +944,7 @@ sessionInfo()
 ## [100] stringi_1.8.4           lazyeval_0.2.2          yaml_2.3.8             
 ## [103] evaluate_0.23           codetools_0.2-20        tibble_3.2.1           
 ## [106] cli_3.6.2               uwot_0.2.2              systemfonts_1.1.0      
-## [109] xtable_1.8-4            reticulate_1.37.0       munsell_0.5.1          
+## [109] xtable_1.8-4            reticulate_1.39.0       munsell_0.5.1          
 ## [112] jquerylib_0.1.4         GenomeInfoDb_1.40.1     Rcpp_1.0.12            
 ## [115] globals_0.16.3          spatstat.random_3.2-3   png_0.1-8              
 ## [118] parallel_4.4.0          blob_1.2.4              ggplot2_3.5.1          
