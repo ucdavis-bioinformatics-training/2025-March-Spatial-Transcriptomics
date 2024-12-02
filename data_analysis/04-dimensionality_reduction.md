@@ -64,7 +64,7 @@ DimPlot(experiment.aggregate,
 The axes are unit-less; points (cells or nuclei) that are farther apart are more dissimilar on the displayed PC than points that are closer together.
 
 ### PCA loadings
-Each PC can be imagined as a sort of meta-gene for which every cell has an expression value. The top genes associated with the reduction component (i.e. contributing to a cell's "expression level" of that meta-gene) can be plotted for a selected dimension(s) using the `VizDimLoadings` function.
+Each PC can be imagined as a sort of meta-gene (a linear combination of all genes included in RunPCA) for which every cell has an expression value. The top genes associated with the reduction component (i.e. contributing to a cell's "expression level" of that meta-gene) can be plotted for a selected dimension(s) using the `VizDimLoadings` function.
 
 ``` r
 VizDimLoadings(experiment.aggregate,
