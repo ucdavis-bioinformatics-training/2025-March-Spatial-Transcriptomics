@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Single Cell RNA-Seq Part 6: Clustering and cell type assignment"
 author: "UCD Bioinformatics Core"
-date: "2024-06-06"
+date: "2024-12-02"
 output:
     html_document:
       keep_md: TRUE
@@ -1646,7 +1646,7 @@ saveRDS(experiment.aggregate, file="scRNA_workshop-05.rds")
 #### Download the Rmd file
 
 ``` r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2023-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/06-de_enrichment.Rmd", "06-de_enrichment.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/06-de_enrichment.Rmd", "06-de_enrichment.Rmd")
 ```
 
 #### Session Information
@@ -1658,7 +1658,7 @@ sessionInfo()
 ```
 ## R version 4.4.0 (2024-04-24)
 ## Platform: aarch64-apple-darwin20
-## Running under: macOS Ventura 13.5.2
+## Running under: macOS Ventura 13.7.1
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -1718,7 +1718,7 @@ sessionInfo()
 ## [106] statmod_1.5.0          matrixStats_1.3.0      stringi_1.8.4         
 ## [109] lazyeval_0.2.2         yaml_2.3.8             evaluate_0.23         
 ## [112] codetools_0.2-20       tibble_3.2.1           cli_3.6.2             
-## [115] uwot_0.2.2             xtable_1.8-4           reticulate_1.37.0     
+## [115] uwot_0.2.2             xtable_1.8-4           reticulate_1.39.0     
 ## [118] systemfonts_1.1.0      munsell_0.5.1          jquerylib_0.1.4       
 ## [121] Rcpp_1.0.12            globals_0.16.3         spatstat.random_3.2-3 
 ## [124] png_0.1-8              parallel_4.4.0         presto_1.0.0          

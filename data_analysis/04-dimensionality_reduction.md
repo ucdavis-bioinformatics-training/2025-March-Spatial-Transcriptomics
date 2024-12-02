@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Single Cell RNA-Seq Part 4: Dimensionality reduction"
 author: "UCD Bioinformatics Core"
-date: "2024-06-10"
+date: "2024-11-29"
 output:
     html_document:
       keep_md: TRUE
@@ -64,7 +64,7 @@ DimPlot(experiment.aggregate,
 The axes are unit-less; points (cells or nuclei) that are farther apart are more dissimilar on the displayed PC than points that are closer together.
 
 ### PCA loadings
-Each PC can be imagined as a sort of meta-gene for which every cell has an expression value. The top genes associated with the reduction component (i.e. contributing to a cell's "expression level" of that meta-gene) can be plotted for a selected dimension(s) using the `VizDimLoadings` function.
+Each PC can be imagined as a sort of meta-gene (a linear combination of all genes included in RunPCA) for which every cell has an expression value. The top genes associated with a PC component can be plotted for a selected dimension(s) using the `VizDimLoadings` function.
 
 ``` r
 VizDimLoadings(experiment.aggregate,
@@ -78,7 +78,7 @@ VizDimLoadings(experiment.aggregate,
 ![](04-dimensionality_reduction_files/figure-html/viz_pca-1.png)<!-- -->
 
 ### Heat map
-Heat maps display similar information. On the x-axis, cells are ordered by their embeddings ("expression" of the PC), while on the y-axis, genes are ordered by PC loading. When fewer than the total number of cells is selected, this results in selection of the cells with the largest absolute value embeddings, which emphasizes variation on the PC.
+Heat maps can be used to visualize the expressions of the top associated gene with a PC component. On the x-axis, cells are ordered by their embeddings ("expression" of the PC), while on the y-axis, genes are ordered by PC loading. When fewer than the total number of cells is selected, this results in selection of the cells with the largest absolute value embeddings, which emphasizes variation on the PC.
 
 ``` r
 DimHeatmap(experiment.aggregate,
@@ -176,7 +176,7 @@ saveRDS(experiment.aggregate, file="scRNA_workshop-04.rds")
 #### Download Rmd
 
 ``` r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2023-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/05-clustering_celltype.Rmd", "05-clustering_celltype.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/05-clustering_celltype.Rmd", "05-clustering_celltype.Rmd")
 ```
 
 #### Session information
@@ -188,7 +188,7 @@ sessionInfo()
 ```
 ## R version 4.4.0 (2024-04-24)
 ## Platform: aarch64-apple-darwin20
-## Running under: macOS Ventura 13.5.2
+## Running under: macOS Ventura 13.7.1
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -219,7 +219,7 @@ sessionInfo()
 ##  [28] spatstat.utils_3.0-4   irlba_2.3.5.1          parallel_4.4.0        
 ##  [31] cluster_2.1.6          R6_2.5.1               ica_1.0-3             
 ##  [34] spatstat.data_3.0-4    bslib_0.7.0            stringi_1.8.4         
-##  [37] RColorBrewer_1.1-3     reticulate_1.37.0      parallelly_1.37.1     
+##  [37] RColorBrewer_1.1-3     reticulate_1.39.0      parallelly_1.37.1     
 ##  [40] lmtest_0.9-40          jquerylib_0.1.4        scattermore_1.2       
 ##  [43] Rcpp_1.0.12            knitr_1.47             tensor_1.5            
 ##  [46] future.apply_1.11.2    zoo_1.8-12             sctransform_0.4.1     

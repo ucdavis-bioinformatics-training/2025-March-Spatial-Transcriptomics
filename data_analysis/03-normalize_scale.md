@@ -223,7 +223,7 @@ saveRDS(experiment.aggregate, file = "scRNA_workshop-03.rds")
 #### Download Rmd
 
 ``` r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2023-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/04-dimensionality_reduction.Rmd", "04-dimensionality_reduction.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/04-dimensionality_reduction.Rmd", "04-dimensionality_reduction.Rmd")
 ```
 
 #### Session Information
@@ -235,7 +235,7 @@ sessionInfo()
 ```
 ## R version 4.4.0 (2024-04-24)
 ## Platform: aarch64-apple-darwin20
-## Running under: macOS Ventura 13.5.2
+## Running under: macOS Ventura 13.7.1
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib 
@@ -266,7 +266,7 @@ sessionInfo()
 ##  [28] later_1.3.2            spatstat.utils_3.0-4   irlba_2.3.5.1         
 ##  [31] parallel_4.4.0         cluster_2.1.6          R6_2.5.1              
 ##  [34] ica_1.0-3              spatstat.data_3.0-4    bslib_0.7.0           
-##  [37] stringi_1.8.4          RColorBrewer_1.1-3     reticulate_1.37.0     
+##  [37] stringi_1.8.4          RColorBrewer_1.1-3     reticulate_1.39.0     
 ##  [40] parallelly_1.37.1      lmtest_0.9-40          jquerylib_0.1.4       
 ##  [43] scattermore_1.2        Rcpp_1.0.12            knitr_1.47            
 ##  [46] tensor_1.5             future.apply_1.11.2    zoo_1.8-12            
