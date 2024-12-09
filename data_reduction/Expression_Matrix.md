@@ -142,7 +142,7 @@ Let's launch the cellranger job, and then take a moment to walk through what the
 2. Add Cell Ranger to your path, and review cellranger's sub-applications and help docs
 
     ```bash
-		module load cellranger-8.0.1
+		module load cellranger/8.0.1
 		cellranger --help
 		cellranger count --help
     ```
