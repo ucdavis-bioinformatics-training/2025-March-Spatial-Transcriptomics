@@ -89,7 +89,7 @@ Finally, in the lower right, the file browser and help documentation allow users
 
 ## R basics
 
-As with the CLI prerequisites portion of the course, this section is brief by necessity. However, we will be spending the rest of the course working in R and will be covering the functions most relevant to single cell RNA-Seq analysis in greater depth as we go. In this quick introduction, we will cover
+As with the CLI prerequisites portion of the course, this section is brief but necessity. However, we will be spending the rest of the course working in R and will be covering the functions most relevant to single cell RNA-Seq analysis in greater depth as we go. In this quick introduction, we will cover
 
 * assignment, environment, and objects
 * basic data types
