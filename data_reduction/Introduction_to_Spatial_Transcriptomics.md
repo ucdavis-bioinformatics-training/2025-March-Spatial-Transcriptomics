@@ -85,7 +85,7 @@ function showResults(myq, qc, rc){
 # Available Spatial Transcriptomics Platforms
 
 <p float="center">
-  <img src="figures/overview_sp.jpeg" width="70%"/>
+  <img src="figures/overview_sp.png" width="70%"/>
 </p>
 
 
