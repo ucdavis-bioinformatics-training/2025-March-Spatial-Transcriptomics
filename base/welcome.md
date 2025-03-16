@@ -34,7 +34,6 @@ Our team offers custom bioinformatics services to academic and private organizat
   * Lectures/Discussions
   * Technologies use
   * Experimental design
-  * Cost estimation
   * Workflow
   * Data reduction
   * Data analysis
