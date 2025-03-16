@@ -73,10 +73,10 @@ function showResults(myq, qc, rc){
 
 # Why Spatial Transcriptomics
 
-<p float="left">
-  <img src="figures/lego1.jpeg" width="30%" />
-  <img src="figures/lego3.jpeg" width="30%" />
-  <img src="figures/lego2.jpeg" width="30%" />
+<p float="center">
+  <img src="figures/lego1.jpeg" width="25%" />
+  <img src="figures/lego3.jpeg" width="25%" />
+  <img src="figures/lego2.jpeg" width="25%" />
 </p>
   
 
