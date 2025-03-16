@@ -40,6 +40,9 @@ navigation:
   - title: Generating Expression Matrix
     url: data_reduction/Expression_Matrix
 
+  - heading: Spatial Transcriptomics
+    url: data_reduction/Introduction_to_Spatial_Transcriptomics
+
   - heading: scRNAseq Analysis
   - title: Prepare scRNAseq Analysis
     url: data_analysis/00-prepare
