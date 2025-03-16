@@ -75,9 +75,9 @@ function showResults(myq, qc, rc){
 
 <p float="center">
   <img src="figures/lego1.jpeg" alt="Bulk RNASeq" width="25%" />
-&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
   <img src="figures/lego3.jpeg" alt="scRNASeq" width="25%" />
-&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
   <img src="figures/lego2.jpeg" alt="Spatial Transcriptomics" width="25%" />
 </p>
 
