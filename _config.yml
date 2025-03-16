@@ -41,6 +41,7 @@ navigation:
     url: data_reduction/Expression_Matrix
 
   - heading: Spatial Transcriptomics
+  - title: Techonolies
     url: data_reduction/Introduction_to_Spatial_Transcriptomics
 
   - heading: scRNAseq Analysis
