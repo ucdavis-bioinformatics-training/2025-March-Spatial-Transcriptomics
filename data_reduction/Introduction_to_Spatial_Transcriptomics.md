@@ -74,11 +74,11 @@ function showResults(myq, qc, rc){
 # Why Spatial Transcriptomics
 
 <p float="center">
-  <img src="figures/lego1.jpeg" title="Bulk RNASeq" width="25%" />
-&nbsp; &nbsp; &nbsp;
-  <img src="figures/lego3.jpeg" title="scRNASeq" width="25%" />
-&nbsp; &nbsp; &nbsp;
-  <img src="figures/lego2.jpeg" title="Spatial Transcriptomics" width="25%" />
+  <img src="figures/lego1.jpeg" alt="Bulk" title="Bulk RNASeq" width="25%" />
+&nbsp; &nbsp; &nbsp; $nbsp; $nbsp;
+  <img src="figures/lego3.jpeg" alt="scRNA" title="scRNASeq" width="25%" />
+&nbsp; &nbsp; &nbsp; $nbsp; $nbsp;
+  <img src="figures/lego2.jpeg" alt="Spatial" title="Spatial Transcriptomics" width="25%" />
 </p>
   
 
