@@ -73,8 +73,12 @@ function showResults(myq, qc, rc){
 
 # Why Spatial Transcriptomics
 
-![bulk](figues/lego1.jpeg)  ![sc](figures/lego3.jpeg) ![sp](figures/lego2.jpeg)
-
+<p float="left">
+  <img src="figures/lego1.jpeg" width="30%" />
+  <img src="figures/lego3.jpeg" width="30%" />
+  <img src="figures/lego2.jpeg" width="30%" />
+</p>
+  
 
 The dataset used in this workshop is a subset of a much larger dataset from a [recent study](https://doi.org/10.1038/s41588-022-01088-x) that generated single nuclei transcriptome and chromatin accessibility profiles from colorectal tissue samples.[^1] The authors isolated 1000 to 10000 nuclei per sample for 81 samples of three types: 48 polyp samples, 27 normal tissue samples, and 6 colorectal cancer (CRC) samples from patients with or without germline APC mutations. They observed a continuum of cell state and composition changes from normal tissue, to polyps, to cancer.
 
