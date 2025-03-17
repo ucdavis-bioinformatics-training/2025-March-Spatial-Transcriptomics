@@ -100,9 +100,9 @@ Lim, H.J., Wang, Y., Buzdin, A. et al. https://doi.org/10.1186/s12864-025-11235-
 
 
 
-_10X Genomics Visium_ 
+___10X Genomics Visium___
 
-_Slide-Seq_ transfers RNA from tissue sections onto a surface that is covered in DNA-barcoded beads with known physical locations which allows for the position of RNAs at a 10 micro resolution.
+___Slide-Seq___ transfers RNA from tissue sections onto a surface that is covered in DNA-barcoded beads with known physical locations which allows for the position of RNAs at a 10 micro resolution.
 
 ## Image based
 
