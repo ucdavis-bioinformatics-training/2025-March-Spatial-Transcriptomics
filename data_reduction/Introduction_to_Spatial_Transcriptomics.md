@@ -104,8 +104,29 @@ ___10X Genomics Visium___ application permeabilize the fresh frozon tissue to re
 
 ___10X Genomics Visium HD___ slides contain two 6.5 X 6.5 mm capture areas with a continuous array of oligonucleotides in millions of 2 by 2 microns barcoded squares without gaps. This application achieves single-cell level spatial resolution. The tissue is imaged with H&E staining, followed by probe hybridization that targets 18085 genes for human and 19059 genes for mouse using ~54-55K probes. The hybridized probes are transferred onto the Visium HD slide in the CytAssist instrument for sequencing library preparation.
 
-___Slide-Seq___ transfers RNA from tissue sections onto a surface that is covered in DNA-barcoded beads with known physical locations which allows for the position of RNAs at a 10 micro resolution.
+___Slide-Seq___ transfers RNA from tissue sections onto a surface that is covered in DNA-barcoded beads with known physical locations, which allows for the position of RNAs at a 10 micro resolution. The mRNAs are caputured by polydT oligonucleotides, that allows spatial profiling of non-model organisms.
 
+A recent study compares a few sequencing based spatial transcriptomic platforms.
+
+<p float="center">
+  <img src="figures/sequencing_sp_comparison.png" width="95%" />
+</p>
+
+<p align = "center" style="font-family:Times;font-size:12px;">
+You, Y., Fu, Y., Li, L. et al. Nat Methods 21, 1743–1754 (2024). https://doi.org/10.1038/s41592-024-02325-3
+</p>
+
+
+<p float="center">
+  <img src="figures/sequencing_sp_comparison2.png" width="95%" />
+</p>
+
+<p align = "center" style="font-family:Times;font-size:12px;">
+You, Y., Fu, Y., Li, L. et al. Nat Methods 21, 1743–1754 (2024). https://doi.org/10.1038/s41592-024-02325-3
+</p>
+
+
+## Image based
 ## Image based
 
 <p float="center">
@@ -113,7 +134,7 @@ ___Slide-Seq___ transfers RNA from tissue sections onto a surface that is covere
 </p>
 
 <p align = "center" style="font-family:Times;font-size:12px;">
-Lim, H.J., Wang, Y., Buzdin, A. et al. https://doi.org/10.1186/s12864-025-11235-3
+Lim, H.J., Wang, Y., Buzdin, A. et al. BMC Genomics 26, 47 (2025). https://doi.org/10.1186/s12864-025-11235-3
 </p>
 
 
