@@ -91,8 +91,14 @@ function showResults(myq, qc, rc){
 ## Sequencing based
 
 <p float="center">
-  <img src="figures/sequencing_base.jpeg" width="95%" />
+  <img src="figures/sequencing_based.jpeg" width="95%" />
 </p>
+
+<p align = "center" style="font-family:Times;font-size:12px;">
+Lim, H.J., Wang, Y., Buzdin, A. et al. https://doi.org/10.1186/s12864-025-11235-3
+</p>
+
+
 
 _10X Genomics Visium_ 
 
@@ -102,6 +108,10 @@ _Slide-Seq_ transfers RNA from tissue sections onto a surface that is covered in
 
 <p float="center">
   <img src="figures/image_based.jpeg" width="95%" />
+</p>
+
+<p align = "center" style="font-family:Times;font-size:12px;">
+Lim, H.J., Wang, Y., Buzdin, A. et al. https://doi.org/10.1186/s12864-025-11235-3
 </p>
 
 
