@@ -109,7 +109,7 @@ ___Slide-Seq___ transfers RNA from tissue sections onto a surface that is covere
 A recent study compares a few sequencing based spatial transcriptomic platforms.
 
 <p float="center">
-  <img src="figures/sequencing_sp_comparison.png" width="95%" />
+  <img src="figures/sequencing_sp_comparison.jpeg" width="95%" />
 </p>
 
 <p align = "center" style="font-family:Times;font-size:12px;">
@@ -118,7 +118,7 @@ You, Y., Fu, Y., Li, L. et al. Nat Methods 21, 1743–1754 (2024). https://doi.o
 
 
 <p float="center">
-  <img src="figures/sequencing_sp_comparison2.png" width="95%" />
+  <img src="figures/sequencing_sp_comparison2.jpeg" width="95%" />
 </p>
 
 <p align = "center" style="font-family:Times;font-size:12px;">
