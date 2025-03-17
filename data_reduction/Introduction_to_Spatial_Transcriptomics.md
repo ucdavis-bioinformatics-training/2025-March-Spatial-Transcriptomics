@@ -127,7 +127,6 @@ You, Y., Fu, Y., Li, L. et al. Nat Methods 21, 1743–1754 (2024). https://doi.o
 
 
 ## Image based
-## Image based
 
 <p float="center">
   <img src="figures/image_based.jpeg" width="95%" />
@@ -136,6 +135,18 @@ You, Y., Fu, Y., Li, L. et al. Nat Methods 21, 1743–1754 (2024). https://doi.o
 <p align = "center" style="font-family:Times;font-size:12px;">
 Lim, H.J., Wang, Y., Buzdin, A. et al. BMC Genomics 26, 47 (2025). https://doi.org/10.1186/s12864-025-11235-3
 </p>
+
+
+Overall, the metrics to consider when selecting the optimal technology.
+
+<p float="center">
+  <img src="figures/tech_selection_table.png" width="95%" />
+</p>
+
+<p align = "center" style="font-family:Times;font-size:12px;">
+Lim, H.J., Wang, Y., Buzdin, A. et al. BMC Genomics 26, 47 (2025). https://doi.org/10.1186/s12864-025-11235-3
+</p>
+
 
 
 
