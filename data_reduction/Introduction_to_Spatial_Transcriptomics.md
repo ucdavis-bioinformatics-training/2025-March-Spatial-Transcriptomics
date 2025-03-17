@@ -100,7 +100,9 @@ Lim, H.J., Wang, Y., Buzdin, A. et al. https://doi.org/10.1186/s12864-025-11235-
 
 
 
-___10X Genomics Visium___
+___10X Genomics Visium___ application permeabilize the fresh frozon tissue to release mRNA from the cells, which then binds to the spatially barcoded poly(dT) oligonucleotides preent on the spots. For FFPE samples, the mRNAs released from the cells are captured using probes. The spatially barcoded molecules are then pooled for downstream processing to generate a sequencing library. Each slide has 2 or 4 capture areas. The size of the capture areas is 6.5 by 6.5 mm for V1 and V2, with an additional 11 by 11 mm setting for V2. The barcoded spots have a dimension of 55 microns and a distance of 100 microns between spots. The resolution of this platform is between 1 to 10 cells per spot.
+
+___10X Genomics Visium HD___ slides contain two 6.5 X 6.5 mm capture areas with a continuous array of oligonucleotides in millions of 2 by 2 microns barcoded squares without gaps. This application achieves single-cell level spatial resolution. The tissue is imaged with H&E staining, followed by probe hybridization that targets 18085 genes for human and 19059 genes for mouse using ~54-55K probes. The hybridized probes are transferred onto the Visium HD slide in the CytAssist instrument for sequencing library preparation.
 
 ___Slide-Seq___ transfers RNA from tissue sections onto a surface that is covered in DNA-barcoded beads with known physical locations which allows for the position of RNAs at a 10 micro resolution.
 
