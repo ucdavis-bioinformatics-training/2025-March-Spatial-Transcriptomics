@@ -106,6 +106,10 @@ ___10X Genomics Visium HD___ slides contain two 6.5 X 6.5 mm capture areas with 
 
 ___Slide-Seq___ transfers RNA from tissue sections onto a surface that is covered in DNA-barcoded beads with known physical locations, which allows for the position of RNAs at a 10 micro resolution. The mRNAs are caputured by polydT oligonucleotides, that allows spatial profiling of non-model organisms.
 
+___StereoSeq___ uses multidomain probes that include poly(dT) sequence to capture RNAs in a fresh tissue, as well as random barcoded sequences, coordinate identity, and molecular identifiers. It generates circularized sequences for rolling circle amplification and sequence on DNBSeq platforms. The spot size is 200nm and the distance between spots is 500nm. It provides large capture area of 1 cm^2 for standard frame and can be expanded to 13 X 13 cm^2.
+
+___GeoMx DSP___ hybridizes a pool of gene-specific probes to mRNAs. Each probe is linked to a unique digital spatial profiling (DSP) barcode via a UV-cleavable linker. After hybridization and optionally the selection of regions of interest, UV light is used to cleave the DSP barcodes that will undergo library preparation and sequencing. This platform is capable of profiling the whole transcriptomes and/or 570+ proteins at a resolution of at least 10 microns.
+
 A recent study compares a few sequencing based spatial transcriptomic platforms.
 
 <p float="center">
@@ -137,6 +141,13 @@ Lim, H.J., Wang, Y., Buzdin, A. et al. BMC Genomics 26, 47 (2025). https://doi.o
 </p>
 
 
+___Xenium___ provides a large analyzable area of up to 472 mm^2 per run with 2 slides, where a unique dual hybridization and ligation probe chemistry allows for specific and sensitive binding without off-target issues. The platform offers pre-built gene panels that range from ~248 genes to ~5K genes targeting human and mouse tissues. Customers have the opportunity to add up to 100 genes to each panel, or build custome panel with up to 480 genes. The resolution is at ~200nm per pixel. Xenium prime offers a 5K gene panel for detection for human and mouse.
+
+___Merscope___ uses a binary barcode strategy for gene identification, where each gene is assigned a unique binary barcode. The probe hybridization uses 30 to 50 gene-specific primary probes hybridize to different regions of the target gene. Each primary probe has a target-binding domain for RNA hybridization and "hangout tails" for secondary probe binding. The secondary probes are fluorescently labeled or unlabeled and bind to the tails of the primary probes. The imaging area is large with 1.0 cm^2 per slide for MERSCOPE and up to 3 cm^2 for MERSCOPE ULTRA. The resolution is high at 100nm per pixel. It has a multiplex capacity of up to 1K genes.
+
+___CosMx___ uses probes that are composed of two regions. The first region is 35 to 50 nucleotides in length and has gene specific sequences to bind to target mRNAs. The second readout region has 4 domains that bind to reporter probes that are fluorophore labeled. The number of cycles used in reporter probe binding leads to different multiplex capacities. It has a 6K gene panel for human and is developing a whole transcriptome panel for human that will be released this year. CosMx offers a 300 mm^2 imaging area.
+
+
 Overall, the metrics to consider when selecting the optimal technology.
 
 <p float="center">
@@ -148,145 +159,6 @@ Lim, H.J., Wang, Y., Buzdin, A. et al. BMC Genomics 26, 47 (2025). https://doi.o
 </p>
 
 
-The dataset used in this workshop is a subset of a much larger dataset from a [recent study](https://doi.org/10.1038/s41588-022-01088-x) that generated single nuclei transcriptome and chromatin accessibility profiles from colorectal tissue samples.[^1] The authors isolated 1000 to 10000 nuclei per sample for 81 samples of three types: 48 polyp samples, 27 normal tissue samples, and 6 colorectal cancer (CRC) samples from patients with or without germline APC mutations. They observed a continuum of cell state and composition changes from normal tissue, to polyps, to cancer.
-
-For the purposes of this workshop, we will use one sample from each condition (CRC: A001-C-007, polyp: A001-C-104, and normal: B001-A-301).
-
-
-[^1]: Becker, W. R.; Nevins, S. A.; Chen, D. C.; Chiu, R.; Horning, A. M.; Guha, T. K.; Laquindanum, R.; Mills, M.; Chaib, H.; Ladabaum, U.; Longacre, T.; Shen, J.; Esplin, E. D.; Kundaje, A.; Ford, J. M.; Curtis, C.; Snyder, M. P.; Greenleaf, W. J. Single-Cell Analyses Define a Continuum of Cell State and Composition Changes in the Malignant Transformation of Polyps to Colorectal Cancer. Nat. Genet. 2022. https://doi.org/10.1038/s41588-022-01088-x.
-
-# Data Setup
-
-Let's set up a project directory for the analysis, and talk a bit about project philosophy.
-
-**1\.** First, create a directory for your user and the example project in the workshop directory:
-
-```bash
-cd
-mkdir -p /share/workshop/scRNA_workshop/$USER/scrnaseq_example
-```
 
 ---
 
-**2a\.** Next, go into that directory, create a raw data directory (we are going to call this 00-RawData) and cd into that directory. Let's then create symbolic links to the fastq files that contains the raw read data.
-
-```bash
-cd /share/workshop/scRNA_workshop/$USER/scrnaseq_example
-mkdir 00-RawData
-cd 00-RawData/
-ln -s /share/workshop/scRNA_workshop/DATA/*.fastq.gz .
-```
-
-This directory now contains the reads for each sample.
-
-**2b\.** Let's create a sample sheet for the project, and store sample names in a file called samples.txt
-
-```bash
-cd /share/workshop/scRNA_workshop/$USER/scrnaseq_example/00-RawData
-ls *_R1_* |cut -d'_' -f1 > ../samples.txt
-cat ../samples.txt
-```
-
-# Data Exploration
----
-**3\.** Now, take a look at the raw data directory.
-
-```bash
-ls /share/workshop/scRNA_workshop/$USER/scrnaseq_example/00-RawData
-```
----
-
-**4\.** View the contents of the files using the 'less' command, when gzipped used 'zless' (which is just the 'less' command for gzipped files, q to exit):
-
-Read 1
-
-```bash
-cd /share/workshop/scRNA_workshop/$USER/scrnaseq_example/00-RawData
-zless A001-C-007_S4_R1_001.fastq.gz
-```
-
-and Read 2
-
-```bash
-zless A001-C-007_S4_R2_001.fastq.gz
-```
-
-A detailed explanation of FASTQ file can be found [here](filetypes.md). Please read on the description and make sure you can identify which lines correspond to a single read and which lines are the header, sequence, and quality values. Press 'q' to exit this screen.
-
-Let's figure out the number of reads in this file. A simple way to do that is to count the number of lines and divide by 4 (because the record of each read uses 4 lines). In order to do this use cat to output the uncompressed file and pipe that to "wc" to count the number of lines:
-
-```bash
-zcat A001-C-007_S4_R1_001.fastq.gz | wc -l
-```
-
-Divide this number by 4 and you have the number of reads in this file.
-
-```bash
-expr $(zcat A001-C-007_S4_R1_001.fastq.gz | wc -l) / 4
-```
-
-One more thing to try is to figure out the length of the reads without counting each nucleotide. First get the first 4 lines of the file (i.e. the first record):
-
-```bash
-zcat A001-C-007_S4_R1_001.fastq.gz  | head -4
-```
-
-Note the header lines (1st and 3rd line) and sequence and quality lines (2nd and 4th) in each 4-line fastq block. You can isolate the sequence line:
-
-```bash
-zcat A001-C-007_S4_R1_001.fastq.gz | head -2 | tail -1
-```
-
-Then, copy and paste the DNA sequence line into the following command (replace [sequence] with the line):
-
-```bash
-echo -n [sequence] | wc -c
-```
-
-This will give you the length of the read.
-
-Also can do the bash one liner:
-
-```bash
-echo -n $(zcat A001-C-007_S4_R1_001.fastq.gz  | head -2 | tail -1) | wc -c
-```
-
-See if you can figure out how this command works.
-
-
-## Quiz
-
-<div id="quiz1" class="quiz"></div>
-<button id="submit1">Submit Quiz</button>
-<div id="results1" class="output"></div>
-<script>
-quizContainer1 = document.getElementById('quiz1');
-resultsContainer1 = document.getElementById('results1');
-submitButton1 = document.getElementById('submit1');
-
-myQuestions1 = [
-  {
-    question: "How many reads are in the file?",
-    answers: {
-      a: "200 Thousand",
-      b: "500 Thousand",
-      c: "4 Million",
-      d: "2 Million"
-    },
-    correctAnswer: "c"
-  },
-  {
-    question: "What is the length of Read 1 and Read 2?",
-    answers: {
-      a: "90 and 90",
-      b: "50 and 100",
-      c: "28 and 91",
-      d: "75 and 25"
-    },
-    correctAnswer: "c"
-  }
-];
-
-buildQuiz(myQuestions1, quizContainer1);
-submitButton1.addEventListener('click', function() {showResults(myQuestions1, quizContainer1, resultsContainer1);});
-</script>
