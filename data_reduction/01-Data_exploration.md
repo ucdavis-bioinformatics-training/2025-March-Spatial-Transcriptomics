@@ -25,40 +25,41 @@ ls
 * morphology.ome.tif - 3D Z-stack of the DAPI image that can be useful to resegment cells, assess segmentation quality, and view data.
 * morphology_focus - available in Xenium experiment where 3 additional stain images available besides the nuclei DAPI stain image: boundary (ATP1A1/E-Cadherin/CD45) image, interior RNA (18S) image, and interior protein (alphaSMA/Vimentin) image
 * cells.csv.gz - cell summary file with columns for:
- - cell id
- - X location of the cell centroid in microns
- - Y location of the cell centroid in microns
- - count of gene features for transcripts with Q-Score >= 20
- - count of negative control probes
- - count of genomic control codewords (Xenium Prime)
- - count of negative control codewords
- - count of unassigned codewords
- - total counts of the probes and codewords
- - 2D area covered by the cell in micron^2
- - 2D area covered by the nucleus in micron^2
- - count of detected nuclei
- - cell segmentation method
+	* cell id
+	* X location of the cell centroid in microns
+	* Y location of the cell centroid in microns
+	* count of gene features for transcripts with Q-Score >= 20
+	* count of negative control probes
+	* count of genomic control codewords (Xenium Prime)
+	* count of negative control codewords
+	* count of unassigned codewords
+	* total counts of the probes and codewords
+	* 2D area covered by the cell in micron^2
+	* 2D area covered by the nucleus in micron^2
+	* count of detected nuclei
+	* cell segmentation method
 * cells.parquet - cell summary in Parquet format that allows faster loading and reading of data
 * cells.zarr.zip - cell segmentation file in Zarr format that contains segmentation masks and boundaries for nuclei and cells. It's used to assign transcripts to cells
 * nucleus_boundaries.csv.gz and cell_boundaries.csv.gz are nucleus and cell boundaries in csv format. Each row represents a vertex in the boundary polygon of the cell/nucleus and the boundaries points for each cell/nucleus are listed in clockwise order.
 * transcripts.parquet contains data to evaluate transcript quality and localization.
- - transcript id
- - cell id
- - binary value to indicate if the transcript falls within the segmented nuccleus of a cell
- - gene or control name
- - X location of the transcript in micron
- - Y location of the transcript in micron
- - Z location of the transcript in micron
- - phred-scaled quality value (Q-Score) estimating the probability of incorrect call
- - FOV name
- - the distance between the transcript and the nearest nucleus boundary in micron based on segmentation mask boundaries.
- - an integer index for each codeword used to decode transcripts
- - codeword category
- - value to indicate whether transcript feature is "Gene Expression" or not
+	* transcript id
+	* cell id
+	* binary value to indicate if the transcript falls within the segmented nuccleus of a cell
+	* gene or control name
+	* X location of the transcript in micron
+	* Y location of the transcript in micron
+	* Z location of the transcript in micron
+	* phred-scaled quality value (Q-Score) estimating the probability of incorrect call
+	* FOV name
+	* the distance between the transcript and the nearest nucleus boundary in micron based on segmentation mask boundaries.
+	* an integer index for each codeword used to decode transcripts
+	* codeword category
+	* value to indicate whether transcript feature is "Gene Expression" or not
 * cell_feature_matrix - cell-feature matrix output from XOA in three formats: a standard text-based format (the Market Exchange Format (MEX)), the Hierarchical Data Format (HDF5), and the Zarr format. They only include transcripts that pass the default quality value threshold of Q20 and are assigned to cells.
 * analysis folder contains outputs from XOA pipeline: clustering, differential expression, principal component analysis and UMAP.
 * aux_outputs
- - morphology_fov_locations.json contains FOV name, height, width, and XY positions in the space of the ROI morphology image. It's the same space used to compute transcript and cell locations.
 
+
+## The output from CosMx AtoMx pipeline
 
 
