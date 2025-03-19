@@ -7,14 +7,18 @@ There are a few different data sets used throughout the workshop because no one 
 
 First, let's create a project folder to keep all the workshop materials in. Then download the data and uncompress them and put them into their corresponding directories.
 
+```bash
 mkdir -p ~/Spatial_transcriptomics; cd Spatial_transcriptomics
 mkdir Xenium_V1_FFPE_TgCRND8_5_7_months_outs; mv Xenium_V1_FFPE_TgCRND8_5_7_months_outs.zip Xenium_V1_FFPE_TgCRND8_5_7_months_outs/
 mkdir Xenium_V1_FFPE_wildtype_5_7_months_outs; mv Xenium_V1_FFPE_wildtype_5_7_months_outs.zip Xenium_V1_FFPE_wildtype_5_7_months_outs/
+```
 
 Let's take a look at the files inside Xenium_V1_FFPE_wildtype_5_7_months_outs folder as an example.
 
+```bash
 cd Xenium_V1_FFPE_wildtype_5_7_months_outs
 ls
+```
 
 Most analyses have two stages: data reduction and data analysis.
 
