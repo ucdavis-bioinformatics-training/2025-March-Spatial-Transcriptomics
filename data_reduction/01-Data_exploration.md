@@ -62,22 +62,22 @@ ls
 
 ## The output from CosMx AtoMx pipeline
 
-Bruker AtoMx interface provides export functions to download necessary files to be used with community developed tools. One may export flat files (text based, csv) for:
-	* count matrix
-	* cell metadata
-	* transcripts
-	* polygons
-	* FOV positions
+Bruker AtoMx interface provides export functions to download necessary files to be used with community developed tools. One may export flat files (text based, csv).
+* count matrix
+* cell metadata
+* transcripts
+* polygons
+* FOV positions
 Tertiary analysis objects, such as Seurat object and TileDB array, can be exported as well. User has the option to include transcript coordinates and polygon coordinates in the exported Seurat object. But these produce large data files. Morphology 2D data may be exported as well, but produces very large data.
 
 ## The output from Visium HD platform
 
-10X Genomics Visium HD runs generate fastq files. The first step in analysis is to run Space Ranger to translate the raw sequencing data to location decoded gene expression matrix. The input files required for Space Ranger are:
-	* fastq files
-	* reference file
-	* probe set file
-	* slide layout file
-	* CytAssist-captured imageA
-	* optionally, a high resolution microscope image in either brightfield and fluorescence image can be added
+10X Genomics Visium HD runs generate fastq files. The first step in analysis is to run Space Ranger to translate the raw sequencing data to location decoded gene expression matrix. The input files required for Space Ranger.
+* fastq files
+* reference file
+* probe set file
+* slide layout file
+* CytAssist-captured imageA
+* optionally, a high resolution microscope image in either brightfield and fluorescence image can be added
 
 
