@@ -35,6 +35,6 @@ navigation:
   - heading: Spatial Transcriptomics
   - title: Technologies
     url: data_reduction/Introduction_to_Spatial_Transcriptomics
-  - title: Part 1- Data exploration
-    url: data_reduction/01-Data_exploration
+  - title: Part 1- Introduction to Data
+    url: data_reduction/00-intro2data
 

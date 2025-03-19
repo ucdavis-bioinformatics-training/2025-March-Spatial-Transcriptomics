@@ -78,7 +78,7 @@ Tertiary analysis objects, such as Seurat object and TileDB array, can be export
 * reference file
 * probe set file
 * slide layout file
-* CytAssist-captured imageA
+* CytAssist-captured image
 * optionally, a high resolution microscope image in either brightfield and fluorescence image can be added
 
 
