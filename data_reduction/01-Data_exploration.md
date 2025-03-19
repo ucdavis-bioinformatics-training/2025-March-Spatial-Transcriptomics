@@ -68,6 +68,7 @@ Bruker AtoMx interface provides export functions to download necessary files to 
 * transcripts
 * polygons
 * FOV positions
+
 Tertiary analysis objects, such as Seurat object and TileDB array, can be exported as well. User has the option to include transcript coordinates and polygon coordinates in the exported Seurat object. But these produce large data files. Morphology 2D data may be exported as well, but produces very large data.
 
 ## The output from Visium HD platform
