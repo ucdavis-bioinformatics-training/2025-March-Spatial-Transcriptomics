@@ -1,4 +1,4 @@
-# Data exploration
+# Introduction to Data
 
 There are a few different data sets used throughout the workshop because no one data set meets the requirement for all aspects we are going to discuss. The first data set is a Xenium data set on Alzheimer's disease model of mouse brain coronal section from one hemisphere. It is a data set provided by 10X Genomics on their website: https://www.10xgenomics.com/datasets/xenium-in-situ-analysis-of-alzheimers-disease-mouse-model-brain-coronal-sections-from-one-hemisphere-over-a-time-course-1-standard. The full data set includes 2 genotypes: wild type and Alzheimer's disease model, and 3 time points per genotype. We are going to use only the time point at 5.7 months for the 2 genotypes in this workshop.
 
