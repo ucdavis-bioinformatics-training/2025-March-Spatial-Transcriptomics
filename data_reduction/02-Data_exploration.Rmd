@@ -1,5 +1,5 @@
 ---
-title: "Spatial Transcriptomics Part 1: Data Exploration"
+title: "Spatial Transcriptomics Part 2: Data Exploration"
 author: "UCD Bioinformatics Core"
 date: "`r Sys.Date()`"
 output:
@@ -24,15 +24,15 @@ library(ggplot2)   # create graphics
 library(viridis)   # accessible color palettes
 ```
 
-This roughly replicates the table that appears in the Cellranger web summary file.
-
 ## Create Seurat object
-We will be using [Seurat](http://satijalab.org/seurat/) as the basis of our single cell (or nucleus) RNA-Seq analysis. Seurat is a popular R package that is designed for QC, analysis, and exploration of single cell data, which aims to enable users to identify and interpret sources of heterogeneity from single cell transcriptomic measurements, and to integrate diverse types of single cell data.
-In addition to the standard Seurat workflow, this documentation makes use of some custom code, and brings in functions from other packages. For additional information on Seurat standard workflows, see the authors' [tutorials](https://satijalab.org/seurat/vignettes.html).
+[Seurat](http://satijalab.org/seurat/) is a popular R package that is designed for QC, analysis, and exploration of single cell data, and spatial single cell data. We will use Seurat in the first stage in analysis to carry out a series of standard procedures: read in spatial data, QC, normalization, dimensionality reduction, clustering and visualizations.
+Seurat has an extensive documentation that covers many different use cases. In addition to the standard Seurat workflow, this documentation makes use of some custom code, and brings in functions from other packages. For additional information on Seurat standard workflows, see the authors' [tutorials](https://satijalab.org/seurat/vignettes.html).
 
 #### Read in expression matrix
+
 First, we read in data from each individual sample folder.
-```{r load_data_hdf5}
+
+```{r load_data}
 expression.data <- lapply(experiment.metadata$id, function(id){
   sample.matrix = Read10X_h5(file.path(dataset.loc, id, "/outs","filtered_feature_bc_matrix.h5"))
   colnames(sample.matrix) = paste(sapply(strsplit(colnames(sample.matrix),split="-"), '[[', 1L), id, sep="_")
