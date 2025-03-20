@@ -25,7 +25,7 @@ library(viridis)   # accessible color palettes
 
 ## Create Seurat object
 [Seurat](http://satijalab.org/seurat/) is a popular R package that is designed for QC, analysis, and exploration of single cell data, and spatial single cell data. We will use Seurat in the first stage in analysis to carry out a series of standard procedures: read in spatial data, QC, normalization, dimensionality reduction, clustering and visualizations.
-Seurat has an extensive documentation that covers many different use cases. In addition to the standard Seurat workflow, this documentation makes use of some custom code, and brings in functions from other packages. For additional information on Seurat standard workflows, see the authors' [tutorials](https://satijalab.org/seurat/vignettes.html).
+Seurat has an extensive documentation that covers many different use cases. In addition to the standard Seurat workflow, this documentation makes use of some custom code, and brings in functions from other packages. For additional information on Seurat standard workflows, see the authors' [tutorials](https://satijalab.org/seurat/articles/get_started_v5_new).
 
 #### Read in spatial data and cell feature matrix
 
@@ -200,33 +200,39 @@ VlnPlot(experiment.aggregate, features = c("nFeature_ControlProbe", "nCount_Cont
 
 ``` r
 ## genomic control: designed to bind to intergenic genomic DNA but not to any transcript sequence present in the tissue. They are present in the Xenium Prime 5K assay, but not in other Xenium assays.
+```
 
+## Exploratory visualizations
+
+
+
+``` r
 ## plot expression for genes of interest
 ImageDimPlot(experiment.aggregate, fov = "fov.wildtype", molecules = c("Satb2", "Lamp5", "Car4"), group.by = NULL, size = 0.5, alpha = 0.5, axes = T)
 ```
 
-![](02-Data_exploration_files/figure-html/visual-5.png)<!-- -->
+![](02-Data_exploration_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
 
 ``` r
 ImageDimPlot(experiment.aggregate, fov = "fov.TgCRND8", molecules = c("Satb2", "Lamp5", "Car4"), group.by = NULL, size = 0.5, alpha = 0.5, axes = T)
 ```
 
-![](02-Data_exploration_files/figure-html/visual-6.png)<!-- -->
+![](02-Data_exploration_files/figure-html/unnamed-chunk-1-2.png)<!-- -->
 
 ``` r
-ImageFeaturePlot(experiment.aggregate, fov = "fov.wildtype", features = c("Satb2", "Lamp5", "Car4"), size = 0.5, cols = c("white", "red"))
+ImageFeaturePlot(experiment.aggregate, fov = "fov.wildtype", features = c("Satb2", "Lamp5", "Car4"), size = 0.75, cols = c("white", "red"))
 ```
 
-![](02-Data_exploration_files/figure-html/visual-7.png)<!-- -->
+![](02-Data_exploration_files/figure-html/unnamed-chunk-1-3.png)<!-- -->
 
 ``` r
-ImageFeaturePlot(experiment.aggregate, fov = "fov.TgCRND8", features = c("Satb2", "Lamp5", "Car4"), size = 0.5, cols = c("white", "red"))
+ImageFeaturePlot(experiment.aggregate, fov = "fov.TgCRND8", features = c("Satb2", "Lamp5", "Car4"), size = 0.75, cols = c("white", "red"))
 ```
 
-![](02-Data_exploration_files/figure-html/visual-8.png)<!-- -->
+![](02-Data_exploration_files/figure-html/unnamed-chunk-1-4.png)<!-- -->
 
 ``` r
-## zoom in on specific fovs
+## zoom in on specific regions
 wildtype.subfov.1 <- Crop(experiment.aggregate[["fov.wildtype"]], y = c(1300, 3500), x = c(1200, 4100), coords = "plot")
 experiment.aggregate[["wildtype.subfov.1"]] <- wildtype.subfov.1
 DefaultBoundary(experiment.aggregate[["wildtype.subfov.1"]]) <- "segmentation"
@@ -234,7 +240,7 @@ ImageDimPlot(experiment.aggregate, fov = "wildtype.subfov.1", axes = T, border.c
 	coord.fixed = F, molecules = c("Satb2", "Lamp5", "Car4"), alpha = 0.5, nmols = 10000)
 ```
 
-![](02-Data_exploration_files/figure-html/visual-9.png)<!-- -->
+![](02-Data_exploration_files/figure-html/unnamed-chunk-1-5.png)<!-- -->
 
 ``` r
 TgCRND8.subfov.1 <- Crop(experiment.aggregate[["fov.TgCRND8"]], y = c(3700, 4800), x = c(300, 1800), coords = "plot")
@@ -244,7 +250,7 @@ ImageDimPlot(experiment.aggregate, fov = "TgCRND8.subfov.1", axes = T, border.co
 	coord.fixed = F, molecules = c("Satb2", "Lamp5", "Car4"), alpha = 0.5, nmols = 10000)
 ```
 
-![](02-Data_exploration_files/figure-html/visual-10.png)<!-- -->
+![](02-Data_exploration_files/figure-html/unnamed-chunk-1-6.png)<!-- -->
 
 ## Prepare for the next section
 
