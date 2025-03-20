@@ -8,7 +8,7 @@ output:
       toc: TRUE
 ---
 
-# Spatial Transcriptomics Part 1: Data Exploration
+# Spatial Transcriptomics Part 2: Data Exploration
 
 
 
@@ -263,7 +263,7 @@ saveRDS(experiment.aggregate, file="Spatial_workshop-02.rds")
 #### Download Rmd
 
 ``` r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_analysis/03-clustering.Rmd", "03-clustering.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_analysis/03-Clustering.Rmd", "03-Clustering.Rmd")
 ```
 
 #### Session information
