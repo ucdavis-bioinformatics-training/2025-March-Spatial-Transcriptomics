@@ -37,4 +37,6 @@ navigation:
     url: data_reduction/Introduction_to_Spatial_Transcriptomics
   - title: Part 1- Introduction to Data
     url: data_reduction/01-Intro2data
+  - title: Part 2- Data Exploration
+    url: data_reduction/02-Data_exploration
 

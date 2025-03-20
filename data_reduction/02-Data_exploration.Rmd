@@ -28,74 +28,46 @@ library(viridis)   # accessible color palettes
 [Seurat](http://satijalab.org/seurat/) is a popular R package that is designed for QC, analysis, and exploration of single cell data, and spatial single cell data. We will use Seurat in the first stage in analysis to carry out a series of standard procedures: read in spatial data, QC, normalization, dimensionality reduction, clustering and visualizations.
 Seurat has an extensive documentation that covers many different use cases. In addition to the standard Seurat workflow, this documentation makes use of some custom code, and brings in functions from other packages. For additional information on Seurat standard workflows, see the authors' [tutorials](https://satijalab.org/seurat/vignettes.html).
 
-#### Read in expression matrix
+#### Read in spatial data and cell feature matrix
 
-First, we read in data from each individual sample folder.
+First, we read in data from each individual tissue folder and create Seurat objects.
 
 ```{r load_data}
-expression.data <- lapply(experiment.metadata$id, function(id){
-  sample.matrix = Read10X_h5(file.path(dataset.loc, id, "/outs","filtered_feature_bc_matrix.h5"))
-  colnames(sample.matrix) = paste(sapply(strsplit(colnames(sample.matrix),split="-"), '[[', 1L), id, sep="_")
-  sample.matrix
+## set up directories
+data.dir <- "./00-RawData"
+project.dir <- "./"
+
+## samples
+samples <- c("TgCRND8", "wildtype")
+sample.dir <- paste0("Xenium_V1_FFPE_", samples, "_5_7_months_outs")
+
+## modify "future.globals.maxSize" to accommodate larege data"
+options(future.globals.maxSize = 2000 * 1024 ^ 2)
+## load multiple slices
+data.xenium <- lapply(seq_along(samples), function(i){
+	## modify the fov slot names to distinguish fovs from different tissue samples for easier access later
+	tmp <- Seurat::LoadXenium(data.dir = file.path(data.dir, sample.dir[i]), segmentations = "cell", cell.centroids = T, fov = paste0("fov.", samples[i]))
+	## attach tissue sample name to cell names
+	tmp <- RenameCells(tmp, new.names = paste0(samples[i], "-", Cells(tmp)))
+	## add metadata to identify tissue samples
+	tmp <- AddMetaData(tmp, metadata = samples[i], col.name = "Genotype")
+	return(tmp)
 })
-names(expression.data) <- experiment.metadata$id
-```
 
-```{r view_1, eval=FALSE}
-View(expression.data)
-```
-
-#### Merge matrices
-```{r aggregate}
-aggregate.data <- do.call("cbind", expression.data)
-```
-
-#### Create object
-The `CreateSeuratObject` function allows feature (gene) and cell filtering by minimum cell and feature counts. We will set these to 0 for now in order to explore manual filtering more fully in part 2.
-```{r create_seurat_object}
-experiment.aggregate <- CreateSeuratObject(
-  aggregate.data,
-  project = experiment.name,
-  min.cells = 0,
-  min.features = 0,
-  names.field = 2, # tells Seurat which part of the cell identifier contains the sample name
-  names.delim = "\\_")
-```
-
-## Add metadata
-We can now attach the metadata in our table to the Seurat object.
-
-#### Match metadata to expression matrix
-The columns of the expression matrix correspond to the cells in the experiment. When we created the Seurat object, the "names.field" and "names.delim" arguments allowed Seurat to infer sample identity from the cell names. This information is stored in a variable called "orig.ident."
-```{r orig.ident}
-levels(experiment.aggregate$orig.ident)
-```
-
-These sample identifiers are stored in the experiment.metadata object as well, which allows us to match the other metadata contained within that table to the correct cells within the Seurat object.
-```{r sample.index}
-sample.index <- match(experiment.aggregate$orig.ident, experiment.metadata$id)
-```
-
-#### Attach metadata
-The AddMetaData function returns a new Seurat object with an additional column in the metadata table containing the new information.
-```{r AddMetaData}
-experiment.aggregate <- AddMetaData(experiment.aggregate,
-                                    metadata = experiment.metadata$group[sample.index],
-            col.name = "group")
-experiment.aggregate$group <- factor(experiment.aggregate$group,
-                                     levels = c("Normal", "Polyp", "Colorectal Cancer"))
-experiment.aggregate <- AddMetaData(experiment.aggregate,
-                                    metadata = experiment.metadata$run[sample.index],
-                                    col.name = "run")
-experiment.aggregate$run <- factor(experiment.aggregate$run,
-                                   levels = c("A00509:113:HTNCWDMXX:1",
-                                              "A00509:116:HTLNJDMXX:1",
-                                              "A00509:126:HTLFWDMXX:1"))
+for (i in seq_along(data.xenium)){
+	if (i == 1){
+		experiment.aggregate <- data.xenium[[i]]
+	}else{
+		experiment.aggregate <- merge(experiment.aggregate, data.xenium[[i]])
+	}
+}
 ```
 
 ## Explore the Seurat object
-A Seurat object is a complex data structure containing the data from a single cell or single nucleus assay and **all** of the information associated with the experiment, including annotations, analysis, and more. This data structure was developed by the authors of the Seurat analysis package, for use with their pipeline.
-```{r view_2, eval=FALSE}
+
+A Seurat object is a complex data structure containing the data from a spatial single cell assay and **all** of the information associated with the experiment, including annotations, analysis, and more. This data structure was developed by the authors of the Seurat analysis package, for use with their pipeline.
+
+```{r view, eval=FALSE}
 View(experiment.aggregate)
 ```
 
@@ -110,7 +82,7 @@ experiment.aggregate@assays # a slot is accessed with the @ symbol
 - What type of object is the content of the meta.data slot?
 - What metadata is available?
 
-There is often more than one way to interact with the information stored in each of a Seurat objects many slots. The default behaviors of different access functions are described in the help documentation.
+There is often more than one way to interact with the information stored in each of a Seurat objects' many slots. The default behaviors of different access functions are described in the help documentation.
 
 ```{r explore_object_2}
 # which slot is being accessed here? find another way to produce the result
@@ -119,36 +91,53 @@ head(experiment.aggregate[[]])
 
 The use of syntax is often a matter of personal preference. In the interest of clarity, this documentation will generally use the more explicit syntax, with a few exceptions.
 
-## Barcode inflection plots
+## QC visuzalization
 
-Imagine the barcode rank plot from the Cell Ranger web summary. That graphic plots the number of UMIs against the barcode rank, and typically has a sharp inflection point where the number of UMIs drops dramatically. These points can represent a transition between cell types from a higher RNA content population to a lower RNA content population, or from cell-associated barcodes to background.
+```{r visual}
+## genes: designed probes for the gene panel
+VlnPlot(experiment.aggregate, features = c("nFeature_Xenium", "nCount_Xenium"), ncol = 2, pt.size = 0, log = T)
 
-The Seurat `BarcodeInflectionsPlot` provides a similar graphic. In this case, because we are using the filtered barcode matrix, rather than all barcodes, much of the background is absent from the plot.
+## blank, unassigned codewords: are unused codewords. No probe in the corresponding gene panel that will generate the codeword
+VlnPlot(experiment.aggregate, features = c("nFeature_BlankCodeword", "nCount_BlankCodeword"), ncol = 2, pt.size = 0.01)
 
-```{r barcode_inflection_plot}
-experiment.aggregate <- CalculateBarcodeInflections(experiment.aggregate)
-BarcodeInflectionsPlot(experiment.aggregate) +
-  scale_color_viridis_d()
-```
+## negative control codewords: codewords that do not have any probes matching that code. They are used to assess the specificity of the decoding algoritm
+VlnPlot(experiment.aggregate, features = c("nFeature_ControlCodeword", "nCount_ControlCodeword"), ncol = 2, pt.size = 0.01)
 
-Adding a log-scale transformation to the x-axis increases the resemblance to the Cell Ranger plot. Values on the y-axis are already log-transformed.
+## control, negative control probe: probes that exist in the panel but do not target any biological sequences. They are used to assess the specificity of the assay
+VlnPlot(experiment.aggregate, features = c("nFeature_ControlProbe", "nCount_ControlProbe"), ncol = 2, pt.size = 0.01)
 
-```{r barcode_inflection_plot_log}
-BarcodeInflectionsPlot(experiment.aggregate) +
-  scale_x_continuous(trans = "log10") +
-  scale_color_viridis_d()
+## genomic control: designed to bind to intergenic genomic DNA but not to any transcript sequence present in the tissue. They are present in the Xenium Prime 5K assay, but not in other Xenium assays.
+
+## plot expression for genes of interest
+ImageDimPlot(experiment.aggregate, fov = "fov.wildtype", molecules = c("Satb2", "Lamp5", "Car4"), group.by = NULL, size = 0.5, alpha = 0.5, axes = T)
+ImageDimPlot(experiment.aggregate, fov = "fov.TgCRND8", molecules = c("Satb2", "Lamp5", "Car4"), group.by = NULL, size = 0.5, alpha = 0.5, axes = T)
+ImageFeaturePlot(experiment.aggregate, fov = "fov.wildtype", features = c("Satb2", "Lamp5", "Car4"), size = 0.5, cols = c("white", "red"))
+ImageFeaturePlot(experiment.aggregate, fov = "fov.TgCRND8", features = c("Satb2", "Lamp5", "Car4"), size = 0.5, cols = c("white", "red"))
+
+## zoom in on specific fovs
+wildtype.subfov.1 <- Crop(experiment.aggregate[["fov.wildtype"]], y = c(1300, 3500), x = c(1200, 4100), coords = "plot")
+experiment.aggregate[["wildtype.subfov.1"]] <- wildtype.subfov.1
+DefaultBoundary(experiment.aggregate[["wildtype.subfov.1"]]) <- "segmentation"
+ImageDimPlot(experiment.aggregate, fov = "wildtype.subfov.1", axes = T, border.color = "white", border.size = 0.1, cols = "polychrome",
+	coord.fixed = F, molecules = c("Satb2", "Lamp5", "Car4"), alpha = 0.5, nmols = 10000)
+TgCRND8.subfov.1 <- Crop(experiment.aggregate[["fov.TgCRND8"]], y = c(3700, 4800), x = c(300, 1800), coords = "plot")
+experiment.aggregate[["TgCRND8.subfov.1"]] <- TgCRND8.subfov.1
+DefaultBoundary(experiment.aggregate[["TgCRND8.subfov.1"]]) <- "segmentation"
+ImageDimPlot(experiment.aggregate, fov = "TgCRND8.subfov.1", axes = T, border.color = "white", border.size = 0.1, cols = "polychrome",
+	coord.fixed = F, molecules = c("Satb2", "Lamp5", "Car4"), alpha = 0.5, nmols = 10000)
+
 ```
 
 ## Prepare for the next section
 
 #### Save object
 ```{r saveRDS}
-saveRDS(experiment.aggregate, file="scRNA_workshop-01.rds")
+saveRDS(experiment.aggregate, file="Spatial_workshop-02.rds")
 ```
 
 #### Download Rmd
 ```{r download_Rmd, eval=FALSE}
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/02-filtering.Rmd", "02-filtering.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_analysis/03-clustering.Rmd", "03-clustering.Rmd")
 ```
 
 #### Session information
