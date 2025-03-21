@@ -1,0 +1,175 @@
+---
+title: "Spatial Transcriptomics Part 3: Clustering"
+author: "UCD Bioinformatics Core"
+date: "`r Sys.Date()`"
+output:
+    html_document:
+      keep_md: TRUE
+      toc: TRUE
+---
+
+# Spatial Transcriptomics Part 3: Clustering
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, error = FALSE)
+```
+
+## Set up the workspace
+
+
+```{r libraries}
+library(Seurat)     # Spatial transcriptomics analysis
+library(kableExtra) # format tables
+library(ggplot2)   # create graphics
+library(viridis)   # accessible color palettes
+```
+
+If you are continuing directly from part 2, the experiment.aggregate object is likely already in your workspace. In case you cleared your workspace at the end of the previous section, or are working on this project at a later date after re-starting R, you can use the readRDS function to read your saved Seurat object from part 2.
+
+
+```{r load_data}
+experiment.aggregate <- readRDS("Spatial_workshop-02.rds")
+```
+
+Recall the QC visualizations we did in part 2. The quality of cells are reflected in a series of features that are different from single cell RNA-Seq data. For image based spatial transcriptomics, there are a few metrics used to control the background noise and decoding accuracy.
+
+* negative control codewords: codewords that do not have any probes matching to. They are chosen to assess the specificity of the decoding algorithm that assign the raw quality score to transcripts.
+* blank/unassigned codewords: codewords that no probe in a gene panel will generate
+* negative control probes: probes that exist in the gene panels but target non-biological sequences. They are used to assess the specificity of the assay.
+* genomic control probes: probes that are designed to bind to intergenic genomic DNA but not to any transcript sequence. They are present in the Xenium Prime assay
+
+The Xenium Onboard Analysis transcripts output only include the transcripts that meet the requirement of Q-Score of 20. The quality control remaining is to identify the high quality cells. The one important metric used to assess cell quality is the number of transcripts detected. The value of this metric is highly dependent on the size of the gene panel used in the assay.
+
+```{r}
+experiment.aggregate <- subset(experiment.aggregate, subset = nCount_Xenium > 20)
+```
+
+## Normalization
+
+Normalization is an important step in all gene expression analysis. The best normalization for spatial single cell data set is still an area of active development. There have been studies that were set to evaluate the different approaches. Please read the following manuscripts to learn more about this area: [Bhuva et. al.](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-024-03241-7) and [Atta et. al.](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-024-03303-w).
+
+Two normalization approaches are available in Seurat. One is the global-normalization method LogNormalize that normalizes the expression measurements for each cell by the total expression, multiplies this by a scaling factor of 10000 and log-transforms the results. The second is the SCTransform method where it performs gene-specific adjustments of expression measurements by regressing out the effect of library size using a generalized linear model framework.
+
+```{r}
+## first, let's take a look at the function SCTranform itself
+?SCTransform
+
+## normalize
+experiment.aggregate <- SCTransform(experiment.aggregate, assay = "Xenium")
+```
+
+## Dimentionality reduction
+
+Single cell resolution data are extremely high-dimensional. In order to reduce the complexity of analysis and remove sources of noise, dimensionality reduction is an important step in the analysis workflow. In this section, we will be using two dimension reduction methods: PCA and UMAP.
+
+Principal Components Analysis (PCA) is a widely-used dimension reduction method. Each PC is a vector in the reduced-dimensional space that is orthogonal to all preceding PCs. The first of these explains the largest amount of variation and each subsequent PC explains slightly less than the preceding component. PCA is performed on the scaled data, and therefore uses only the variable features.
+
+[Uniform Manifold Approximation and Projection](https://arxiv.org/pdf/1802.03426v3.pdf) (UMAP) is a dimensionality reduction method that is commonly used in single cell data analysis. Single cell data is extremely high-dimensional; UMAP calculates a nearest neighbor network describing the relationships between cells as measured by the PC loadings of variable genes and creates a lower-dimensional space that preserves these relationships.
+
+```{r}
+## linear
+experiment.aggregate <- RunPCA(experiment.aggregate, npcs = 30, features = rownames(experiment.aggregate))
+DimPlot(experiment.aggregate, reduction = "pca", group.by = "Genotype")
+
+## non-linear
+experiment.aggregate <- RunUMAP(experiment.aggregate, dims = 1:30)
+DimPlot(experiment.aggregate, reduction = "umap", group.by = "Genotype")
+
+```
+
+## Clustering
+
+Clustering is a critical step in single cell experiments, which is designed to capture the heterogeneity within samples as well as between them. Clustering permits the user to organize cells into clusters that correspond to biologically and experimentally relevant populations.
+
+Seurat implements an graph-based clustering approach. Distances between the cells are calculated based on previously identified PCs.
+
+The default method for identifying k-nearest neighbors is [annoy](https://github.com/spotify/annoy), an approximate nearest-neighbor approach that is widely used for high-dimensional analysis in many fields, including single-cell analysis. Extensive community benchmarking has shown that annoy substantially improves the speed and memory requirements of neighbor discovery, with negligible impact to downstream results.
+
+The FindClusters function implements the neighbor based clustering procedure, and contains a resolution parameter that sets the granularity of the downstream clustering, with increased values leading to a greater number of clusters. This code produces a series of resolutions for us to investigate and choose from. The clustering resolution parameter is unit-less and somewhat arbitrary. The resolutions used here were selected to produce a useable number of clusters in the example experiment.
+
+```{r}
+experiment.aggregate <- FindNeighbors(experiment.aggregate, reduction = "pca", dims = 1:30)
+experiment.aggregate <- FindClusters(experiment.aggregate, resolution = c(0.3, 0.5))
+```
+
+### Visualize clustering
+
+Seurat adds the clustering information to the metadata table. Each FindClusters call generates a new column named with the assay, followed by "_snn_res.", and the resolution.
+
+```{r cluster_metadata}
+cluster.resolutions <- grep("res", colnames(experiment.aggregate@meta.data), value = TRUE)
+head(experiment.aggregate@meta.data[,cluster.resolutions]) %>%
+  kable(caption = 'Cluster identities are added to the meta.data slot.') %>%
+  kable_styling("striped")
+```
+
+#### UMAP
+
+Dimensionality reduction plots can be used to visualize the clustering results. On these plots, we can see how each clustering resolution aligns with patterns in the data revealed by dimensionality reductions.
+
+```{r UMAP}
+# UMAP colored by cluster
+lapply(cluster.resolutions, function(res){
+  DimPlot(experiment.aggregate,
+          group.by = res,
+          reduction = "umap",
+          shuffle = TRUE) +
+    scale_color_viridis_d(option = "turbo")
+})
+```
+
+### Investigate the relationship between cluster identity and sample identity
+
+
+```{r membership}
+lapply(cluster.resolutions, function(res){
+         tmp = experiment.aggregate@meta.data[,c(res, "Genotype")]
+         colnames(tmp) = c("cluster", "Genotype")
+         ggplot(tmp, aes(x = cluster, fill = Genotype)) +
+           geom_bar() +
+           scale_fill_viridis_d(option = "mako") +
+           theme_classic()
+})
+```
+
+### Investigate the relationship between cluster identity and metadata values
+
+Here, example plots are displayed for the lowest resolution in order to save space. To see plots for each resolution, use `lapply()`.
+
+```{r}
+VlnPlot(experiment.aggregate,
+        group.by = "SCT_snn_res.0.3",
+        features = "nCount_Xenium",
+        pt.size = 0.1) +
+  scale_fill_viridis_d(option = "turbo")
+```
+
+### Visualize expression of genes of interest
+
+```{r feature}
+FeaturePlot(experiment.aggregate,
+            reduction = "umap",
+            features = "Satb2")
+VlnPlot(experiment.aggregate,
+        group.by = "SCT_snn_res.0.3",
+        features = "Satb2",
+        pt.size = 0.1) +
+  scale_fill_viridis_d(option = "turbo")
+```
+
+## Prepare for the next section
+
+#### Save object
+```{r saveRDS}
+saveRDS(experiment.aggregate, file="Spatial_workshop-03.rds")
+```
+
+#### Download Rmd
+```{r download_Rmd, eval=FALSE}
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_analysis/04-Celltype.Rmd", "04-Celltype.Rmd")
+```
+
+#### Session information
+```{r sessioinfo}
+sessionInfo()
+```
