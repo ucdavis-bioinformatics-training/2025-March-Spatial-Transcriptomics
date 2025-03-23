@@ -157,6 +157,13 @@ VlnPlot(experiment.aggregate,
   scale_fill_viridis_d(option = "turbo")
 ```
 
+### Visualize the clusters under spatial context
+
+```{r}
+ImageDimPlot(experiment.aggregate, fov = "fov.wildtype", group.by = "SCT_snn_res.0.3", size = 0.3, axes = T)
+ImageDimPlot(experiment.aggregate, fov = "fov.TgCRND8", group.by = "SCT_snn_res.0.3", size = 0.3, axes = T)
+```
+
 ## Prepare for the next section
 
 #### Save object

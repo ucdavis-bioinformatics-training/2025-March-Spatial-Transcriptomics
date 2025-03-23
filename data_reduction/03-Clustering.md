@@ -1,7 +1,7 @@
 ---
 title: "Spatial Transcriptomics Part 3: Clustering"
 author: "UCD Bioinformatics Core"
-date: "2025-03-21"
+date: "2025-03-22"
 output:
     html_document:
       keep_md: TRUE
@@ -110,7 +110,7 @@ experiment.aggregate <- FindClusters(experiment.aggregate, resolution = c(0.3, 0
 ## Running Louvain algorithm...
 ## Maximum modularity in 10 random starts: 0.9516
 ## Number of communities: 22
-## Elapsed time: 32 seconds
+## Elapsed time: 35 seconds
 ## Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
 ## 
 ## Number of nodes: 116549
@@ -119,7 +119,7 @@ experiment.aggregate <- FindClusters(experiment.aggregate, resolution = c(0.3, 0
 ## Running Louvain algorithm...
 ## Maximum modularity in 10 random starts: 0.9382
 ## Number of communities: 26
-## Elapsed time: 36 seconds
+## Elapsed time: 37 seconds
 ```
 
 ### Visualize clustering
@@ -269,6 +269,21 @@ VlnPlot(experiment.aggregate,
 ```
 
 ![](03-Clustering_files/figure-html/feature-2.png)<!-- -->
+
+### Visualize the clusters under spatial context
+
+
+``` r
+ImageDimPlot(experiment.aggregate, fov = "fov.wildtype", group.by = "SCT_snn_res.0.3", size = 0.3, axes = T)
+```
+
+![](03-Clustering_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+
+``` r
+ImageDimPlot(experiment.aggregate, fov = "fov.TgCRND8", group.by = "SCT_snn_res.0.3", size = 0.3, axes = T)
+```
+
+![](03-Clustering_files/figure-html/unnamed-chunk-6-2.png)<!-- -->
 
 ## Prepare for the next section
 
