@@ -158,7 +158,16 @@ Overall, the metrics to consider when selecting the optimal technology.
 Lim, H.J., Wang, Y., Buzdin, A. et al. BMC Genomics 26, 47 (2025). https://doi.org/10.1186/s12864-025-11235-3
 </p>
 
-
-
 ---
+
+### Download materials and prepare for the next section
+
+In the R console run the following command to download part 2 of the workshop.
+
+#### Markdown template document 
+```{r}
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_reduction/02-Date_exploration.Rmd", "02-Data_exploration.Rmd")
+```
+
+
 

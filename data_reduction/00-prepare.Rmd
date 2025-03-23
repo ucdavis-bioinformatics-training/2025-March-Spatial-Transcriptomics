@@ -171,6 +171,15 @@ if (!any(rownames(installed.packages()) == "remotes")){
 }
 library(remotes)
 ```
+#### NicheDE
+NicheDE performs niche-differential gene expression analysis, i.e. tests if the expression of a given cell type is influenced by being spatially close to another celltype.
+```{r}
+if (!any(rownames(installed.packages()) == "NicheDE")){
+  options(timeout=9999999)
+  remotes::install_github("kaishumason/NicheDE")
+}
+library(nicheDE)
+```
 
 #### spacexr
 spacexr implements computations methods for cell type identification and differential expression on spatial transcriptomics datasets.
@@ -216,25 +225,4 @@ Finally, we can get the session info to ensure that all of the packages were ins
 sessionInfo()
 ```
 
-### Download materials and prepare for the next section
 
-In the R console run the following command to download part 1 of data analysis.
-
-#### Markdown template document
-```{r}
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2024-December-Single-Cell-RNA-Seq-Analysis/main/data_analysis/01-create_object.Rmd", "01-create_object.Rmd")
-```
-
-#### Expression matrix
-
-In Rstudio, navigate to the terminal tab (next to the console). This gives you access to a bash terminal. Run the following code, **remember to change username to your own username for tadpole**:
-
-```{bash eval=F}
-
-scp username@tadpole.genomecenter.ucdavis.edu:/share/workshop/scRNA_workshop/cellranger_outs/expression_data_cellranger.zip .
-unzip expression_data_cellranger.zip
-```
-
-**Some Windows users may need to use Filezilla/WinSCP to download the file instead.**
-
-When the download and extraction are complete, you should see three folders: A001-C-007, A001-C-104 and B001-A-301. Make sure the "01-create_object.Rmd" file is in the same location.
