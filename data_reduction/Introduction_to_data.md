@@ -82,15 +82,3 @@ Tertiary analysis objects, such as Seurat object and TileDB array, can be export
 * optionally, a high resolution microscope image in either brightfield and fluorescence image can be added
 
 ---
-
-### Download materials and prepare for the next section
-
-In the R console run the following command to download part 2 of the workshop.
-
-#### Markdown template document 
-```{r}
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_reduction/00-prepare.Rmd", "00-prepare.Rmd")
-```
-
-
-
