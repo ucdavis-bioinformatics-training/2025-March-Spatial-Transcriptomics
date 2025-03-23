@@ -247,7 +247,7 @@ sessionInfo()
 
 ### Download materials and prepare for the next section
 
-In the R console run the following command to download part 2 of the workshop.
+In the R console run the following command to download part 1 of the workshop.
 
 #### Markdown template document 
 ``` r
