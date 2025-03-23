@@ -1,5 +1,5 @@
 ---
-title: "Spatial Transcriptomics Part 4: Cell type annotation"
+title: "Spatial Transcriptomics Part 3: Cell type annotation"
 author: "UCD Bioinformatics Core"
 date: "2025-03-23"
 output:
@@ -8,7 +8,7 @@ output:
       toc: TRUE
 ---
 
-# Spatial Transcriptomics Part 4: Cell type annotation
+# Spatial Transcriptomics Part 3: Cell type annotation
 
 
 
@@ -25,7 +25,7 @@ library(spacexr)  # cell type identification
 library(scCustomize)  # data type conversion
 ```
 
-If you are continuing directly from part 3, the experiment.aggregate object is likely already in your workspace. In case you cleared your workspace at the end of the previous section, or are working on this project at a later date after re-starting R, you can use the readRDS function to read your saved Seurat object from part 3.
+If you are continuing directly from part 2, the experiment.aggregate object is likely already in your workspace. In case you cleared your workspace at the end of the previous section, or are working on this project at a later date after re-starting R, you can use the readRDS function to read your saved Seurat object from part 2.
 
 
 

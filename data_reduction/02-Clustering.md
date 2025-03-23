@@ -1,5 +1,5 @@
 ---
-title: "Spatial Transcriptomics Part 3: Clustering"
+title: "Spatial Transcriptomics Part 2: Clustering"
 author: "UCD Bioinformatics Core"
 date: "2025-03-22"
 output:
@@ -8,7 +8,7 @@ output:
       toc: TRUE
 ---
 
-# Spatial Transcriptomics Part 3: Clustering
+# Spatial Transcriptomics Part 2: Clustering
 
 
 
@@ -23,7 +23,7 @@ library(ggplot2)   # create graphics
 library(viridis)   # accessible color palettes
 ```
 
-If you are continuing directly from part 2, the experiment.aggregate object is likely already in your workspace. In case you cleared your workspace at the end of the previous section, or are working on this project at a later date after re-starting R, you can use the readRDS function to read your saved Seurat object from part 2.
+If you are continuing directly from part 1, the experiment.aggregate object is likely already in your workspace. In case you cleared your workspace at the end of the previous section, or are working on this project at a later date after re-starting R, you can use the readRDS function to read your saved Seurat object from part 1.
 
 
 
