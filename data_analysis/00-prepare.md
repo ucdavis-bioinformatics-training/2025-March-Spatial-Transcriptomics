@@ -1,7 +1,7 @@
 ---
 title: "Prepare scRNA-Seq analysis"
 author: "UC Davis Bioinformatics Core"
-date: "2024-11-25"
+date: "2025-03-23"
 output: 
   html_document:
     keep_md: TRUE
@@ -237,7 +237,28 @@ if (!any(rownames(installed.packages()) == "HGNChelper")){
 library(HGNChelper)
 ```
 
-#### Verfiy installation
+#### NicheDE
+NicheDE performs niche-differential gene expression analysis, i.e. tests if the expression of a given cell type is influenced by being spatially close to another celltype.
+
+``` r
+if (!any(rownames(installed.packages()) == "NicheDE")){
+  options(timeout=9999999)
+  remotes::install_github("kaishumason/NicheDE")
+}
+library(nicheDE)
+```
+
+#### spacexr
+spacexr performs cell type deconvolution for older, lower resolution spatial platforms.  Required for the NicheDE example.
+
+``` r
+if (!any(rownames(installed.packages()) == "spacexr")){
+  remotes::install_github("dmcable/spacexr", build_vignettes = FALSE)
+}
+library(spacexr)
+```
+
+#### Verify installation
 Finally, we can get the session info to ensure that all of the packages were installed and loaded correctly.
 
 ``` r
