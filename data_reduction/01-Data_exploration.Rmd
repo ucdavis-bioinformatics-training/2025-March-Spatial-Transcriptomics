@@ -137,7 +137,7 @@ ImageDimPlot(experiment.aggregate, fov = "TgCRND8.subfov.1", axes = T, border.co
 
 #### Save object
 ```{r saveRDS}
-saveRDS(experiment.aggregate, file="Spatial_workshop-02.rds")
+saveRDS(experiment.aggregate, file="Spatial_workshop-01.rds")
 ```
 
 #### Download Rmd

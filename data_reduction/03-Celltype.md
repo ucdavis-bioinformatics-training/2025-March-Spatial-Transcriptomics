@@ -30,7 +30,7 @@ If you are continuing directly from part 3, the experiment.aggregate object is l
 
 
 ``` r
-experiment.aggregate <- readRDS("Spatial_workshop-03.rds")
+experiment.aggregate <- readRDS("Spatial_workshop-02.rds")
 ```
 
 Identifying the cell type present in the data is the most obvious objective of a spatial single cell experiment. And it enables the assessment of the cell type heterogeniety in the tissue and the differences across tissues/experimental conditions, as well as many other more sophisticated analysis, such as niche analysis, cell-cell interaction analysis that we will discuss later.
@@ -225,7 +225,7 @@ ImageDimPlot(experiment.aggregate, fov = "fov.TgCRND8", group.by = "predicted.ce
 #### Save object
 
 ``` r
-saveRDS(experiment.aggregate, file="Spatial_workshop-04.rds")
+saveRDS(experiment.aggregate, file="Spatial_workshop-03.rds")
 ```
 
 #### Download Rmd
