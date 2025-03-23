@@ -1,5 +1,5 @@
 ---
-title: "Spatial Transcriptomics Part 2: Data Exploration"
+title: "Spatial Transcriptomics Part 1: Data Exploration"
 author: "UCD Bioinformatics Core"
 date: "2025-03-20"
 output:
@@ -8,7 +8,7 @@ output:
       toc: TRUE
 ---
 
-# Spatial Transcriptomics Part 2: Data Exploration
+# Spatial Transcriptomics Part 1: Data Exploration
 
 
 

@@ -1,5 +1,5 @@
 ---
-title: "Spatial Transcriptomics Part 2: Data Exploration"
+title: "Spatial Transcriptomics Part 1: Data Exploration"
 author: "UCD Bioinformatics Core"
 date: "`r Sys.Date()`"
 output:
@@ -8,7 +8,7 @@ output:
       toc: TRUE
 ---
 
-# Spatial Transcriptomics Part 2: Data Exploration
+# Spatial Transcriptomics Part 1: Data Exploration
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE, error = FALSE)
