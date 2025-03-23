@@ -134,9 +134,7 @@ sf is a package that supports simple features, a standardized way to encode spat
 if (!any(rownames(installed.packages()) == "ComplexHeatmap")){
   install.packages("sf")
 }
-library(ComplexHeatmap)
 ```
-
 
 #### ComplexHeatmap
 ComplexHeatmap produces beautiful, highly-customizable heat maps.
@@ -172,6 +170,25 @@ if (!any(rownames(installed.packages()) == "remotes")){
   utils::install.packages("remotes")
 }
 library(remotes)
+```
+
+#### spacexr
+spacexr implements computations methods for cell type identification and differential expression on spatial transcriptomics datasets.
+```{r}
+## may need to modify the download time out limit for the installation to be successful
+#options(timeout = 600000000)
+if (!any(rownames(installed.packages()) == "spacexr")){
+remotes::install_github("dmcable/spacexr", build_vignettes = FALSE)
+}
+```
+
+#### scCustomize
+scCustome is a package with collection of functions created and/or curated to aid in visualization and analysis of single-cell data in R
+```{r}
+if (!any(rownames(installed.packages()) == "scCustomize")){
+  utils::install.packages("scCustomize")
+}
+library(scCustomize)
 ```
 
 #### ape
