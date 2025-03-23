@@ -31,7 +31,7 @@ If you are continuing directly from part 1, the experiment.aggregate object is l
 experiment.aggregate <- readRDS("Spatial_workshop-01.rds")
 ```
 
-Recall the QC visualizations we did in part 2. The quality of cells are reflected in a series of features that are different from single cell RNA-Seq data. For image based spatial transcriptomics, there are a few metrics used to control the background noise and decoding accuracy.
+Recall the QC visualizations we did in part 1. The quality of cells are reflected in a series of features that are different from single cell RNA-Seq data. For image based spatial transcriptomics, there are a few metrics used to control the background noise and decoding accuracy.
 
 * negative control codewords: codewords that do not have any probes matching to. They are chosen to assess the specificity of the decoding algorithm that assign the raw quality score to transcripts.
 * blank/unassigned codewords: codewords that no probe in a gene panel will generate
