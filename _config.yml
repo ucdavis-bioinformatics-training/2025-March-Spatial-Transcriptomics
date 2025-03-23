@@ -43,4 +43,6 @@ navigation:
     url: data_reduction/02-Data_exploration
   - title: Part 3- Clustering
     url: data_reduction/03-Clustering
+  - title: Part 4- Cell type
+    url: data_reduction/04-Celltype
 
