@@ -75,7 +75,7 @@ experiment.aggregate <- RunPCA(experiment.aggregate, npcs = 30, features = rowna
 DimPlot(experiment.aggregate, reduction = "pca", group.by = "Genotype")
 ```
 
-![](03-Clustering_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](02-Clustering_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
 ## non-linear
@@ -83,7 +83,7 @@ experiment.aggregate <- RunUMAP(experiment.aggregate, dims = 1:30)
 DimPlot(experiment.aggregate, reduction = "umap", group.by = "Genotype")
 ```
 
-![](03-Clustering_files/figure-html/unnamed-chunk-3-2.png)<!-- -->
+![](02-Clustering_files/figure-html/unnamed-chunk-3-2.png)<!-- -->
 
 ## Clustering
 
@@ -197,14 +197,14 @@ lapply(cluster.resolutions, function(res){
 ## [[1]]
 ```
 
-![](03-Clustering_files/figure-html/UMAP-1.png)<!-- -->
+![](02-Clustering_files/figure-html/UMAP-1.png)<!-- -->
 
 ```
 ## 
 ## [[2]]
 ```
 
-![](03-Clustering_files/figure-html/UMAP-2.png)<!-- -->
+![](02-Clustering_files/figure-html/UMAP-2.png)<!-- -->
 
 ### Investigate the relationship between cluster identity and sample identity
 
@@ -225,14 +225,14 @@ lapply(cluster.resolutions, function(res){
 ## [[1]]
 ```
 
-![](03-Clustering_files/figure-html/membership-1.png)<!-- -->
+![](02-Clustering_files/figure-html/membership-1.png)<!-- -->
 
 ```
 ## 
 ## [[2]]
 ```
 
-![](03-Clustering_files/figure-html/membership-2.png)<!-- -->
+![](02-Clustering_files/figure-html/membership-2.png)<!-- -->
 
 ### Investigate the relationship between cluster identity and metadata values
 
@@ -247,7 +247,7 @@ VlnPlot(experiment.aggregate,
   scale_fill_viridis_d(option = "turbo")
 ```
 
-![](03-Clustering_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+![](02-Clustering_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
 
 ### Visualize expression of genes of interest
 
@@ -258,7 +258,7 @@ FeaturePlot(experiment.aggregate,
             features = "Satb2")
 ```
 
-![](03-Clustering_files/figure-html/feature-1.png)<!-- -->
+![](02-Clustering_files/figure-html/feature-1.png)<!-- -->
 
 ``` r
 VlnPlot(experiment.aggregate,
@@ -268,7 +268,7 @@ VlnPlot(experiment.aggregate,
   scale_fill_viridis_d(option = "turbo")
 ```
 
-![](03-Clustering_files/figure-html/feature-2.png)<!-- -->
+![](02-Clustering_files/figure-html/feature-2.png)<!-- -->
 
 ### Visualize the clusters under spatial context
 
@@ -277,13 +277,13 @@ VlnPlot(experiment.aggregate,
 ImageDimPlot(experiment.aggregate, fov = "fov.wildtype", group.by = "SCT_snn_res.0.3", size = 0.3, axes = T)
 ```
 
-![](03-Clustering_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
+![](02-Clustering_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
 ImageDimPlot(experiment.aggregate, fov = "fov.TgCRND8", group.by = "SCT_snn_res.0.3", size = 0.3, axes = T)
 ```
 
-![](03-Clustering_files/figure-html/unnamed-chunk-6-2.png)<!-- -->
+![](02-Clustering_files/figure-html/unnamed-chunk-6-2.png)<!-- -->
 
 ## Prepare for the next section
 
@@ -296,7 +296,7 @@ saveRDS(experiment.aggregate, file="Spatial_workshop-02.rds")
 #### Download Rmd
 
 ``` r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_analysis/03-Celltype.Rmd", "03-Celltype.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_reduction/03-Celltype.Rmd", "03-Celltype.Rmd")
 ```
 
 #### Session information
