@@ -191,7 +191,7 @@ NicheDE performs niche-differential gene expression analysis, i.e. tests if the 
 ``` r
 if (!any(rownames(installed.packages()) == "NicheDE")){
   options(timeout=9999999)
-  remotes::install_github("kaishumason/NicheDE")
+  remotes::install_github("kaishumason/nicheDE")
 }
 library(nicheDE)
 ```
