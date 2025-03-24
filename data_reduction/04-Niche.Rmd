@@ -1,0 +1,210 @@
+---
+title: "Spatial Transcriptomics Part 4: Niche DE"
+author: "UCD Bioinformatics Core"
+date: "`r Sys.Date()`"
+output:
+    html_document:
+      keep_md: TRUE
+      toc: TRUE
+---
+
+# Spatial Transcriptomics Part 4: Niche-Differential Gene Expression with the nicheDE R package
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, error = FALSE)
+```
+
+Niche-differential gene expression [(Mason et al., 2024)](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-023-03159-6) identifies genes whose expression in a given cell type is influenced by the cell types in the local microenvironment. 
+
+We use the [nicheDE](https://github.com/kaishumason/NicheDE/) R package accompanying the above article for our analysis.
+
+```{r, include = FALSE}
+library(Seurat)
+library(nicheDE)
+library(dplyr)
+```
+
+## Read in cortex Seurat object with cell type annotations
+We will use the cortex subset of the Xenium data used in the previous section of the course.
+```{r}
+cortex <- readRDS("cortex.rds")
+```
+
+## Create expression profile matrix from reference data
+The background average expression profile from each cell type is obtained from reference data.  We use the Allen Brain Atlas cortex data from the previous section.
+
+```{r}
+allen <- readRDS("allen_cortex.rds")
+Idents(allen) <- "subclass"
+L <- CreateLibraryMatrixFromSeurat(allen, assay = 'RNA')
+```
+NicheDE requires that the cell types in the analysis data _exactly_ match that in the reference data. For this reason, it easiest, if possible, to use the same reference data to obtain the average expression profile that was used for cell type identification.
+
+The library matrix has a cell type not present in our data (CR), which we will manually remove:
+```{r}
+drop <- which(rownames(L) == "CR")
+L <- L[-drop,]
+```
+
+Change "L2/3 IT" celltype in library matrix to "L2-3 IT" to match our data
+```{r}
+rownames(L) <- gsub("L2/3 IT", "L2-3 IT", rownames(L), fixed = TRUE)
+```
+
+## Set up deconvolution matrix from identified cell types
+The deconvolution matrix tells NicheDE what type each cell has been assigned (or, for spot-level data, what mixture of cell types each spot has been predicted to contain).
+
+Our deconvolution matrix will have a column for each cell type and a row for each cell.  A cell will have a 1 in the column that matches its predicted celltype and a 0 otherwise.
+```{r}
+deconv_est <- model.matrix(~0 + cortex$predicted.celltype)
+rownames(deconv_est) <- colnames(cortex)
+colnames(deconv_est) <- gsub("cortex$predicted.celltype", "", colnames(deconv_est), fixed = TRUE)
+
+# Force column order to be the same as rows of L
+deconv_est <- deconv_est[, rownames(L)]
+```
+
+## Create NicheDE object
+```{r}
+cortex.counts <- LayerData(cortex, layer = "counts")
+counts_mat <- t(cortex.counts)
+cortex.coords <- GetTissueCoordinates(cortex, which = "centroids")
+rownames(cortex.coords) <- cortex.coords$cell
+cortex.coords <- cortex.coords[,1:2] # take out "cell" column
+NDE_obj <- CreateNicheDEObject(counts_mat = counts_mat, coordinate_mat = cortex.coords, library_mat = L, deconv_mat = deconv_est, sigma = c(100, 250, 500))
+```
+Sigma is the standard deviation of the Gaussian kernel used in niche calculation (details below).
+
+For Visium data, `sigma = c(1, 100, 250)` may be more appropriate.
+
+## Calculate effective Niche
+Identify neighboring cells that are in the immediate environment of each cell, based on cell coordinates and kernel bandwidth.
+
+```{r}
+NDE_obj <- CalculateEffectiveNiche(NDE_obj)
+```
+## Run NicheDE
+```{r, include = FALSE}
+NDE_obj = niche_DE(NDE_obj, num_cores = 4, outfile = "", C = 150, M = 10, gamma = 0.8, print = TRUE, Int = TRUE, self_EN = FALSE, G = 1)
+```
+
+Arguments:
+
+* num_cores: The number of cores to use when performing parallelization
+
+* outfile: The file path to the txt on which workers will write status reports on
+
+* C: The minimum total expression of a gene across observations needed for the niche-DE model to run. The default value is 150.
+
+* M: Minimum number of spots containing the index cell type with the niche cell type in its effective niche for (index,niche) niche patterns to be investigated. The default value is 10
+
+* Gamma: Percentile a gene needs to be with respect to expression in the index cell type in order for the model to investigate niche patterns for that gene in the index cell. The default value is 0.8 (80th percentile)
+
+* Int: Logical for if data is count data. If True, a negative binomial regression is performed. Otherwise linear regression with a gene specific variance is applied. Default is True.
+
+* self_EN: Logical if niche interactions between the same cell types should be considered. Default is False.
+
+* G: Number of gigabytes each core should hold. If the counts matrix is bigger than G gigabytes, it is split into multiple chunks such that the size of each chunk is less than G gigabytes.
+
+## Examine DE genes
+
+```{r}
+DE_genes <- get_niche_DE_genes(NDE_obj, 'I', index = 'Oligo', niche = 'Astro', positive = T, alpha = 0.05)
+head(DE_genes)
+```
+
+The genes above have significantly higher expression in oligodendrocytes that are near astrocytes, compared to average oligodendrocyte expression.
+
+We can use lapply to repeat this analysis over all pairs of index and niche cells.
+
+```{r, include = FALSE}
+index.celltypes <- unique(as.character(cortex$predicted.celltype))
+out <- lapply(index.celltypes, function(index){
+  niche.celltypes <- setdiff(index.celltypes, index) 
+  tmp <- lapply(niche.celltypes, function(niche){
+    DE <- get_niche_DE_genes(NDE_obj, 'I', index = index, niche = niche, positive = TRUE, alpha = 0.05)
+    if (nrow(DE) == 0) return(NULL)
+    DE$Niche <- niche
+    DE$Index <- index
+    return(DE)
+  })
+  tmp2 <- do.call(rbind, tmp)
+})
+NicheDE.results <- do.call(rbind, out)
+NicheDE.results <- select(NicheDE.results, Index, Niche, everything())
+write.table(NicheDE.results, file = "NicheDE_results.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+```
+
+```{r}
+head(NicheDE.results, 30)
+```
+
+## The math behind NicheDE
+
+First, for each cell, NicheDE defines the cell neighborhood using the distances to all other cells and a Gaussian kernel K:
+
+```{r, echo = FALSE}
+knitr::include_graphics("nicheDE_neighborhood_equation.png")
+```
+
+If we defined K as 1 if d < max.dist and 0 otherwise, the neighborhood would just be the number of cells of the given type within max.dist of our index cell.
+
+The Gaussian kernel instead allows cells closer to the index cell to have a greater influence than cells farther away. 
+
+```{r, echo = FALSE}
+knitr::include_graphics("gaussian_kernel.jpg")
+```
+
+The standard deviation of the kernel (the bandwidth) sigma determines the distance over which neighboring cells are assumed to most influence the index cell. 
+
+Once the neighborhoods have been defined, the niche DE model is then fitted:
+
+```{r, echo = FALSE}
+knitr::include_graphics("nicheDE_model.png")
+```
+
+In brief, the log mean expression of a gene g of celltype T is equal to the log mean background expression for that celltype plus a sum of contributions from neighboring cell types.
+
+The betas are unknown parameters which are estimated and tested using a negative binomial model. A nonzero beta means a gene is niche-differentially expressed for a given index celltype and niche celltype combination.
+
+## P-value adjustment
+NicheDE adjusts p-values for multiple testing using a hierarchical approach:
+
+```{r, echo = FALSE}
+knitr::include_graphics("hierarchical_testing.png")
+```
+
+###### From figure 1 of [https://genomebiology.biomedcentral.com/articles/10.1186/s13059-023-03159-6](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-023-03159-6)
+
+1. Test if a gene is nicheDE for any index-niche pair
+
+2. Correct for multiple testing across genes using the [Benjamini-Hochberg](https://www.jstor.org/stable/2346101?seq=1) false discovery rate controlling approach (BH).
+
+3. For significant genes, test if they are nicheDE for any index cell type.
+
+4. Apply BH correction across cell types within each gene from (3).
+
+5. For gene-index celltype combinations that are significant after steps 3 and 4, test if the gene is nicheDE for each niche celltype.
+
+6. Apply BH correction across niche celltypes within each gene-index celltype combination.
+
+
+## Choice of kernel bandwidth sigma
+
+Users are recommended to use multiple values of the kernel bandwith sigma.  P-values are then combined across the different bandwidths using a [Cauchy combination test](https://pmc.ncbi.nlm.nih.gov/articles/PMC7531765/).
+
+By default, the coordinates are transformed such that 100 is the median distance between units of observation (i.e. cells or spots). 
+
+Per the package developer:
+
+>For spot data which can contain many cells like Visium, we recommend using a sigma vector that contains a small value (e.g. 1), a value equal to the distance between neighboring spots (100), and a value somewhat larger, say 2-3 times the distance between neighboring spots (200-300).
+
+>For Xenium, it may make sense to increase sigma to be such that on average 5-10 cells are within a distance sigma from a cell.
+
+#### Download Rmd
+# ADD FILE DOWNLOAD HERE
+
+#### Session information
+```{r sessioninfo}
+sessionInfo()
+```
