@@ -22,7 +22,7 @@ ls
 
 * analysis_summary.html - Contains summary metrics and automated secondary analysis results
 * gene_panel.json - transcript feature metadata
-* morphology.ome.tif - 3D Z-stack of the DAPI image that can be useful to resegment cells, assess segmentation quality, and view data.
+* morphology.ome.tif - 3D Z-stack of the DAPI image that can be useful to resegment cells, assess segmentation quality, and view data. Open with [imageJ](https://imagej.net/ij/)
 * morphology_focus - available in Xenium experiment where 3 additional stain images available besides the nuclei DAPI stain image: boundary (ATP1A1/E-Cadherin/CD45) image, interior RNA (18S) image, and interior protein (alphaSMA/Vimentin) image
 * cells.csv.gz - cell summary file with columns for:
 	* cell id
