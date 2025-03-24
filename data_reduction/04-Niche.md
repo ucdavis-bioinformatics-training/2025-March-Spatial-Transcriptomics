@@ -109,6 +109,68 @@ NDE_obj <- CalculateEffectiveNiche(NDE_obj)
 ```
 ## Run NicheDE
 
+``` r
+NDE_obj = niche_DE(NDE_obj, num_cores = 4, outfile = "", C = 150, M = 10, gamma = 0.8, print = TRUE, Int = TRUE, self_EN = FALSE, G = 1)
+```
+
+```
+## [1] "Starting Niche-DE analysis with parameters C = 150, M = 10, gamma = 0.8."
+## [1] "Performing Niche-DE analysis with kernel bandwidth:100 (number 1 out of 3 values)"
+## [1] "Running Niche-DE in parallel"
+## [1] "Splitting Data into 1 chunks in order to avoid memory overload. Each chunk is less than 1 gigabytes."
+## [1] "Initializing cluster"
+## [1] "Evaluating chunk 1 out of 1"
+```
+
+```
+## [1] "Closing cluster"
+## [1] "Cleaning disk for next iteration"
+## [1] "Performing Niche-DE analysis with kernel bandwidth:250 (number 2 out of 3 values)"
+## [1] "Running Niche-DE in parallel"
+## [1] "Splitting Data into 1 chunks in order to avoid memory overload. Each chunk is less than 1 gigabytes."
+## [1] "Initializing cluster"
+## [1] "Evaluating chunk 1 out of 1"
+```
+
+```
+## [1] "Closing cluster"
+## [1] "Cleaning disk for next iteration"
+## [1] "Performing Niche-DE analysis with kernel bandwidth:500 (number 3 out of 3 values)"
+## [1] "Running Niche-DE in parallel"
+## [1] "Splitting Data into 1 chunks in order to avoid memory overload. Each chunk is less than 1 gigabytes."
+## [1] "Initializing cluster"
+## [1] "Evaluating chunk 1 out of 1"
+```
+
+```
+## [1] "Closing cluster"
+## [1] "Cleaning disk for next iteration"
+## [1] "Computing Positive Niche-DE Pvalues"
+## [1] "Computing Gene Level Pvalues"
+```
+
+```
+## [1] "Combining Gene Level Pvalues Across Kernel Bandwidths"
+## [1] "Computing Cell Type Level Pvalues"
+```
+
+```
+## [1] "Combining Cell Type  Level Pvalues Across Kernel Bandwidths"
+## [1] "Computing and Combining interaction Level Pvalues Across Kernel bandwidths"
+## [1] "Computing Negative Niche-DE Pvalues"
+## [1] "Computing Gene Level Pvalues"
+```
+
+```
+## [1] "Combining Gene Level Pvalues Across Kernel Bandwidths"
+## [1] "Computing Cell Type Level Pvalues"
+```
+
+```
+## [1] "Combining Cell Type  Level Pvalues Across Kernel Bandwidths"
+## [1] "Computing and Combining interaction Level Pvalues Across Kernel bandwidths"
+## [1] "Niche-DE analysis complete. Number of Genes with niche-DE T-stat equal to 288"
+```
 
 Arguments:
 
@@ -145,12 +207,12 @@ head(DE_genes)
 
 ```
 ##     Genes Pvalues.Interaction
-## 2   Cryab        4.462312e-07
-## 4     Id2        7.305770e-04
-## 3     Gsn        1.490888e-03
-## 7 Plekhb1        2.544947e-03
-## 8  Syngr1        2.758693e-03
-## 5     Mbp        3.547963e-03
+## 2   Cryab        4.275142e-07
+## 4     Id2        7.305609e-04
+## 3     Gsn        1.548044e-03
+## 7 Plekhb1        2.360830e-03
+## 8  Syngr1        2.774559e-03
+## 5     Mbp        3.573748e-03
 ```
 
 The genes above have significantly higher expression in oligodendrocytes that are near astrocytes, compared to average oligodendrocyte expression.
@@ -166,36 +228,36 @@ head(NicheDE.results, 30)
 
 ```
 ##     Index Niche   Genes Pvalues.Interaction
-## 1   Astro  Endo    Cd63        1.840866e-02
-## 2   Astro  Endo   Tppp3        3.864281e-02
-## 16  Astro    L4    Rorb        2.183863e-10
-## 3   Astro    L4    Cd63        3.607709e-06
-## 10  Astro    L4   Mertk        7.801465e-06
-## 11  Astro    L4   Ntsr2        1.694301e-04
-## 4   Astro    L4   Cdh20        2.110896e-04
-## 13  Astro    L4 Plekhb1        2.394844e-04
-## 5   Astro    L4    Clmn        9.446550e-04
-## 15  Astro    L4   Prdx6        1.459752e-03
-## 6   Astro    L4    Ctsb        1.590515e-03
-## 25  Astro    L4 Bhlhe40        2.255197e-03
-## 17  Astro    L4    Tle4        4.223759e-03
-## 14  Astro    L4 Ppp1r1b        6.137328e-03
-## 8   Astro    L4     Gns        7.102540e-03
-## 7   Astro    L4    Dner        2.213793e-02
-## 12  Astro    L4   Pde7b        3.669347e-02
-## 110 Astro    L4  Acsbg1        3.984212e-02
-## 9   Astro    L4     Id2        4.322719e-02
-## 111 Astro L5 IT    Cd63        5.425245e-04
-## 51  Astro L5 IT    Dkk3        7.565075e-04
-## 61  Astro L5 IT   Mertk        2.675376e-03
-## 71  Astro L5 IT   Ntsr2        3.495031e-03
-## 81  Astro L5 IT Plekhb1        3.515800e-03
-## 91  Astro L5 IT   Prdx6        6.179895e-03
-## 112 Astro L5 IT    Tle4        8.571327e-03
-## 101 Astro L5 IT  Syngr1        9.102447e-03
-## 41  Astro L5 IT     Clu        1.423734e-02
-## 121 Astro L5 IT   Tppp3        1.484999e-02
-## 31  Astro L5 IT    Clmn        1.849889e-02
+## 1   Astro  Endo    Cd63        1.840192e-02
+## 2   Astro  Endo   Tppp3        3.881817e-02
+## 16  Astro    L4    Rorb        2.273438e-10
+## 3   Astro    L4    Cd63        3.600164e-06
+## 10  Astro    L4   Mertk        7.656552e-06
+## 4   Astro    L4   Cdh20        1.918622e-04
+## 11  Astro    L4   Ntsr2        1.954952e-04
+## 13  Astro    L4 Plekhb1        2.293317e-04
+## 5   Astro    L4    Clmn        8.275067e-04
+## 15  Astro    L4   Prdx6        1.468130e-03
+## 6   Astro    L4    Ctsb        1.588223e-03
+## 25  Astro    L4 Bhlhe40        2.104837e-03
+## 17  Astro    L4    Tle4        4.656530e-03
+## 14  Astro    L4 Ppp1r1b        6.068871e-03
+## 8   Astro    L4     Gns        7.198966e-03
+## 7   Astro    L4    Dner        2.339466e-02
+## 110 Astro    L4  Acsbg1        3.982912e-02
+## 9   Astro    L4     Id2        4.336028e-02
+## 12  Astro    L4   Pde7b        4.430591e-02
+## 26  Astro L5 IT    Cd63        5.419448e-04
+## 61  Astro L5 IT    Dkk3        7.512025e-04
+## 71  Astro L5 IT   Mertk        2.654231e-03
+## 91  Astro L5 IT Plekhb1        3.382095e-03
+## 81  Astro L5 IT   Ntsr2        3.811127e-03
+## 101 Astro L5 IT   Prdx6        6.220223e-03
+## 111 Astro L5 IT  Syngr1        9.009586e-03
+## 121 Astro L5 IT    Tle4        9.160447e-03
+## 51  Astro L5 IT     Clu        1.423488e-02
+## 131 Astro L5 IT   Tppp3        1.516854e-02
+## 41  Astro L5 IT    Clmn        1.729295e-02
 ```
 
 ## The math behind NicheDE

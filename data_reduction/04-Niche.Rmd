@@ -84,7 +84,7 @@ Identify neighboring cells that are in the immediate environment of each cell, b
 NDE_obj <- CalculateEffectiveNiche(NDE_obj)
 ```
 ## Run NicheDE
-```{r, include = FALSE}
+```{r, , message = FALSE}
 NDE_obj = niche_DE(NDE_obj, num_cores = 4, outfile = "", C = 150, M = 10, gamma = 0.8, print = TRUE, Int = TRUE, self_EN = FALSE, G = 1)
 ```
 
