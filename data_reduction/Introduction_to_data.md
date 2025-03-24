@@ -56,14 +56,14 @@ ls
 	* codeword category
 	* value to indicate whether transcript feature is "Gene Expression" or not
 
-<p float="center">
-  <img src="figures/"InSitu_CodebookOverview.png width="85%" />
-</p>
-
-
 * cell_feature_matrix - cell-feature matrix output from XOA in three formats: a standard text-based format (the Market Exchange Format (MEX)), the Hierarchical Data Format (HDF5), and the Zarr format. They only include transcripts that pass the default quality value threshold of Q20 and are assigned to cells.
 * analysis folder contains outputs from XOA pipeline: clustering, differential expression, principal component analysis and UMAP.
 * aux_outputs
+
+
+<p float="center">
+  <img src="figures/"InSitu_CodebookOverview.png width="85%" />
+</p>
 
 
 ## The output from CosMx AtoMx pipeline
