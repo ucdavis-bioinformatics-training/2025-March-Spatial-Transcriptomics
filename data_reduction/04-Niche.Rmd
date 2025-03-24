@@ -18,7 +18,7 @@ Niche-differential gene expression [(Mason et al., 2024)](https://genomebiology.
 
 We use the [nicheDE](https://github.com/kaishumason/NicheDE/) R package accompanying the above article for our analysis.
 
-```{r, include = FALSE}
+```{r}
 library(Seurat)
 library(nicheDE)
 library(dplyr)
@@ -108,7 +108,7 @@ Arguments:
 
 ## Examine DE genes
 
-```{r}
+```{r, results='hide'}
 DE_genes <- get_niche_DE_genes(NDE_obj, 'I', index = 'Oligo', niche = 'Astro', positive = T, alpha = 0.05)
 head(DE_genes)
 ```
@@ -117,7 +117,7 @@ The genes above have significantly higher expression in oligodendrocytes that ar
 
 We can use lapply to repeat this analysis over all pairs of index and niche cells.
 
-```{r, include = FALSE}
+```{r, results='hide'}
 index.celltypes <- unique(as.character(cortex$predicted.celltype))
 out <- lapply(index.celltypes, function(index){
   niche.celltypes <- setdiff(index.celltypes, index) 

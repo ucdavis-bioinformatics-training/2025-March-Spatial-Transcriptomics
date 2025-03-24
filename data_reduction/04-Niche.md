@@ -17,6 +17,11 @@ Niche-differential gene expression [(Mason et al., 2024)](https://genomebiology.
 We use the [nicheDE](https://github.com/kaishumason/NicheDE/) R package accompanying the above article for our analysis.
 
 
+``` r
+library(Seurat)
+library(nicheDE)
+library(dplyr)
+```
 
 ## Read in cortex Seurat object with cell type annotations
 We will use the cortex subset of the Xenium data used in the previous section of the course.
@@ -169,7 +174,7 @@ NDE_obj = niche_DE(NDE_obj, num_cores = 4, outfile = "", C = 150, M = 10, gamma 
 ```
 ## [1] "Combining Cell Type  Level Pvalues Across Kernel Bandwidths"
 ## [1] "Computing and Combining interaction Level Pvalues Across Kernel bandwidths"
-## [1] "Niche-DE analysis complete. Number of Genes with niche-DE T-stat equal to 288"
+## [1] "Niche-DE analysis complete. Number of Genes with niche-DE T-stat equal to 287"
 ```
 
 Arguments:
@@ -195,24 +200,7 @@ Arguments:
 
 ``` r
 DE_genes <- get_niche_DE_genes(NDE_obj, 'I', index = 'Oligo', niche = 'Astro', positive = T, alpha = 0.05)
-```
-
-```
-## [1] "Returning Niche-DE Genes"
-```
-
-``` r
 head(DE_genes)
-```
-
-```
-##     Genes Pvalues.Interaction
-## 2   Cryab        4.275142e-07
-## 4     Id2        7.305609e-04
-## 3     Gsn        1.548044e-03
-## 7 Plekhb1        2.360830e-03
-## 8  Syngr1        2.774559e-03
-## 5     Mbp        3.573748e-03
 ```
 
 The genes above have significantly higher expression in oligodendrocytes that are near astrocytes, compared to average oligodendrocyte expression.
@@ -220,6 +208,23 @@ The genes above have significantly higher expression in oligodendrocytes that ar
 We can use lapply to repeat this analysis over all pairs of index and niche cells.
 
 
+``` r
+index.celltypes <- unique(as.character(cortex$predicted.celltype))
+out <- lapply(index.celltypes, function(index){
+  niche.celltypes <- setdiff(index.celltypes, index) 
+  tmp <- lapply(niche.celltypes, function(niche){
+    DE <- get_niche_DE_genes(NDE_obj, 'I', index = index, niche = niche, positive = TRUE, alpha = 0.05)
+    if (nrow(DE) == 0) return(NULL)
+    DE$Niche <- niche
+    DE$Index <- index
+    return(DE)
+  })
+  tmp2 <- do.call(rbind, tmp)
+})
+NicheDE.results <- do.call(rbind, out)
+NicheDE.results <- select(NicheDE.results, Index, Niche, everything())
+write.table(NicheDE.results, file = "NicheDE_results.txt", sep = "\t", row.names = FALSE, quote = FALSE)
+```
 
 
 ``` r
@@ -228,36 +233,36 @@ head(NicheDE.results, 30)
 
 ```
 ##     Index Niche   Genes Pvalues.Interaction
-## 1   Astro  Endo    Cd63        1.840192e-02
-## 2   Astro  Endo   Tppp3        3.881817e-02
-## 16  Astro    L4    Rorb        2.273438e-10
-## 3   Astro    L4    Cd63        3.600164e-06
-## 10  Astro    L4   Mertk        7.656552e-06
-## 4   Astro    L4   Cdh20        1.918622e-04
-## 11  Astro    L4   Ntsr2        1.954952e-04
-## 13  Astro    L4 Plekhb1        2.293317e-04
-## 5   Astro    L4    Clmn        8.275067e-04
-## 15  Astro    L4   Prdx6        1.468130e-03
-## 6   Astro    L4    Ctsb        1.588223e-03
-## 25  Astro    L4 Bhlhe40        2.104837e-03
-## 17  Astro    L4    Tle4        4.656530e-03
-## 14  Astro    L4 Ppp1r1b        6.068871e-03
-## 8   Astro    L4     Gns        7.198966e-03
-## 7   Astro    L4    Dner        2.339466e-02
-## 110 Astro    L4  Acsbg1        3.982912e-02
-## 9   Astro    L4     Id2        4.336028e-02
-## 12  Astro    L4   Pde7b        4.430591e-02
-## 26  Astro L5 IT    Cd63        5.419448e-04
-## 61  Astro L5 IT    Dkk3        7.512025e-04
-## 71  Astro L5 IT   Mertk        2.654231e-03
-## 91  Astro L5 IT Plekhb1        3.382095e-03
-## 81  Astro L5 IT   Ntsr2        3.811127e-03
-## 101 Astro L5 IT   Prdx6        6.220223e-03
-## 111 Astro L5 IT  Syngr1        9.009586e-03
-## 121 Astro L5 IT    Tle4        9.160447e-03
-## 51  Astro L5 IT     Clu        1.423488e-02
-## 131 Astro L5 IT   Tppp3        1.516854e-02
-## 41  Astro L5 IT    Clmn        1.729295e-02
+## 1   Astro  Endo    Cd63        1.830914e-02
+## 2   Astro  Endo   Tppp3        3.840264e-02
+## 16  Astro    L4    Rorb        2.079483e-10
+## 3   Astro    L4    Cd63        3.530799e-06
+## 10  Astro    L4   Mertk        7.794669e-06
+## 11  Astro    L4   Ntsr2        1.784085e-04
+## 13  Astro    L4 Plekhb1        2.253555e-04
+## 4   Astro    L4   Cdh20        2.292005e-04
+## 5   Astro    L4    Clmn        9.145508e-04
+## 15  Astro    L4   Prdx6        1.465273e-03
+## 6   Astro    L4    Ctsb        1.591306e-03
+## 25  Astro    L4 Bhlhe40        2.256214e-03
+## 8   Astro    L4     Gns        2.267488e-03
+## 17  Astro    L4    Tle4        3.846945e-03
+## 14  Astro    L4 Ppp1r1b        5.639732e-03
+## 7   Astro    L4    Dner        2.212313e-02
+## 110 Astro    L4  Acsbg1        3.983739e-02
+## 9   Astro    L4     Id2        4.364113e-02
+## 12  Astro    L4   Pde7b        4.431024e-02
+## 111 Astro L5 IT    Cd63        5.358621e-04
+## 51  Astro L5 IT    Dkk3        7.651756e-04
+## 61  Astro L5 IT   Mertk        2.674314e-03
+## 81  Astro L5 IT Plekhb1        3.353475e-03
+## 71  Astro L5 IT   Ntsr2        3.605895e-03
+## 91  Astro L5 IT   Prdx6        6.206872e-03
+## 112 Astro L5 IT    Tle4        8.049508e-03
+## 101 Astro L5 IT  Syngr1        9.013382e-03
+## 41  Astro L5 IT     Clu        1.423242e-02
+## 121 Astro L5 IT   Tppp3        1.455379e-02
+## 31  Astro L5 IT    Clmn        1.819645e-02
 ```
 
 ## The math behind NicheDE
