@@ -251,7 +251,7 @@ In the R console run the following command to download part 1 of the workshop.
 
 #### Markdown template document 
 ``` r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_reduction/00-prepare.Rmd", "00-prepare.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_reduction/01-Data_exploration.Rmd", "01-Datat_exploration.Rmd")
 ```
 
 
