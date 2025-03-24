@@ -60,6 +60,7 @@ ls
 * analysis folder contains outputs from XOA pipeline: clustering, differential expression, principal component analysis and UMAP.
 * aux_outputs
 
+---
 
 <p float="center">
   <img src="figures/"InSitu_CodebookOverview.png width="85%" />
