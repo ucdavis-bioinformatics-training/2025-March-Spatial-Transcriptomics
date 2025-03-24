@@ -124,6 +124,7 @@ names(annotations) <- rownames(RCTD@results$results_df)
 experiment.joined$predicted.celltype <- annotations
 keep.cells <- Cells(experiment.joined)[!is.na(experiment.joined$predicted.celltype)]
 cortex.obj <- subset(experiment.joined, cells = keep.cells)
+saveRDS(cortex.obj, file = "cortex.rds")
 
 ## visualize the annotated cell types in spatial context
 ImageDimPlot(cortex.obj, group.by = "predicted.celltype")
