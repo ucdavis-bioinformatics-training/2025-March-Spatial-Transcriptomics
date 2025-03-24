@@ -45,4 +45,6 @@ navigation:
     url: data_reduction/02-Clustering
   - title: Part 3- Cell type
     url: data_reduction/03-Celltype
+  - title: Part 4- NicheDE
+    url: data_reduction/04-Niche
 
