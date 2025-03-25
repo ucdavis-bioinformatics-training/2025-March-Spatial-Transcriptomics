@@ -90,7 +90,7 @@ First, please download "allen_cortex.rds" from _/share/workshop/Spatial_scRNA_wo
 
 ``` r
 ## create subset cells
-cropped <- Crop(experiment.aggregate[["fov.TgCRND8"]], x = c(100, 4000), y = c(4900, 5800), coords = c("plot"))
+cropped <- Crop(experiment.aggregate[["fov.TgCRND8"]], x = c(100, 4000), y = c(4900, 5800), coords = c("plot", "tissue"))
 experiment.aggregate[["cropped"]] <- cropped
 
 ## visualize subsetted section
