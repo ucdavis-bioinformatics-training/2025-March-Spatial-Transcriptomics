@@ -175,28 +175,28 @@ The use of syntax is often a matter of personal preference. In the interest of c
 VlnPlot(experiment.aggregate, features = c("nFeature_Xenium", "nCount_Xenium"), ncol = 2, pt.size = 0, log = T)
 ```
 
-![](02-Data_exploration_files/figure-html/visual-1.png)<!-- -->
+![](01-Data_exploration_files/figure-html/visual-1.png)<!-- -->
 
 ``` r
 ## blank, unassigned codewords: are unused codewords. No probe in the corresponding gene panel that will generate the codeword
 VlnPlot(experiment.aggregate, features = c("nFeature_BlankCodeword", "nCount_BlankCodeword"), ncol = 2, pt.size = 0.01)
 ```
 
-![](02-Data_exploration_files/figure-html/visual-2.png)<!-- -->
+![](01-Data_exploration_files/figure-html/visual-2.png)<!-- -->
 
 ``` r
 ## negative control codewords: codewords that do not have any probes matching that code. They are used to assess the specificity of the decoding algoritm
 VlnPlot(experiment.aggregate, features = c("nFeature_ControlCodeword", "nCount_ControlCodeword"), ncol = 2, pt.size = 0.01)
 ```
 
-![](02-Data_exploration_files/figure-html/visual-3.png)<!-- -->
+![](01-Data_exploration_files/figure-html/visual-3.png)<!-- -->
 
 ``` r
 ## control, negative control probe: probes that exist in the panel but do not target any biological sequences. They are used to assess the specificity of the assay
 VlnPlot(experiment.aggregate, features = c("nFeature_ControlProbe", "nCount_ControlProbe"), ncol = 2, pt.size = 0.01)
 ```
 
-![](02-Data_exploration_files/figure-html/visual-4.png)<!-- -->
+![](01-Data_exploration_files/figure-html/visual-4.png)<!-- -->
 
 ``` r
 ## genomic control: designed to bind to intergenic genomic DNA but not to any transcript sequence present in the tissue. They are present in the Xenium Prime 5K assay, but not in other Xenium assays.
@@ -211,25 +211,25 @@ VlnPlot(experiment.aggregate, features = c("nFeature_ControlProbe", "nCount_Cont
 ImageDimPlot(experiment.aggregate, fov = "fov.wildtype", molecules = c("Satb2", "Lamp5", "Car4"), group.by = NULL, size = 0.5, alpha = 0.5, axes = T)
 ```
 
-![](02-Data_exploration_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+![](01-Data_exploration_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
 
 ``` r
 ImageDimPlot(experiment.aggregate, fov = "fov.TgCRND8", molecules = c("Satb2", "Lamp5", "Car4"), group.by = NULL, size = 0.5, alpha = 0.5, axes = T)
 ```
 
-![](02-Data_exploration_files/figure-html/unnamed-chunk-1-2.png)<!-- -->
+![](01-Data_exploration_files/figure-html/unnamed-chunk-1-2.png)<!-- -->
 
 ``` r
 ImageFeaturePlot(experiment.aggregate, fov = "fov.wildtype", features = c("Satb2", "Lamp5", "Car4"), size = 0.75, cols = c("white", "red"))
 ```
 
-![](02-Data_exploration_files/figure-html/unnamed-chunk-1-3.png)<!-- -->
+![](01-Data_exploration_files/figure-html/unnamed-chunk-1-3.png)<!-- -->
 
 ``` r
 ImageFeaturePlot(experiment.aggregate, fov = "fov.TgCRND8", features = c("Satb2", "Lamp5", "Car4"), size = 0.75, cols = c("white", "red"))
 ```
 
-![](02-Data_exploration_files/figure-html/unnamed-chunk-1-4.png)<!-- -->
+![](01-Data_exploration_files/figure-html/unnamed-chunk-1-4.png)<!-- -->
 
 ``` r
 ## zoom in on specific regions
@@ -240,7 +240,7 @@ ImageDimPlot(experiment.aggregate, fov = "wildtype.subfov.1", axes = T, border.c
 	coord.fixed = F, molecules = c("Satb2", "Lamp5", "Car4"), alpha = 0.5, nmols = 10000)
 ```
 
-![](02-Data_exploration_files/figure-html/unnamed-chunk-1-5.png)<!-- -->
+![](01-Data_exploration_files/figure-html/unnamed-chunk-1-5.png)<!-- -->
 
 ``` r
 TgCRND8.subfov.1 <- Crop(experiment.aggregate[["fov.TgCRND8"]], y = c(3700, 4800), x = c(300, 1800), coords = "plot")
@@ -250,7 +250,7 @@ ImageDimPlot(experiment.aggregate, fov = "TgCRND8.subfov.1", axes = T, border.co
 	coord.fixed = F, molecules = c("Satb2", "Lamp5", "Car4"), alpha = 0.5, nmols = 10000)
 ```
 
-![](02-Data_exploration_files/figure-html/unnamed-chunk-1-6.png)<!-- -->
+![](01-Data_exploration_files/figure-html/unnamed-chunk-1-6.png)<!-- -->
 
 ## Prepare for the next section
 
