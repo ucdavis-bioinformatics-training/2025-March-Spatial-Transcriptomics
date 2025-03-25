@@ -34,7 +34,7 @@ cortex <- readRDS("cortex.rds")
 
 ## Find niches
 
-Up until now, we have done analyses that are very similar to regular single cell RNASeq data analysis, without utilizing the spatial information of the cell except for in visualizations. One of the popular analyses for spatial transcriptomics is to identify niches. A nich are regions of tissue, each of which is defined by a different composition of spatially adjacent cell types. In Seurat, a local neighborhood for each cell is constructed by including its k.neighbor spatially closest neighbors, and count the occurences of each cell type present in this neighborhood. Then a k-means clustering is done to group cells that have similar neighborhoods together, which is defined as spatial niches.
+Up until now, we have done analyses that are very similar to regular single cell RNASeq data analysis, without utilizing the spatial information of the cell except for in visualizations. One of the popular analyses for spatial transcriptomics is to identify niches. A nich are regions of tissue, each of which is defined by a different composition of spatially adjacent cell types. In Seurat, a local neighborhood for each cell is constructed by including its _neighbors.k_ spatially closest neighbors, and count the occurences of each cell type present in this neighborhood. Then a k-means clustering is done to group cells that have similar neighborhoods together, which is defined as spatial niches.
 
 We will use _BuildNicheAssay_ function to perform this analysis.
 

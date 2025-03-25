@@ -1,0 +1,89 @@
+---
+title: "Spatial Transcriptomics Part 4: Simple Niche analysis"
+author: "UCD Bioinformatics Core"
+date: "`r Sys.Date()`"
+output:
+    html_document:
+      keep_md: TRUE
+      toc: TRUE
+---
+
+# Spatial Transcriptomics Part 4: Simply Niche analysis
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, error = FALSE)
+```
+
+## Set up the workspace
+
+
+```{r libraries}
+library(Seurat)     # Spatial transcriptomics analysis
+library(kableExtra) # format tables
+library(ggplot2)   # create graphics
+library(viridis)   # accessible color palettes
+library(ComplexHeatmap)  # visualization heatmaps
+```
+
+We are going to use the cortex region that was subsetted previously for this exercise.
+
+
+```{r load_data}
+cortex <- readRDS("cortex.rds")
+```
+
+## Find niches
+
+Up until now, we have done analyses that are very similar to regular single cell RNASeq data analysis, without utilizing the spatial information of the cell except for in visualizations. One of the popular analyses for spatial transcriptomics is to identify niches. A nich are regions of tissue, each of which is defined by a different composition of spatially adjacent cell types. In Seurat, a local neighborhood for each cell is constructed by including its _neighbors.k_ spatially closest neighbors, and count the occurences of each cell type present in this neighborhood. Then a k-means clustering is done to group cells that have similar neighborhoods together, which is defined as spatial niches.
+
+We will use _BuildNicheAssay_ function to perform this analysis.
+
+There are over 300 cell types identified using the subclass level. I am going to use the clusters at the resolution 0.3 as an example to find niches.
+
+```{r}
+cortex <- BuildNicheAssay(cortex, fov = "fov.TgCRND8", group.by = "predicted.celltype", niches.k = 5, neighbors.k = 30)
+```
+
+Let's visualize the niche result together with the cell types.
+
+```{r}
+ImageDimPlot(cortex, fov = "fov.TgCRND8", group.by = "predicted.celltype", size = 0.75, dark.background = F)
+ImageDimPlot(cortex, fov = "fov.TgCRND8", group.by = "niches", size = 0.75, dark.background = F)
+```
+
+Next, we can tally the number of each cell type within a niche.
+
+```{r}
+mat <- table(cortex$predicted.celltype, cortex$niches)
+mat
+```
+
+Let's visualize this relationship
+
+```{r}
+cell_fun = function(j, i, x, y, width, height, fill) {
+                grid::grid.rect(x = x, y = y, width = width *0.99, 
+                                height = height *0.99,
+                                gp = grid::gpar(col = "grey", 
+                                                fill = fill, lty = 1, lwd = 0.5))
+}
+
+col_fun=circlize::colorRamp2(c(-2, 0, 2), c("blue", "white", "red"))
+
+Heatmap(scale(mat), show_row_dend = F, show_column_dend = F, rect_gp = grid::gpar(type = "none"), cell_fun = cell_fun, col = col_fun, column_names_rot = 90)
+```
+
+Please play around with the number of niches that _BuildNicheAssay_ should find and see how the cell type distribution changes.
+
+## Prepare for the next section
+
+
+#### Download Rmd
+```{r download_Rmd, eval=FALSE}
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_analysis/05-NicheDE.Rmd", "05-NicheDE.Rmd")
+```
+
+#### Session information
+```{r sessioinfo}
+sessionInfo()
+```
