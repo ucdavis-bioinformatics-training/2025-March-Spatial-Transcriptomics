@@ -1,5 +1,5 @@
 ---
-title: "Spatial Transcriptomics Part 4: Niche DE"
+title: "Spatial Transcriptomics Part 5: Niche DE"
 author: "UCD Bioinformatics Core"
 date: "`r Sys.Date()`"
 output:
@@ -8,7 +8,7 @@ output:
       toc: TRUE
 ---
 
-# Spatial Transcriptomics Part 4: Niche-Differential Gene Expression with the nicheDE R package
+# Spatial Transcriptomics Part 5: Niche-Differential Gene Expression with the nicheDE R package
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(message = FALSE, warning = FALSE, error = FALSE)
@@ -84,7 +84,7 @@ Identify neighboring cells that are in the immediate environment of each cell, b
 NDE_obj <- CalculateEffectiveNiche(NDE_obj)
 ```
 ## Run NicheDE
-```{r, , message = FALSE}
+```{r, results = "hide"}
 NDE_obj = niche_DE(NDE_obj, num_cores = 4, outfile = "", C = 150, M = 10, gamma = 0.8, print = TRUE, Int = TRUE, self_EN = FALSE, G = 1)
 ```
 
@@ -110,6 +110,9 @@ Arguments:
 
 ```{r, results='hide'}
 DE_genes <- get_niche_DE_genes(NDE_obj, 'I', index = 'Oligo', niche = 'Astro', positive = T, alpha = 0.05)
+```
+
+```{r}
 head(DE_genes)
 ```
 
