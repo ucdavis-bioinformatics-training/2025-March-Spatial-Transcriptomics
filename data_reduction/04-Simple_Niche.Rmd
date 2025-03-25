@@ -73,6 +73,82 @@ Heatmap(scale(mat), show_row_dend = F, show_column_dend = F, rect_gp = grid::gpa
 
 Please play around with the number of niches that _BuildNicheAssay_ should find and see how the cell type distribution changes.
 
+```{r}
+library(SpatialExperiment)
+library(SummarizedExperiment)
+library(scuttle)
+library(scater) 
+library(cowplot) 
+    
+
+cortex <- readRDS("cortex.rds")
+exp <- LayerData(cortex, layer = "counts")
+coords <- GetTissueCoordinates(cortex, which = "centroids")
+rownames(coords) <- coords$cell
+coords <- as.matrix(coords[,1:2])
+    
+se <- SpatialExperiment(assay = list(counts = exp), spatialCoords = coords)
+
+se <- computeLibraryFactors(se)
+
+assay(se, "data") <- normalizeCounts(se)
+
+k_geom <- c(15, 30)
+se <- computeBanksy(se, compute_agf = T, k_geom = k_geom, assay_name = "data")
+
+lambda <- c(0.2, 0.8)
+set.seed(1000)
+se <- runBanksyPCA(se, use_agf = T, lambda = lambda)
+se <- runBanksyUMAP(se, use_agf = T, lambda = lambda)
+se <- clusterBanksy(se, use_agf = T, lambda = lambda, resolution = c(0.3, 0.5))
+
+cnames <- colnames(colData(se))
+cnames <- cnames[grep("^clust", cnames)]
+colData(se) <- cbind(colData(se), spatialCoords(se))
+
+plot_lam02res08 <- plotColData(se,
+    x = 'x', y = 'y',
+    point_size = 0.6, colour_by = cnames[1]
+)
+plot_lam02res1 <- plotColData(se,
+    x = "x", y = "y",
+    point_size = 0.6, colour_by = cnames[2]
+)
+plot_lam08res08 <- plotColData(se,
+    x = "x", y = "y",
+    point_size = 0.6, colour_by = cnames[3]
+)
+plot_lam08res1 <- plotColData(se,
+    x = "x", y = "y",
+    point_size = 0.6, colour_by = cnames[4]
+)
+plot_lam02res03 <- plotColData(se,
+    x = 'x', y = 'y',
+    point_size = 0.6, colour_by = cnames[5]
+)
+plot_lam02res05 <- plotColData(se,
+    x = "x", y = "y",
+    point_size = 0.6, colour_by = cnames[6]
+)
+plot_lam08res03 <- plotColData(se,
+    x = "x", y = "y",
+    point_size = 0.6, colour_by = cnames[7]
+)
+plot_lam08res05 <- plotColData(se,
+    x = "x", y = "y",
+    point_size = 0.6, colour_by = cnames[8]
+)
+
+
+
+plot_grid(plotlist = list(plot_lam02res08 + coord_equal(), plot_lam02res1 + coord_equal(),
+        plot_lam08res08 + coord_equal(), plot_lam08res1 + coord_equal(),
+        plot_lam02res03 + coord_equal(), plot_lam02res05 + coord_equal(),
+        plot_lam08res03 + coord_equal(), plot_lam08res05 + coord_equal()),
+        ncol = 1)
+dev.off()
+```
+
 ## Prepare for the next section
 
 
