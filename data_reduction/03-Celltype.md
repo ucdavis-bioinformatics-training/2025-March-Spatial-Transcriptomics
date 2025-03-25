@@ -74,7 +74,7 @@ DoHeatmap(experiment.aggregate,
           group.colors = viridis::turbo(length(unique(experiment.aggregate$SCT_snn_res.0.3))))
 ```
 
-![](04-Celltype_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](03-Celltype_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 By comparing the cluster markers to expected marker gene expression, one can classify each cluster to a cell type.
 
@@ -97,7 +97,7 @@ experiment.aggregate[["cropped"]] <- cropped
 ImageDimPlot(experiment.aggregate, fov = "cropped")
 ```
 
-![](04-Celltype_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](03-Celltype_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 ``` r
 ## subset Seurat object for cortex region in TgCRND8 tissue
@@ -168,7 +168,7 @@ saveRDS(cortex.obj, file = "cortex.rds")
 ImageDimPlot(cortex.obj, group.by = "predicted.celltype")
 ```
 
-![](04-Celltype_files/figure-html/unnamed-chunk-4-2.png)<!-- -->
+![](03-Celltype_files/figure-html/unnamed-chunk-4-2.png)<!-- -->
 
 Allen Institute for Brain Science led the creation of the widely-used [Allen Brain Atlases](https://portal.brain-map.org/). Over 16 years of effort, using multi-modal measurements that include scRNA-seq, spatial transcriptomics, morphology, anatomy, electrophysiology and connectivity, they have generated a taxonomy of 34 classes, 338 subclasses, 1201 supertypes and 5322 clusters. Researchers that wish to use these data to annotate their own dataset can use [MapMyCells](https://knowledge.brain-map.org/mapmycells/process/) online tool. It is also available for offline use through their [github repo](https://github.com/AllenInstitute/cell_type_mapper?tab=readme-ov-file).
 
@@ -219,7 +219,7 @@ View(table(experiment.aggregate$predicted.celltype))
 ImageDimPlot(experiment.aggregate, fov = "fov.TgCRND8", group.by = "predicted.celltype") + NoLegend()
 ```
 
-![](04-Celltype_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
+![](03-Celltype_files/figure-html/unnamed-chunk-7-1.png)<!-- -->
 
 ## Prepare for the next section
 
@@ -232,7 +232,7 @@ saveRDS(experiment.aggregate, file="Spatial_workshop-03.rds")
 #### Download Rmd
 
 ``` r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_analysis/05-Niche.Rmd", "05-Niche.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_reduction/04-Niche.Rmd", "04-Niche.Rmd")
 ```
 
 #### Session information
