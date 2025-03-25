@@ -108,35 +108,35 @@ colData(se) <- cbind(colData(se), spatialCoords(se))
 
 plot_lam02res08 <- plotColData(se,
     x = 'x', y = 'y',
-    point_size = 0.6, colour_by = cnames[1]
+    point_size = 0.2, colour_by = cnames[1]
 )
 plot_lam02res1 <- plotColData(se,
     x = "x", y = "y",
-    point_size = 0.6, colour_by = cnames[2]
+    point_size = 0.2, colour_by = cnames[2]
 )
 plot_lam08res08 <- plotColData(se,
     x = "x", y = "y",
-    point_size = 0.6, colour_by = cnames[3]
+    point_size = 0.2, colour_by = cnames[3]
 )
 plot_lam08res1 <- plotColData(se,
     x = "x", y = "y",
-    point_size = 0.6, colour_by = cnames[4]
+    point_size = 0.2, colour_by = cnames[4]
 )
 plot_lam02res03 <- plotColData(se,
     x = 'x', y = 'y',
-    point_size = 0.6, colour_by = cnames[5]
+    point_size = 0.2, colour_by = cnames[5]
 )
 plot_lam02res05 <- plotColData(se,
     x = "x", y = "y",
-    point_size = 0.6, colour_by = cnames[6]
+    point_size = 0.2, colour_by = cnames[6]
 )
 plot_lam08res03 <- plotColData(se,
     x = "x", y = "y",
-    point_size = 0.6, colour_by = cnames[7]
+    point_size = 0.2, colour_by = cnames[7]
 )
 plot_lam08res05 <- plotColData(se,
     x = "x", y = "y",
-    point_size = 0.6, colour_by = cnames[8]
+    point_size = 0.2, colour_by = cnames[8]
 )
 
 
