@@ -100,7 +100,7 @@ lambda <- c(0.2, 0.8)
 set.seed(1000)
 se <- runBanksyPCA(se, use_agf = T, lambda = lambda)
 se <- runBanksyUMAP(se, use_agf = T, lambda = lambda)
-se <- clusterBanksy(se, use_agf = T, lambda = lambda, resolution = c(0.3, 0.5))
+se <- clusterBanksy(se, use_agf = T, lambda = lambda, resolution = c(0.3, 0.5, 0.8, 1))
 
 cnames <- colnames(colData(se))
 cnames <- cnames[grep("^clust", cnames)]
