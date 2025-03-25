@@ -232,7 +232,7 @@ saveRDS(experiment.aggregate, file="Spatial_workshop-03.rds")
 #### Download Rmd
 
 ``` r
-download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_reduction/04-Niche.Rmd", "04-Niche.Rmd")
+download.file("https://raw.githubusercontent.com/ucdavis-bioinformatics-training/2025-March-Spatial-Transcriptomics/main/data_reduction/04-Simple_Niche.Rmd", "04-Simple_Niche.Rmd")
 ```
 
 #### Session information

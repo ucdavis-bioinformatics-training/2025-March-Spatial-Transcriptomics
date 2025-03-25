@@ -38,8 +38,6 @@ Up until now, we have done analyses that are very similar to regular single cell
 
 We will use _BuildNicheAssay_ function to perform this analysis.
 
-There are over 300 cell types identified using the subclass level. I am going to use the clusters at the resolution 0.3 as an example to find niches.
-
 
 ``` r
 cortex <- BuildNicheAssay(cortex, fov = "fov.TgCRND8", group.by = "predicted.celltype", niches.k = 5, neighbors.k = 30)
