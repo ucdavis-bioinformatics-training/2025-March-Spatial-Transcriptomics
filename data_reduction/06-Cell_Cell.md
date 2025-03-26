@@ -18,11 +18,19 @@ Here is the summary figure for COMMOT.
   <img src="figures/LR.COMMOT.jpeg" width="75%"/>
 </p>
 
+<p align = "center" style="font-family:Times;font-size:12px;">
+Cang, Z., Zhao, Y., Almet, A.A. et al. Nat Methods 20, 218–228 (2023) https://doi.org/10.1038/s41592-022-01728-4.
+</p>
+
 
 Here is a figure from the publication of SCOTIA to demonstrate what type of analysis it offers.
 
 <p float="center">
   <img src="figures/SCOTIA.jpeg" width="75%"/>
+</p>
+
+<p align = "center" style="font-family:Times;font-size:12px;">
+Shiau, C., Cao, J., Gong, D. et al. Nat Genet 56, 2466–2478 (2024). https://doi.org/10.1038/s41588-024-01890-9
 </p>
 
 
