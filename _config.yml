@@ -51,4 +51,6 @@ navigation:
     url: data_reduction/05-Niche
   - title: Part 6- CCC
     url: data_reduction/06-Cell_Cell
+  - title: Part 7- Cell Segmmentation
+    url: data_reduction/07-Segmentation
 
