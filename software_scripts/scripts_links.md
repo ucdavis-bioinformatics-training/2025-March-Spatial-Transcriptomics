@@ -1,8 +1,12 @@
 ## Links to Scripts
 
 
-#### Slurm script for cellranger counts
-[Cellranger counts](scripts/cellranger-counts.sh)
+#### script for squidpy analysis
+[squidpy](scripts/squidpy_analysis.py)
 
-#### Bash script (loop) for cellranger counts
-[Cellranger counts](scripts/cellranger-counts.bash)
+#### script for SCOTIA analysis 
+[scotia](scripts/scotia_analysis.py)
+
+#### script for cellpose3 analysis 
+[cellpose](scripts/cellpose_analysis.py)
+
